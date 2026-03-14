@@ -247,12 +247,12 @@ export default function LandingPage() {
               <img 
                 src="/assets/signature.png" 
                 alt="Virendra Mahajan Signature" 
-                className="h-24 md:h-32 w-auto object-contain opacity-80 mix-blend-multiply filter contrast-125" 
+                className="h-24 md:h-32 w-auto object-contain opacity-75 mix-blend-multiply grayscale brightness-110 contrast-125" 
               />
             </div>
             
-            <p className="font-mono text-xs md:text-sm tracking-widest text-[#5e554d]">
-              Virendra Mahajan, Founder ARGUS
+            <p className="font-mono text-xs md:text-sm tracking-widest text-[#5e554d] uppercase mt-2">
+              Virendra Mahajan, Chief Architect & Founder
             </p>
           </div>
         </div>
