@@ -12,6 +12,7 @@ import {
   EscalationEvent,
 } from "@/lib/horizonEngine";
 import { useReviewRoom } from "@/components/simulation/ReviewRoomContext";
+import { useAuth } from "@/context/AuthProvider";
 
 // ─── Engine Slice ─────────────────────────────────────────────────────────────
 // Purely derived. Memoized. No side effects.
@@ -58,6 +59,7 @@ export function InstitutionalStateProvider({ children }: { children: React.React
   // Simulation slice is already its own isolated provider (ReviewRoomContext).
   // We only consume the TWO boolean signals that affect the engine.
   const { isExpired, isResolvedTimely, session } = useReviewRoom();
+  const { role } = useAuth();
 
   const [escalationHistory, setEscalationHistory] = React.useState<EscalationEvent[]>(ESCALATION_HISTORY);
 
@@ -117,11 +119,14 @@ export function InstitutionalStateProvider({ children }: { children: React.React
     // Async institutional append to backend
     fetch("/api/governance", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-ARGUS-ROLE": role,
+      },
       body: JSON.stringify(newRecord),
     }).catch(err => console.error("ARGUS: Critical failure in governance write.", err));
 
-  }, [isExpired, isResolvedTimely, session, escalationHistory]);
+  }, [isExpired, isResolvedTimely, role, session, escalationHistory]);
 
   // ── Governance Slice ──
   // Mutation type is derived from the two simulation booleans.

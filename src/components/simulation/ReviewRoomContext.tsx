@@ -140,7 +140,7 @@ export function ReviewRoomProvider({ children }: { children: React.ReactNode }) 
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [session]);
+  }, [logDecision, session]);
 
   const initiateReview = (cycleId: string, durationMinutes = 15) => {
     // Doctrine Restriction: Prevents resetting a clock for the current cycle

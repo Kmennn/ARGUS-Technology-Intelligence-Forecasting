@@ -51,6 +51,14 @@ const DOMAIN_COLORS: Record<string, string> = {
   Propulsion: "#8C5B5B",
 };
 
+const DOMAIN_SWATCH_CLASSES: Record<string, string> = {
+  AI: "bg-[var(--accent-deep)]",
+  Bio: "bg-[#5B8C5A]",
+  Materials: "bg-[#8C7A5B]",
+  Quantum: "bg-[#5B6A8C]",
+  Propulsion: "bg-[#8C5B5B]",
+};
+
 export function ConvergenceGraph() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
@@ -148,12 +156,9 @@ export function ConvergenceGraph() {
           </p>
         </div>
         <div className="flex gap-4 text-[8px] font-mono uppercase tracking-tighter">
-          {Object.entries(DOMAIN_COLORS).map(([domain, color]) => (
+          {Object.entries(DOMAIN_COLORS).map(([domain]) => (
             <div key={domain} className="flex items-center gap-1">
-              <div 
-                className="w-1.5 h-1.5 rounded-full" 
-                style={{ backgroundColor: color }} 
-              />
+              <div className={`w-1.5 h-1.5 rounded-full ${DOMAIN_SWATCH_CLASSES[domain] || "bg-[var(--ink-muted)]"}`} />
               <span className="text-[var(--ink-tertiary)]">{domain}</span>
             </div>
           ))}
@@ -198,10 +203,7 @@ export function ConvergenceGraph() {
                   </button>
                 </div>
                 <div className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-tertiary)] flex items-center gap-2 mb-2">
-                  <span 
-                    className="w-1.5 h-1.5 rounded-full" 
-                    style={{ backgroundColor: DOMAIN_COLORS[selectedNode.domain] || "var(--ink-muted)" }} 
-                  />
+                  <span className={`w-1.5 h-1.5 rounded-full ${DOMAIN_SWATCH_CLASSES[selectedNode.domain] || "bg-[var(--ink-muted)]"}`} />
                   {selectedNode.id}
                 </div>
                 <div className="font-mono text-[8px] text-[var(--ink-muted)] uppercase tracking-wider">

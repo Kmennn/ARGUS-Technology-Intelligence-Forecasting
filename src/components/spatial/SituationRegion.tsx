@@ -53,22 +53,13 @@ export function SituationRegion() {
 
             {/* Signal Watch */}
             <div className="space-y-[6px]">
-              <span
-                className="block font-mono text-[10px] uppercase tracking-[0.05em] font-semibold"
-                style={{ color: "var(--ink-secondary)" }}
-              >
+              <span className="block font-mono text-[10px] uppercase tracking-[0.05em] font-semibold text-[var(--ink-secondary)]">
                 Signal Watch
               </span>
-              <div
-                className="font-mono text-[13px]"
-                style={{ color: "var(--text-primary)" }}
-              >
+              <div className="font-mono text-[13px] text-[var(--text-primary)]">
                 Since Q4 review — procurement references +2, patent velocity +14%.
               </div>
-              <div
-                className="font-mono text-[11px]"
-                style={{ color: "var(--ink-tertiary)" }}
-              >
+              <div className="font-mono text-[11px] text-[var(--ink-tertiary)]">
                 Composite patent activity converging with procurement language. Field validation now governs TRL 5 advancement.
               </div>
             </div>
@@ -104,13 +95,7 @@ export function SituationRegion() {
         </div>
 
         {/* Forecast Deviation Chart — full width */}
-        <div
-          className="pt-2"
-          style={{
-            borderTop: "1px solid var(--border-subtle, rgba(255,255,255,0.06))",
-            paddingTop: "16px",
-          }}
-        >
+        <div className="pt-4 border-t border-[rgba(255,255,255,0.06)]">
           <DeviationBand
             domainLabel="Research"
             q1Variance={-6}
@@ -131,14 +116,7 @@ export function SituationRegion() {
         <div className="pt-2">
           <button
             onClick={() => setShowContext((v) => !v)}
-            className="font-mono text-[10px] uppercase tracking-[0.05em] font-medium"
-            style={{
-              color: "var(--ink-muted)",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-            }}
+            className="font-mono text-[10px] uppercase tracking-[0.05em] font-medium text-[var(--ink-muted)] bg-transparent border-0 cursor-pointer p-0"
           >
             {showContext ? "Hide" : "View"} research context
           </button>
@@ -150,10 +128,10 @@ export function SituationRegion() {
                   {"// Context"}
                 </span>
                 <div className="space-y-6">
-                  <p className="text-[15px] leading-[1.75] max-w-[65ch]" style={{ color: "var(--ink-secondary)" }}>
+                  <p className="text-[15px] leading-[1.75] max-w-[65ch] text-[var(--ink-secondary)]">
                     Emerging systems do not exist in isolation. They are embedded within research communities, funding cycles, supply chains, policy environments, and cultural narratives. To interpret them correctly, one must examine these layers together rather than independently.
                   </p>
-                  <p className="text-[15px] leading-[1.75] max-w-[65ch]" style={{ color: "var(--ink-secondary)" }}>
+                  <p className="text-[15px] leading-[1.75] max-w-[65ch] text-[var(--ink-secondary)]">
                     The temptation in modern analysis is compression — to reduce complexity into dashboards, to distill uncertainty into confidence scores, to convert long arcs into immediate verdicts. We take a different approach. We privilege continuity over immediacy.
                   </p>
                 </div>
@@ -165,7 +143,7 @@ export function SituationRegion() {
                 <span className="font-mono text-xs uppercase tracking-[0.05em] font-semibold text-[var(--ink-tertiary)]">
                   {"// Convergence"}
                 </span>
-                <p className="text-[15px] leading-[1.75] max-w-[65ch]" style={{ color: "var(--ink-secondary)" }}>
+                <p className="text-[15px] leading-[1.75] max-w-[65ch] text-[var(--ink-secondary)]">
                   The most consequential transformations often occur not within a single field, but at intersections. Filing velocity has increased 14% since Q3, exceeding the five-year baseline trend. If sustained, this acceleration would compress projected maturation timelines by approximately 12–18 months.
                 </p>
               </div>
@@ -174,7 +152,7 @@ export function SituationRegion() {
                 <span className="font-mono text-xs uppercase tracking-[0.05em] font-semibold text-[var(--ink-tertiary)]">
                   {"// Maturity"}
                 </span>
-                <p className="text-[15px] leading-[1.75] max-w-[65ch]" style={{ color: "var(--ink-secondary)" }}>
+                <p className="text-[15px] leading-[1.75] max-w-[65ch] text-[var(--ink-secondary)]">
                   The system has progressed from validated principles to laboratory-integrated components. Operational deployment remains constrained to controlled environments. Confidence is moderate, supported by 17 independent publications and cross-referenced simulation results. Absence of field validation limits advancement to TRL 5.
                 </p>
               </div>

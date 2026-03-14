@@ -8,14 +8,12 @@ import { CommandRegion } from "@/components/spatial/CommandRegion";
 import { DecisionLedgerPanel } from "@/components/intelligence/command/DecisionLedgerPanel";
 import { ActivityFeedPanel } from "@/components/intelligence/command/ActivityFeedPanel";
 import { SystemNotificationStrip } from "@/components/intelligence/command/SystemNotificationStrip";
-import { AuthProvider } from "@/context/AuthProvider";
 
 export function AppShell({ children }: { children?: React.ReactNode }) {
   return (
-    <AuthProvider>
     <ReviewRoomProvider>
     <InstitutionalStateProvider>
-      <div className="min-h-screen flex flex-col" style={{ background: "var(--background)", color: "var(--text-primary)" }}>
+      <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
         {/* Global Notifications */}
         <SystemNotificationStrip />
 
@@ -50,8 +48,8 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
         </div>
 
         {/* Architectural Footer */}
-        <footer className="w-full px-[5vw] py-16 md:py-24" style={{ borderTop: "1px solid var(--border)", background: "rgba(254, 249, 237, 0.5)" }}>
-          <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 font-mono text-[11px] uppercase tracking-widest leading-loose" style={{ color: "var(--text-muted)" }}>
+        <footer className="w-full px-[5vw] py-16 md:py-24 border-t border-[var(--border)] bg-[rgba(254,249,237,0.5)]">
+          <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 font-mono text-[11px] uppercase tracking-widest leading-loose text-[var(--text-muted)]">
             {/* Column 1 */}
             <div className="flex flex-col gap-2">
               <a href="/research" className="hover:text-[var(--text-primary)] transition-colors">Research</a>
@@ -84,7 +82,6 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
       </div>
     </InstitutionalStateProvider>
     </ReviewRoomProvider>
-    </AuthProvider>
   );
 }
 

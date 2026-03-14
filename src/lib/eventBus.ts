@@ -25,7 +25,7 @@ export interface ArgusEventPayload {
   actor?: string;
   role?: string;
   message?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export type ArgusEventListener = (payload?: ArgusEventPayload) => void;

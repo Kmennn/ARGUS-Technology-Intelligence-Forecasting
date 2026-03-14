@@ -22,8 +22,7 @@ type ExportArtifact = {
   }
 }
 
-function canonicalStringify(obj: any): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+function canonicalStringify(obj: unknown): string {
   if (obj === null || typeof obj !== "object") {
     if (Number.isNaN(obj)) return '"NaN"'
     if (obj === Infinity) return '"Infinity"'
@@ -38,7 +37,7 @@ function canonicalStringify(obj: any): string {
 
   const keys = Object.keys(obj).sort()
   const keyValuePairs = keys.map(
-    key => `"${key}":${canonicalStringify(obj[key])}`
+    key => `"${key}":${canonicalStringify((obj as Record<string, unknown>)[key])}`
   )
 
   return `{${keyValuePairs.join(",")}}`
@@ -93,8 +92,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(artifact)
-
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Export signing failed" },
       { status: 500 }

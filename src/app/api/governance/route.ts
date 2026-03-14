@@ -11,7 +11,7 @@ async function getGovernanceData() {
     const fileContents = await fs.readFile(dataFilePath, "utf8");
     const data = JSON.parse(fileContents);
     return data.events || [];
-  } catch (_error) {
+  } catch {
     // If file doesn't exist or is invalid, use the baseline history
     return ESCALATION_HISTORY;
   }
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     // Ensure data directory exists
     try {
       await fs.mkdir(path.dirname(dataFilePath), { recursive: true });
-    } catch (_e) {
+    } catch {
       // Ignore directory exists error
     }
 

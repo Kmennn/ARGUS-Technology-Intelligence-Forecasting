@@ -6,7 +6,6 @@ import {
   YAxis,
   CartesianGrid,
   ReferenceLine,
-  ResponsiveContainer,
   AreaChart,
   Area,
   Tooltip,
@@ -59,9 +58,8 @@ export function SCurveEngine() {
         </div>
       </div>
 
-      <div className="h-[180px] w-full bg-[var(--ink-ghost)] rounded-sm border border-[var(--border-soft)] p-4">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={DATA} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+      <div className="w-full overflow-x-auto bg-[var(--ink-ghost)] rounded-sm border border-[var(--border-soft)] p-4">
+        <AreaChart width={640} height={148} data={DATA} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="2 2" stroke="var(--border-soft)" vertical={false} />
             <XAxis 
               dataKey="label" 
@@ -102,8 +100,7 @@ export function SCurveEngine() {
             />
             <ReferenceLine x="Q8" stroke="var(--ink-tertiary)" strokeDasharray="3 3" label={{ position: 'top', value: 'INFLECTION', fill: 'var(--ink-tertiary)', fontSize: 7, fontFamily: 'var(--font-mono)' }} />
             <ReferenceLine y={DATA.find(d => d.label === "Q8")?.adoption} stroke="var(--border-soft)" strokeDasharray="2 2" />
-          </AreaChart>
-        </ResponsiveContainer>
+        </AreaChart>
       </div>
 
       <div className="grid grid-cols-3 gap-4 text-[9px] font-mono">
