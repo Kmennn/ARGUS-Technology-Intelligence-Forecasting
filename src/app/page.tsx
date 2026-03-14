@@ -234,23 +234,26 @@ export default function LandingPage() {
       {/* 3. Founder's Quote */}
       <section className="relative argus-section--secondary mai-section-padding overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[rgba(255,255,255,0.5)] to-transparent pointer-events-none"></div>
-        <div className="mai-grid-asymmetric max-w-[1400px] mx-auto reveal-on-scroll relative z-10">
-          <blockquote className="m-0">
-            <h2 className="font-serif text-[clamp(36px,5vw,68px)] leading-[1.15] text-[#2f2a26] font-light mb-8">
-              “Strategic surprise is mathematically observable long before it becomes operationally realized.”
+        <div className="mai-grid-asymmetric max-w-[1400px] mx-auto reveal-on-scroll relative z-10 items-center">
+          <blockquote className="m-0 pr-8 md:pr-16 lg:pr-24">
+            <h2 className="font-serif text-[clamp(28px,4vw,56px)] leading-[1.25] text-[#2f2a26] font-light mb-8 max-w-[24ch]">
+              “A nation is not merely defined by the lines on a map, but by the vigor of its energy, the robustness of its economy, and the strength of its defense.”
             </h2>
-            <div className="flex items-center gap-6 mt-12">
-              <div className="w-16 h-[1px] bg-[var(--ink-tertiary)]"></div>
-              <div>
-                <p className="font-mono text-sm tracking-widest uppercase text-[var(--ink-primary)] mb-1">Director of Analysis</p>
-                <p className="text-[var(--ink-tertiary)] italic font-serif">ARGUS Doctrine, Vol. II</p>
-              </div>
-            </div>
           </blockquote>
-          <div className="flex items-center justify-center sm:justify-end h-full mt-10 sm:mt-0">
-            <button onClick={() => router.push("/overview")} className="mai-pill-btn bg-white/60 hover:bg-white/90">
-              More about our methodology <span className="opacity-70">→</span>
-            </button>
+          
+          <div className="flex flex-col items-start justify-center pl-8 md:pl-12 border-l border-[rgba(0,0,0,0.05)] h-full min-h-[250px] mt-10 md:mt-0">
+            <div className="mb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/assets/signature.png" 
+                alt="Virendra Mahajan Signature" 
+                className="h-24 md:h-32 w-auto object-contain opacity-80 mix-blend-multiply filter contrast-125" 
+              />
+            </div>
+            
+            <p className="font-mono text-xs md:text-sm tracking-widest text-[#5e554d]">
+              Virendra Mahajan, Founder ARGUS
+            </p>
           </div>
         </div>
       </section>
