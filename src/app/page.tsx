@@ -141,7 +141,18 @@ export default function LandingPage() {
               It requires context, patience, and disciplined observation.
             </p>
 
-            <div className="inline-block mt-8">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="flex items-center gap-2">
+                <span className="pulse-dot"></span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[rgba(254,249,237,0.6)]">Signal Live</span>
+              </div>
+              <div className="w-1 h-1 rounded-full bg-white/20"></div>
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[rgba(254,249,237,0.6)]">LAT: 12.9716° N</span>
+              <div className="w-1 h-1 rounded-full bg-white/20"></div>
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[rgba(254,249,237,0.6)]">LNG: 77.5946° E</span>
+            </div>
+
+            <div className="inline-block">
               <button
                 onClick={() => router.push("/overview")}
                 className="text-lg transition-colors duration-300 border-b border-transparent hover:border-white pb-1"
@@ -162,6 +173,10 @@ export default function LandingPage() {
         </div>
         <div className="mai-grid-asymmetric max-w-[1400px] mx-auto relative z-10 reveal-on-scroll">
           <div>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="tech-data-label">Framework v4.1</span>
+              <div className="h-[1px] flex-1 bg-black/5"></div>
+            </div>
             <h2 className="mai-headline mb-10">We build technology intelligence frameworks.</h2>
             <button
               onClick={() => router.push("/overview")}
@@ -193,7 +208,8 @@ export default function LandingPage() {
 
           <div className="mai-grid-asymmetric">
             {/* Feature Card */}
-            <div className="mai-card group cursor-pointer" onClick={() => router.push("/research")}>
+            <div className="mai-card group cursor-pointer relative" onClick={() => router.push("/research")}>
+              <div className="tech-scan-line"></div>
               <div className="mai-card-image-wrapper">
                 <div className="absolute inset-0 bg-gradient-to-br from-[rgba(198,104,75,0.4)] to-[rgba(138,126,119,0.3)] opacity-60 transition-opacity group-hover:opacity-80 mix-blend-multiply"></div>
                 <div className="absolute bottom-6 left-6 flex gap-3">
@@ -293,23 +309,26 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 5. Careers/CTA Hero (Enter Archive) */}
       <section className="argus-section--primary pb-0 px-4 sm:px-12 reveal-on-scroll">
-        <div className="mai-card aspect-[21/9] min-h-[400px] relative overflow-hidden flex flex-col items-center justify-center text-center px-6">
+        <div className="mai-card aspect-[21/9] min-h-[400px] relative overflow-hidden flex flex-col items-center justify-center text-center px-6 radar-grid">
           <div className="absolute inset-0 bg-gradient-to-br from-[#dfe6e9] to-[#dcdde1] mix-blend-multiply opacity-50"></div>
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
           
           <div className="relative z-10 max-w-[800px] mx-auto">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <span className="tech-data-label">Access Granted</span>
+              <span className="pulse-dot"></span>
+              <span className="tech-data-label">System Ready</span>
+            </div>
             <h2 className="mai-headline mb-8 text-[clamp(40px,7vw,90px)]">Enter the archive.</h2>
             <p className="mai-body mb-10 max-w-[50ch] mx-auto text-[#4a4a4a]">
               Join the analysts and strategic allocators using ARGUS to navigate the horizon. Access global patterns today.
             </p>
             <button
               onClick={() => router.push("/overview")}
-              className="mai-pill-btn bg-white/80 hover:bg-white text-[var(--ink-primary)] shadow-sm font-semibold"
+              className="mai-pill-btn bg-white/80 hover:bg-white text-[var(--ink-primary)] shadow-md font-semibold border-black/5"
               style={{ padding: "16px 36px", fontSize: "12px" }}
             >
-              Initialize Console <span className="opacity-70 ml-2">→</span>
+              INITIALIZE CONSOLE <span className="opacity-70 ml-2">→</span>
             </button>
           </div>
         </div>
