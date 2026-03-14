@@ -31,6 +31,14 @@ export default function LandingPage() {
   const router = useRouter();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [activeTab, setActiveTab] = useState(0);
+
+  const capabilities = [
+    { id: 0, title: "Signal Telemetry", desc: "Continuous ingestion of global research, patents, and technical vectors, mathematically weighted and bound to temporal horizons." },
+    { id: 1, title: "Horizon Engine", desc: "Deterministic mathematical modeling of technology maturity, forecasting critical convergence points before they emerge." },
+    { id: 2, title: "Monte Carlo", desc: "Probabilistic simulation engine mapping cascading dependencies across domains, revealing institutional blind spots." },
+    { id: 3, title: "Governance", desc: "Immutable cryptographic ledgers tracing every analytical mutation and strategic decision back to its source evidence." }
+  ];
 
   useScrollReveal();
 
@@ -146,75 +154,200 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <section className="argus-section argus-section--primary overflow-hidden">
-        <div className="argus-section__inner relative">
-          <div className="reveal-on-scroll max-w-[800px]">
-            <p className="argus-section__eyebrow">The Architecture</p>
-            <h2 className="argus-section__title text-[64px] leading-[1.1] mb-8">
-              Strategic foresight,<br/><strong className="font-serif">engineered.</strong>
-            </h2>
-            <p className="argus-section__text">
-              ARGUS transforms fragmented research signals into structured intelligence models. It is not about reacting faster, but about seeing the cascade of consequences before they manifest.
+      {/* 1. Mission Statement Section */}
+      <section className="relative argus-section--primary overflow-hidden mai-section-padding">
+        <div className="mai-blob-container">
+          <div className="mai-blob mai-blob-1"></div>
+          <div className="mai-blob mai-blob-2"></div>
+        </div>
+        <div className="mai-grid-asymmetric max-w-[1400px] mx-auto relative z-10 reveal-on-scroll">
+          <div>
+            <h2 className="mai-headline mb-10">We build technology intelligence frameworks.</h2>
+            <button
+              onClick={() => router.push("/overview")}
+              className="mai-pill-btn mt-6"
+            >
+              Explore our research archive <span className="opacity-70">→</span>
+            </button>
+          </div>
+          <div className="pt-4">
+            <p className="mai-body text-[var(--ink-secondary)] max-w-[40ch]">
+              Through mathematically grounded forecasting and structured evidentiary pipelines, we transform fragmented global signals into institutional foresight and decision superiority.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="bento-grid mt-24 reveal-on-scroll">
-            <div className="bento-card col-span-12 md:col-span-8 group">
-              <h3 className="font-serif text-4xl text-[var(--ink-primary)] mb-6">Signal Telemetry</h3>
-              <p className="text-[var(--ink-secondary)] text-xl font-light leading-relaxed max-w-[45ch]">
-                Continuous ingestion of global research, patents, and technical vectors, mathematically weighted and bound to temporal horizons.
-              </p>
+      {/* 2. Latest Intelligence Grid */}
+      <section className="argus-section--primary mai-section-padding pt-0">
+        <div className="max-w-[1400px] mx-auto reveal-on-scroll">
+          <div className="mb-16 flex justify-between items-end border-b border-[rgba(0,0,0,0.05)] pb-8">
+            <div>
+              <h2 className="mai-subheadline mb-2" style={{ fontStyle: "normal", color: "var(--ink-primary)" }}>Latest intelligence.</h2>
+              <span className="mai-subheadline" style={{ fontSize: "clamp(20px, 2vw, 32px)" }}>Signals. Patterns. Forecasts.</span>
             </div>
-            
-            <div className="bento-card col-span-12 md:col-span-4 group bg-gradient-to-br from-[rgba(255,255,255,0.4)] to-[rgba(255,255,255,0.1)]">
-              <h3 className="font-serif text-4xl text-[var(--ink-primary)] mb-6">Governance</h3>
-              <p className="text-[var(--ink-secondary)] text-xl font-light leading-relaxed">
-                Immutable ledgers trace every analytical mutation to its source.
-              </p>
+            <button onClick={() => router.push("/evidence")} className="mai-pill-btn hidden sm:flex">
+              All intelligence <span className="opacity-70">→</span>
+            </button>
+          </div>
+
+          <div className="mai-grid-asymmetric">
+            {/* Feature Card */}
+            <div className="mai-card group cursor-pointer" onClick={() => router.push("/research")}>
+              <div className="mai-card-image-wrapper">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(198,104,75,0.4)] to-[rgba(138,126,119,0.3)] opacity-60 transition-opacity group-hover:opacity-80 mix-blend-multiply"></div>
+                <div className="absolute bottom-6 left-6 flex gap-3">
+                  <span className="mai-tag shadow-sm">research</span>
+                  <span className="mai-tag shadow-sm">forecast</span>
+                </div>
+              </div>
+              <div className="mai-card-content">
+                <span className="mai-meta-text mb-4 block">Mar 12, 2026 · 14 min read</span>
+                <h3 className="font-serif text-[clamp(28px,3vw,40px)] leading-[1.1] text-[var(--ink-primary)] font-light mb-4">
+                  The Convergence of Quantum Error Correction and Lattice Cryptography
+                </h3>
+                <p className="mai-body line-clamp-2">Our latest horizon models indicate a 24-month acceleration in timeline compression, driven by recent heuristic breakthroughs.</p>
+              </div>
             </div>
 
-            <div className="bento-card col-span-12 group !p-20 text-center bg-gradient-to-b from-[rgba(255,255,255,0.6)] to-[rgba(255,255,255,0.2)] mt-4">
-              <p className="font-mono text-xs tracking-[0.2em] text-[var(--ink-tertiary)] uppercase mb-8">Simulation Engine</p>
-              <h3 className="font-serif text-[48px] md:text-[64px] text-[var(--ink-primary)] font-light mx-auto leading-tight max-w-[20ch]">
-                Simulate a thousand futures to conquer one.
-              </h3>
-              <p className="text-[var(--ink-secondary)] text-2xl mt-8 max-w-[48ch] mx-auto font-light">
-                Probabilistic Monte Carlo modeling maps cascading dependencies across domains, revealing institutional blind spots before they break.
-              </p>
+            {/* Sub Cards List */}
+            <div className="flex flex-col gap-8">
+              {[1, 2].map((i) => (
+                <div key={i} className="mai-card group flex flex-col sm:flex-row cursor-pointer h-full" onClick={() => router.push("/research")}>
+                  <div className="w-full sm:w-2/5 aspect-[4/3] sm:aspect-auto bg-gradient-to-br from-[rgba(138,126,119,0.2)] to-[rgba(198,104,75,0.1)] relative"></div>
+                  <div className="mai-card-content flex-1 p-6 flex flex-col justify-center">
+                    <span className="mai-meta-text mb-3 block">Mar 08, 2026</span>
+                    <h3 className="font-serif text-2xl leading-[1.2] text-[var(--ink-primary)] font-light mb-3">
+                      {i === 1 ? "Supply Chain Vulnerabilities in Advanced Packaging" : "Emergent Behavior in Billion-Parameter Models"}
+                    </h3>
+                  </div>
+                </div>
+              ))}
+              <button onClick={() => router.push("/evidence")} className="mai-pill-btn mt-4 justify-center sm:hidden">
+                All intelligence <span className="opacity-70">→</span>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="argus-section argus-section--quote text-center">
-        <div className="argus-quote-wrap reveal-on-scroll">
-          <blockquote className="argus-quote text-[48px] md:text-[80px] font-serif font-light leading-[1.05] text-[var(--ink-primary)] tracking-tight">
-            “Intelligence is the space<br />
-            between a signal and<br />
-            its consequence.”
+      {/* 3. Founder's Quote */}
+      <section className="relative argus-section--secondary mai-section-padding overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[rgba(255,255,255,0.5)] to-transparent pointer-events-none"></div>
+        <div className="mai-grid-asymmetric max-w-[1400px] mx-auto reveal-on-scroll relative z-10">
+          <blockquote className="m-0">
+            <h2 className="font-serif text-[clamp(36px,5vw,68px)] leading-[1.15] text-[#2f2a26] font-light mb-8">
+              “Strategic surprise is mathematically observable long before it becomes operationally realized.”
+            </h2>
+            <div className="flex items-center gap-6 mt-12">
+              <div className="w-16 h-[1px] bg-[var(--ink-tertiary)]"></div>
+              <div>
+                <p className="font-mono text-sm tracking-widest uppercase text-[var(--ink-primary)] mb-1">Director of Analysis</p>
+                <p className="text-[var(--ink-tertiary)] italic font-serif">ARGUS Doctrine, Vol. II</p>
+              </div>
+            </div>
           </blockquote>
-          <p className="argus-quote__author mt-16 tracking-[0.3em] opacity-80">ARGUS Doctrine</p>
+          <div className="flex items-center justify-center sm:justify-end h-full mt-10 sm:mt-0">
+            <button onClick={() => router.push("/overview")} className="mai-pill-btn bg-white/60 hover:bg-white/90">
+              More about our methodology <span className="opacity-70">→</span>
+            </button>
+          </div>
         </div>
       </section>
 
-      <section className="argus-section argus-section--primary pb-[200px]">
-        <div className="argus-section__inner argus-section__inner--center reveal-on-scroll">
-          <h2 className="argus-section__title mx-auto text-[56px] md:text-[88px] font-light">
-            Enter the archive.
-          </h2>
-          <p className="argus-section__subtext mx-auto mt-6 text-2xl font-light">
-            Access the institutional intelligence layer.
+      {/* 4. Core Capabilities (Pill Tabs) */}
+      <section className="argus-section--primary mai-section-padding text-center">
+        <div className="max-w-[1000px] mx-auto reveal-on-scroll">
+          <h2 className="mai-headline mb-6">Core capabilities.</h2>
+          <p className="mai-body mb-16 max-w-[60ch] mx-auto">
+            Our platform operationalizes intelligence through four sequential modules, ensuring decisions are grounded in verifiable, forward-looking mathematical rigor.
           </p>
-          <button
-            onClick={() => router.push("/overview")}
-            className="mt-16 group relative inline-flex items-center justify-center px-10 py-5 text-sm tracking-[0.2em] uppercase font-medium overflow-hidden rounded-full border border-[var(--ink-primary)] bg-transparent transition-all duration-500 hover:bg-[var(--ink-primary)] hover:text-white"
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Initialize Console
-            </span>
-          </button>
+
+          {/* Interactive Tab Bar */}
+          <div className="mai-tab-bar flex-wrap justify-center mb-12 shadow-sm border border-black/5">
+            {capabilities.map((tab, idx) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(idx)}
+                className={`mai-tab font-serif text-lg ${activeTab === idx ? "active" : ""}`}
+              >
+                {tab.title}
+              </button>
+            ))}
+          </div>
+
+          {/* Active Tab Content Card */}
+          <div className="mai-card p-12 md:p-24 text-center bg-gradient-to-b from-white to-[rgba(255,255,255,0.5)] border border-black/5 min-h-[400px] flex flex-col justify-center items-center relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[rgba(198,104,75,0.03)] to-[rgba(138,126,119,0.03)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+            <p className="font-mono text-sm tracking-[0.2em] text-[var(--ink-tertiary)] uppercase mb-8 relative z-10 transition-all duration-300">Phase 0{activeTab + 1}</p>
+            <h3 className="font-serif text-[42px] md:text-[60px] text-[var(--ink-primary)] font-light leading-tight max-w-[20ch] mb-8 relative z-10">
+              {capabilities[activeTab].title}
+            </h3>
+            <p className="text-[var(--ink-secondary)] text-xl md:text-2xl max-w-[50ch] mx-auto font-light leading-relaxed relative z-10">
+              {capabilities[activeTab].desc}
+            </p>
+          </div>
         </div>
       </section>
+
+      {/* 5. Careers/CTA Hero (Enter Archive) */}
+      <section className="argus-section--primary pb-0 px-4 sm:px-12 reveal-on-scroll">
+        <div className="mai-card aspect-[21/9] min-h-[400px] relative overflow-hidden flex flex-col items-center justify-center text-center px-6">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#dfe6e9] to-[#dcdde1] mix-blend-multiply opacity-50"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+          
+          <div className="relative z-10 max-w-[800px] mx-auto">
+            <h2 className="mai-headline mb-8 text-[clamp(40px,7vw,90px)]">Enter the archive.</h2>
+            <p className="mai-body mb-10 max-w-[50ch] mx-auto text-[#4a4a4a]">
+              Join the analysts and strategic allocators using ARGUS to navigate the horizon. Access global patterns today.
+            </p>
+            <button
+              onClick={() => router.push("/overview")}
+              className="mai-pill-btn bg-white/80 hover:bg-white text-[var(--ink-primary)] shadow-sm font-semibold"
+              style={{ padding: "16px 36px", fontSize: "12px" }}
+            >
+              Initialize Console <span className="opacity-70 ml-2">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Premium Footer */}
+      <footer className="mai-footer relative z-10 mt-12 sm:mt-24">
+        <div className="mai-footer-grid pb-20 border-b border-[rgba(0,0,0,0.08)]">
+          <div>
+            <span className="font-serif text-3xl tracking-tight text-[var(--ink-primary)] mb-8 block">ARGUS</span>
+            <p className="text-sm text-[var(--ink-secondary)] max-w-[250px] leading-relaxed">
+              Institutional intelligence & horizon forecasting. Engineered for decision superiority.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-mono text-xs tracking-widest uppercase text-[var(--ink-tertiary)] mb-6">Platform</h4>
+            <ul className="space-y-4 text-sm text-[var(--ink-secondary)]">
+              <li><a href="/research" className="hover:text-[var(--ink-primary)] transition-colors">Research Archive</a></li>
+              <li><a href="/signals" className="hover:text-[var(--ink-primary)] transition-colors">Global Signals</a></li>
+              <li><a href="/evidence" className="hover:text-[var(--ink-primary)] transition-colors">Forecasting Engine</a></li>
+              <li><a href="/calibrate" className="hover:text-[var(--ink-primary)] transition-colors">Model Calibration</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-mono text-xs tracking-widest uppercase text-[var(--ink-tertiary)] mb-6">Documentation</h4>
+            <ul className="space-y-4 text-sm text-[var(--ink-secondary)]">
+              <li><span className="cursor-help hover:text-[var(--ink-primary)] transition-colors">Methodology</span></li>
+              <li><span className="cursor-help hover:text-[var(--ink-primary)] transition-colors">Data Privacy</span></li>
+              <li><span className="cursor-help hover:text-[var(--ink-primary)] transition-colors">API Reference</span></li>
+              <li><span className="cursor-help hover:text-[var(--ink-primary)] transition-colors">Institutional Access</span></li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-center pt-8 text-xs text-[var(--ink-tertiary)] font-mono uppercase tracking-wider">
+          <p>© {new Date().getFullYear()} ARGUS Intelligence Corporation</p>
+          <div className="flex gap-6 mt-4 sm:mt-0">
+            <span className="hover:text-[var(--ink-primary)] cursor-pointer transition-colors">Terms of Service</span>
+            <span className="hover:text-[var(--ink-primary)] cursor-pointer transition-colors">Privacy Policy</span>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
