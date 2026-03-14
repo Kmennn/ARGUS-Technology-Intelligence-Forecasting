@@ -1,0 +1,49 @@
+{
+  "events": [
+    {
+      "eventId": "gov-001",
+      "cycleId": "Q3-2025",
+      "cycle": "Q3 2025",
+      "userId": "SYSTEM_SEED",
+      "role": "Admin",
+      "timestamp": "2025-07-15T10:00:00Z",
+      "projectedWithoutIntervention": 10.1,
+      "actualRecoveryTime": 8.7,
+      "governanceTrace": {
+        "decisionSubmitted": true,
+        "timeRemainingAtSubmissionMs": 240000,
+        "mutationApplied": "None"
+      }
+    },
+    {
+      "eventId": "gov-002",
+      "cycleId": "Q4-2025",
+      "cycle": "Q4 2025",
+      "userId": "SYSTEM_SEED",
+      "role": "Admin",
+      "timestamp": "2025-10-15T10:00:00Z",
+      "projectedWithoutIntervention": 9.0,
+      "actualRecoveryTime": 9.2,
+      "governanceTrace": {
+        "decisionSubmitted": false,
+        "timeRemainingAtSubmissionMs": 0,
+        "mutationApplied": "Penalty"
+      }
+    },
+    {
+      "eventId": "gov-003",
+      "cycleId": "Q1-2026",
+      "cycle": "Q1 2026",
+      "userId": "SYSTEM_SEED",
+      "role": "Admin",
+      "timestamp": "2026-01-15T10:00:00Z",
+      "projectedWithoutIntervention": 6.8,
+      "actualRecoveryTime": 4.2,
+      "governanceTrace": {
+        "decisionSubmitted": true,
+        "timeRemainingAtSubmissionMs": 840000,
+        "mutationApplied": "Reward"
+      }
+    }
+  ]
+}

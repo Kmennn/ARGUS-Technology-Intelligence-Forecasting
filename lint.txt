@@ -1,0 +1,27 @@
+﻿
+D:\(ACTIF)\src\app\page.tsx
+  187:28  error  Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+D:\(ACTIF)\src\components\analytics\TechnologyRadar.tsx
+  16:29  error  'focusedNodeId' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+D:\(ACTIF)\src\components\landing\TypewriterText.tsx
+  21:5  error  'timeout' is never reassigned. Use 'const' instead  prefer-const
+
+D:\(ACTIF)\src\components\layout\ArgusVoiceLayer.tsx
+  44:6  warning  React Hook useEffect has a missing dependency: 'voiceLines'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\(ACTIF)\src\components\layout\BlastDoorTransition.tsx
+  4:10  error  'useEffect' is defined but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars
+  4:21  error  'useState' is defined but never used. Allowed unused vars must match /^_/u               @typescript-eslint/no-unused-vars
+  8:22  error  'setDoorState' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  9:9   error  'pathname' is assigned a value but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars
+
+D:\(ACTIF)\src\components\spatial\ArgusEnvironment.tsx
+  26:9  error  'getCameraTransform' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+D:\(ACTIF)\src\context\IntelligenceContext.tsx
+  106:6  warning  React Hook useEffect has a missing dependency: 'addLog'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Γ£û 10 problems (8 errors, 2 warnings)
+

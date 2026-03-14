@@ -1,0 +1,100 @@
+{
+  "decisions": [
+    {
+      "cycleId": "Q3-2025-ESCALATION",
+      "actor": "admin-01",
+      "role": "Admin",
+      "timestamp": "2025-09-14T08:22:00Z",
+      "action": "INITIATE_REVIEW",
+      "stateBefore": {
+        "pressure": 0.72,
+        "horizonMonths": 8.1
+      },
+      "stateAfter": null,
+      "note": "Triggered by supply chain disruption signal",
+      "decisionId": "3393288b-7bad-4b2c-90ee-808963f12d4e"
+    },
+    {
+      "cycleId": "Q3-2025-ESCALATION",
+      "actor": "admin-01",
+      "role": "Admin",
+      "timestamp": "2025-09-14T08:24:12Z",
+      "action": "SUBMIT_DECISION",
+      "stateBefore": {
+        "pressure": 0.72,
+        "horizonMonths": 8.1
+      },
+      "stateAfter": {
+        "pressure": 0.58,
+        "horizonMonths": 9.4
+      },
+      "note": "Reallocated 15% from defense to energy resilience",
+      "decisionId": "e8d1f44d-03c3-43fb-b63c-891a0424d6ef"
+    },
+    {
+      "cycleId": "Q3-2025-ESCALATION",
+      "actor": "admin-01",
+      "role": "Admin",
+      "timestamp": "2025-09-14T08:24:13Z",
+      "action": "GOVERNANCE_MUTATION_APPLIED",
+      "stateBefore": {
+        "pressure": 0.72,
+        "horizonMonths": 8.1
+      },
+      "stateAfter": {
+        "pressure": 0.58,
+        "horizonMonths": 9.4
+      },
+      "note": "Reward mutation applied — timely resolution",
+      "decisionId": "536ac7b7-412a-434a-be53-d1b49914a70b"
+    },
+    {
+      "cycleId": "Q4-2025-ESCALATION",
+      "actor": "allocator-03",
+      "role": "Allocator",
+      "timestamp": "2025-12-02T14:10:00Z",
+      "action": "INITIATE_REVIEW",
+      "stateBefore": {
+        "pressure": 0.85,
+        "horizonMonths": 5.8
+      },
+      "stateAfter": null,
+      "note": "Pressure spike from semiconductor shortage",
+      "decisionId": "a87d1297-2476-4b4b-80e5-4ac0e0bd7137"
+    },
+    {
+      "cycleId": "Q4-2025-ESCALATION",
+      "actor": "allocator-03",
+      "role": "Allocator",
+      "timestamp": "2025-12-02T14:25:01Z",
+      "action": "REVIEW_EXPIRED",
+      "stateBefore": {
+        "pressure": 0.85,
+        "horizonMonths": 5.8
+      },
+      "stateAfter": {
+        "pressure": 0.91,
+        "horizonMonths": 4.2
+      },
+      "note": "No decision submitted within window",
+      "decisionId": "da2fc740-177a-4095-93e1-158b0ac72020"
+    },
+    {
+      "cycleId": "Q4-2025-ESCALATION",
+      "actor": "allocator-03",
+      "role": "Allocator",
+      "timestamp": "2025-12-02T14:25:02Z",
+      "action": "GOVERNANCE_MUTATION_APPLIED",
+      "stateBefore": {
+        "pressure": 0.85,
+        "horizonMonths": 5.8
+      },
+      "stateAfter": {
+        "pressure": 0.91,
+        "horizonMonths": 4.2
+      },
+      "note": "Penalty mutation applied — review expired without action",
+      "decisionId": "c4e63da9-805a-4121-af9a-523bca5ae0b5"
+    }
+  ]
+}
