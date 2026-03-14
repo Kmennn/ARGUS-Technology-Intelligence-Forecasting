@@ -241,18 +241,18 @@ export default function LandingPage() {
             </h2>
           </blockquote>
           
-          <div className="flex flex-col items-start justify-center pl-8 md:pl-12 border-l border-[rgba(0,0,0,0.05)] h-full min-h-[250px] mt-10 md:mt-0">
-            <div className="mb-4">
+          <div className="flex flex-col items-center justify-center pl-8 md:pl-12 border-l border-[rgba(0,0,0,0.05)] h-full min-h-[250px] mt-10 md:mt-0">
+            <div className="mb-6 mr-8 md:mr-16">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/assets/signature-transparent.png" 
                 alt="Virendra Mahajan Signature" 
-                className="h-24 md:h-32 w-auto object-contain opacity-90" 
+                className="h-32 md:h-48 w-auto object-contain mix-blend-multiply opacity-80" 
               />
             </div>
             
-            <p className="font-mono text-xs md:text-sm tracking-widest text-[#5e554d] uppercase mt-2">
-              Virendra Mahajan, Chief Architect & Founder
+            <p className="font-mono text-sm md:text-base tracking-wide text-[#5e554d]">
+              Virendra Mahajan, CEO ARGUS
             </p>
           </div>
         </div>
