@@ -245,9 +245,9 @@ export default function LandingPage() {
             <div className="mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="/assets/signature.png" 
+                src="/assets/signature-transparent.png" 
                 alt="Virendra Mahajan Signature" 
-                className="h-24 md:h-32 w-auto object-contain opacity-75 mix-blend-multiply grayscale brightness-110 contrast-125" 
+                className="h-24 md:h-32 w-auto object-contain opacity-90" 
               />
             </div>
             
