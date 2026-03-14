@@ -252,7 +252,7 @@ export default function LandingPage() {
             </div>
             
             <p className="font-mono text-sm md:text-base tracking-wide text-[#5e554d]">
-              Virendra Mahajan, CEO ARGUS
+              Virendra Mahajan, Founder & Chief Engineer
             </p>
           </div>
         </div>
