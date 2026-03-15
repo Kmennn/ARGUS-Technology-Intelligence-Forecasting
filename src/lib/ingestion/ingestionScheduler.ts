@@ -9,6 +9,7 @@ import cron from "node-cron";
 import { runIngestionCycle } from "@/lib/ingestion/ingestionPipeline";
 import { seedFromStaticData } from "@/lib/database/database";
 import { updateMomentumScores } from "@/lib/analysis/momentumEngine";
+import { runEmergenceDetection } from "@/lib/analysis/emergenceDetector";
 
 let scheduled = false;
 
@@ -72,11 +73,23 @@ export function startScheduler(): void {
     }
   });
 
+  // Emergence Detection: daily at 02:30 (after momentum recalculation)
+  cron.schedule("30 2 * * *", () => {
+    console.log("[ARGUS Scheduler] Running emergence detection...");
+    try {
+      const results = runEmergenceDetection();
+      console.log(`[ARGUS Scheduler] Emergence: ${results.length} signals detected.`);
+    } catch (err) {
+      console.error("[ARGUS Scheduler] Emergence detection failed:", err);
+    }
+  });
+
   console.log("[ARGUS Scheduler] Schedules active:");
-  console.log("  News:     every hour at :15");
-  console.log("  Research: every 6 hours at :00");
-  console.log("  Patents:  daily at 03:00");
-  console.log("  Momentum: daily at 02:00");
+  console.log("  News:      every hour at :15");
+  console.log("  Research:  every 6 hours at :00");
+  console.log("  Patents:   daily at 03:00");
+  console.log("  Momentum:  daily at 02:00");
+  console.log("  Emergence: daily at 02:30");
 }
 
 /**

@@ -97,14 +97,15 @@ CREATE TABLE IF NOT EXISTS technology_actors (
 
 CREATE TABLE IF NOT EXISTS technology_momentum (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  technology TEXT,
-  country TEXT,
-  year INTEGER,
+  technology TEXT NOT NULL,
+  country TEXT NOT NULL,
+  year INTEGER NOT NULL,
   research_count INTEGER DEFAULT 0,
   patent_count INTEGER DEFAULT 0,
   citation_count INTEGER DEFAULT 0,
-  momentum_score REAL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  momentum_score REAL DEFAULT 0.0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(technology, country, year)
 );
 
 CREATE TABLE IF NOT EXISTS organization_leaders (
@@ -121,3 +122,21 @@ CREATE TABLE IF NOT EXISTS organization_leaders (
 CREATE INDEX IF NOT EXISTS idx_actor_technology ON technology_actors(technology);
 CREATE INDEX IF NOT EXISTS idx_actor_country ON technology_actors(country);
 CREATE INDEX IF NOT EXISTS idx_momentum_technology ON technology_momentum(technology);
+
+-- Phase-23: Early Technology Emergence Detection
+CREATE TABLE IF NOT EXISTS emerging_signals (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  technology TEXT NOT NULL,
+  first_detected DATE NOT NULL,
+  early_signal_score REAL DEFAULT 0.0,
+  publication_growth REAL DEFAULT 0.0,
+  novelty_score REAL DEFAULT 0.0,
+  cross_domain_links INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'emerging',  -- emerging, confirmed, faded
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(technology)
+);
+
+CREATE INDEX IF NOT EXISTS idx_emerging_score ON emerging_signals(early_signal_score DESC);
+CREATE INDEX IF NOT EXISTS idx_emerging_status ON emerging_signals(status);

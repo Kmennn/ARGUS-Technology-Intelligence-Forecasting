@@ -274,24 +274,15 @@ export function updateMomentumScoresCore(technology: string, country: string, is
   const db = getDb();
   const year = new Date().getFullYear();
 
-  const existing = db.prepare(
-    "SELECT id, research_count, patent_count, citation_count FROM technology_momentum WHERE technology = ? AND country = ? AND year = ?"
-  ).get(technology, country, year) as { id: number, research_count: number, patent_count: number, citation_count: number } | undefined;
-
-  if (existing) {
-    db.prepare(`
-      UPDATE technology_momentum 
-      SET research_count = research_count + ?, 
-          patent_count = patent_count + ?,
-          citation_count = citation_count + ?
-      WHERE id = ?
-    `).run(isResearch ? 1 : 0, isPatent ? 1 : 0, citations, existing.id);
-  } else {
-    db.prepare(`
-      INSERT INTO technology_momentum (technology, country, year, research_count, patent_count, citation_count, momentum_score)
-      VALUES (?, ?, ?, ?, ?, ?, 0.0)
-    `).run(technology, country, year, isResearch ? 1 : 0, isPatent ? 1 : 0, citations);
-  }
+  db.prepare(`
+    INSERT INTO technology_momentum (technology, country, year, research_count, patent_count, citation_count, momentum_score)
+    VALUES (?, ?, ?, ?, ?, ?, 0.0)
+    ON CONFLICT(technology, country, year)
+    DO UPDATE SET
+      research_count = research_count + excluded.research_count,
+      patent_count = patent_count + excluded.patent_count,
+      citation_count = citation_count + excluded.citation_count
+  `).run(technology, country, year, isResearch ? 1 : 0, isPatent ? 1 : 0, citations);
 }
 
 export interface DbActorOutput {
@@ -332,5 +323,67 @@ export function getMomentumAggregated(conceptName: string): DbMomentumAggregate[
     WHERE technology = ?
     GROUP BY country
   `).all(conceptName) as DbMomentumAggregate[];
+}
+
+/* ─── Phase-23: Emerging Signals ─── */
+
+export interface DbEmergingSignal {
+  id: number;
+  technology: string;
+  first_detected: string;
+  early_signal_score: number;
+  publication_growth: number;
+  novelty_score: number;
+  cross_domain_links: number;
+  status: string;
+  updated_at: string;
+  created_at: string;
+}
+
+export function upsertEmergingSignal(signal: {
+  technology: string;
+  early_signal_score: number;
+  publication_growth: number;
+  novelty_score: number;
+  cross_domain_links: number;
+}): void {
+  const db = getDb();
+  db.prepare(`
+    INSERT INTO emerging_signals (technology, first_detected, early_signal_score, publication_growth, novelty_score, cross_domain_links, updated_at)
+    VALUES (?, date('now'), ?, ?, ?, ?, datetime('now'))
+    ON CONFLICT(technology)
+    DO UPDATE SET
+      early_signal_score = excluded.early_signal_score,
+      publication_growth = excluded.publication_growth,
+      novelty_score = excluded.novelty_score,
+      cross_domain_links = excluded.cross_domain_links,
+      updated_at = datetime('now'),
+      status = CASE
+        WHEN excluded.early_signal_score >= 0.7 THEN 'confirmed'
+        WHEN excluded.early_signal_score < 0.3 THEN 'faded'
+        ELSE 'emerging'
+      END
+  `).run(
+    signal.technology,
+    signal.early_signal_score,
+    signal.publication_growth,
+    signal.novelty_score,
+    signal.cross_domain_links
+  );
+}
+
+export function getEmergingSignals(limit = 20): DbEmergingSignal[] {
+  return getDb().prepare(
+    "SELECT * FROM emerging_signals WHERE status != 'faded' ORDER BY early_signal_score DESC LIMIT ?"
+  ).all(limit) as DbEmergingSignal[];
+}
+
+export function getAllTrackedTechnologies(): Array<{ technology: string; year: number; research_count: number; patent_count: number }> {
+  return getDb().prepare(`
+    SELECT technology, year, SUM(research_count) as research_count, SUM(patent_count) as patent_count
+    FROM technology_momentum
+    GROUP BY technology, year
+    ORDER BY technology, year
+  `).all() as Array<{ technology: string; year: number; research_count: number; patent_count: number }>;
 }
 

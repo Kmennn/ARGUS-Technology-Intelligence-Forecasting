@@ -20,6 +20,7 @@ import { fetchCrossRefPublications } from "@/lib/ingestion/crossrefFetcher";
 import { fetchPatents } from "@/lib/ingestion/patentFetcher";
 import { fetchNews } from "@/lib/ingestion/newsFetcher";
 import { runBreakoutDetection } from "@/lib/analysis/breakoutEngine";
+import { runEmergenceDetection } from "@/lib/analysis/emergenceDetector";
 
 export interface IngestionResult {
   fetcher: string;
@@ -173,6 +174,13 @@ export async function runIngestionCycle(fetcherName: string): Promise<IngestionR
     runBreakoutDetection();
   } catch (err) {
     errors.push(`Breakout detection error: ${err}`);
+  }
+
+  // Step 4: Run emergence detection (Phase-23)
+  try {
+    runEmergenceDetection();
+  } catch (err) {
+    errors.push(`Emergence detection error: ${err}`);
   }
 
   const durationMs = Date.now() - startTime;
