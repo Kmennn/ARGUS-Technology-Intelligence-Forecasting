@@ -10,7 +10,8 @@ import {
   logIngestion,
   getAllSignals,
 } from "@/lib/database/database";
-import { extractSignals, generateSignalId } from "@/lib/ingestion/signalEngine";
+import { generateSignalId } from "@/lib/ingestion/signalEngine";
+import { extractSemanticSignals } from "@/lib/analysis/semanticSignalEngine";
 import { validateRecord, isDuplicate } from "@/lib/validation/sourceTrust";
 import { fetchArxivPapers } from "@/lib/ingestion/arxivFetcher";
 import { fetchCrossRefPublications } from "@/lib/ingestion/crossrefFetcher";
@@ -42,9 +43,9 @@ async function runFetcher(name: string): Promise<{ fetched: number; stored: numb
 }
 
 /**
- * Process unprocessed raw sources → extract signals → store.
+ * Process unprocessed raw sources → extract semantic signals → store.
  */
-function processRawSources(fetcher?: string): { created: number; updated: number } {
+async function processRawSources(fetcher?: string): Promise<{ created: number; updated: number }> {
   const sources = getUnprocessedSources(fetcher);
   const existingSignals = getAllSignals();
   const existingTitles = existingSignals.map((s) => s.title);
@@ -80,8 +81,9 @@ function processRawSources(fetcher?: string): { created: number; updated: number
         continue;
       }
 
-      // Extract signals
-      const signals = extractSignals(title, abstract, sourceType, sourceUrl, published);
+      // Extract Semantic Signals via LLM (or fallback)
+      const fullText = `${title}\n\n${abstract}`;
+      const signals = await extractSemanticSignals(fullText);
 
       for (const sig of signals) {
         const signalId = generateSignalId(sig.technology, sourceUrl);
@@ -102,22 +104,22 @@ function processRawSources(fetcher?: string): { created: number; updated: number
             id: signalId,
             technology: sig.technology,
             cluster: sig.cluster,
-            title: sig.title,
-            summary: sig.summary,
+            title: title,
+            summary: `Automated Semantic Extraction:\nNovelty Score: ${sig.novelty_score}\nRelated Domains: ${sig.related_domains.join(", ")}\n\nAbstract: ${abstract.substring(0, 300)}...`,
             priority_score: Math.round(sig.confidence * 100),
             trl: sig.trl,
             confidence: sig.confidence,
             velocity: 0,
             volatility: "emerging",
             score_history: JSON.stringify([{ year: new Date().toISOString().slice(0, 7), score: sig.confidence }]),
-            priority_drivers: JSON.stringify([`Detected from ${sig.sourceType} source`]),
-            impact_domains: JSON.stringify([]),
-            source_type: sig.sourceType,
-            source_url: sig.sourceUrl,
+            priority_drivers: JSON.stringify([`Semantic detection (novelty: ${sig.novelty_score})`, `Domains: ${sig.related_domains.join(", ")}`]),
+            impact_domains: JSON.stringify(sig.related_domains),
+            source_type: sourceType,
+            source_url: sourceUrl,
             source_count: 1,
             trend_direction: "rising",
           });
-          existingTitles.push(sig.title);
+          existingTitles.push(title);
           created++;
         }
       }
@@ -147,10 +149,10 @@ export async function runIngestionCycle(fetcherName: string): Promise<IngestionR
     errors.push(`Fetch error: ${err}`);
   }
 
-  // Step 2: Process raw sources → extract signals
+  // Step 2: Process raw sources → extract semantic signals
   let processResult = { created: 0, updated: 0 };
   try {
-    processResult = processRawSources(fetcherName === "news" ? undefined : fetcherName);
+    processResult = await processRawSources(fetcherName === "news" ? undefined : fetcherName);
   } catch (err) {
     errors.push(`Process error: ${err}`);
   }
