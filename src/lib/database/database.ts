@@ -200,3 +200,94 @@ export function seedFromStaticData(): { seeded: number } {
   transaction();
   return { seeded };
 }
+
+/* ─── Technology Actors ─── */
+export interface DbActor {
+  id: number;
+  concept_name: string;
+  organization: string | null;
+  country: string | null;
+  paper_count: number;
+  patent_count: number;
+  citations: number;
+  first_seen: string | null;
+  last_seen: string | null;
+}
+
+export function upsertActor(actor: Pick<DbActor, "concept_name" | "organization" | "country" | "paper_count" | "patent_count" | "citations"> & { timestamp: string }): void {
+  const db = getDb();
+  
+  // Clean up nulls to empty strings for unique constraint matching if needed, though SQLite handles NULLs uniquely.
+  // We'll trust the caller to pass "Unknown" instead of null for primary keys.
+  const org = actor.organization || "Unknown";
+  const ctry = actor.country || "Unknown";
+
+  const existing = db.prepare(
+    "SELECT id, paper_count, patent_count, citations, first_seen FROM technology_actors WHERE concept_name = ? AND organization = ? AND country = ?"
+  ).get(actor.concept_name, org, ctry) as DbActor | undefined;
+
+  if (existing) {
+    db.prepare(`
+      UPDATE technology_actors 
+      SET paper_count = paper_count + ?, 
+          patent_count = patent_count + ?, 
+          citations = citations + ?, 
+          last_seen = ?
+      WHERE id = ?
+    `).run(actor.paper_count, actor.patent_count, actor.citations, actor.timestamp, existing.id);
+  } else {
+    db.prepare(`
+      INSERT INTO technology_actors (concept_name, organization, country, paper_count, patent_count, citations, first_seen, last_seen)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(actor.concept_name, org, ctry, actor.paper_count, actor.patent_count, actor.citations, actor.timestamp, actor.timestamp);
+  }
+}
+
+export function getActorsByConcept(conceptName: string): DbActor[] {
+  return getDb().prepare(
+    "SELECT * FROM technology_actors WHERE concept_name = ? ORDER BY (paper_count + patent_count) DESC LIMIT 50"
+  ).all(conceptName) as DbActor[];
+}
+
+/* ─── Technology Momentum ─── */
+export interface DbMomentum {
+  id: number;
+  concept_name: string;
+  region: string;
+  year: number;
+  momentum_score: number;
+  research_count: number;
+  patent_count: number;
+}
+
+export function upsertMomentum(momentum: Pick<DbMomentum, "concept_name" | "region" | "year" | "research_count" | "patent_count">): void {
+  const db = getDb();
+  
+  const existing = db.prepare(
+    "SELECT id, research_count, patent_count FROM technology_momentum WHERE concept_name = ? AND region = ? AND year = ?"
+  ).get(momentum.concept_name, momentum.region, momentum.year) as DbMomentum | undefined;
+
+  if (existing) {
+    db.prepare(`
+      UPDATE technology_momentum 
+      SET research_count = research_count + ?, 
+          patent_count = patent_count + ?
+      WHERE id = ?
+    `).run(momentum.research_count, momentum.patent_count, existing.id);
+  } else {
+    db.prepare(`
+      INSERT INTO technology_momentum (concept_name, region, year, research_count, patent_count, momentum_score)
+      VALUES (?, ?, ?, ?, ?, 0.0)
+    `).run(momentum.concept_name, momentum.region, momentum.year, momentum.research_count, momentum.patent_count);
+  }
+}
+
+export function updateMomentumScore(id: number, score: number): void {
+  getDb().prepare("UPDATE technology_momentum SET momentum_score = ? WHERE id = ?").run(score, id);
+}
+
+export function getMomentumByConcept(conceptName: string): DbMomentum[] {
+  return getDb().prepare(
+    "SELECT * FROM technology_momentum WHERE concept_name = ? ORDER BY year ASC, region ASC"
+  ).all(conceptName) as DbMomentum[];
+}

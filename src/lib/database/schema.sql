@@ -67,3 +67,31 @@ CREATE INDEX IF NOT EXISTS idx_signals_trl ON signals(trl);
 CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity);
 CREATE INDEX IF NOT EXISTS idx_alerts_created ON alerts(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_raw_sources_processed ON raw_sources(processed);
+
+CREATE TABLE IF NOT EXISTS technology_actors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  concept_name TEXT NOT NULL,       
+  organization TEXT,                
+  country TEXT,                     
+  paper_count INTEGER DEFAULT 0,
+  patent_count INTEGER DEFAULT 0,
+  citations INTEGER DEFAULT 0,
+  first_seen TEXT,                  
+  last_seen TEXT,                   
+  UNIQUE(concept_name, organization, country)
+);
+
+CREATE TABLE IF NOT EXISTS technology_momentum (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  concept_name TEXT NOT NULL,
+  region TEXT NOT NULL,             
+  year INTEGER NOT NULL,
+  momentum_score REAL DEFAULT 0.0,
+  research_count INTEGER DEFAULT 0,
+  patent_count INTEGER DEFAULT 0,
+  UNIQUE(concept_name, region, year)
+);
+
+CREATE INDEX IF NOT EXISTS idx_technology_actors_concept ON technology_actors(concept_name);
+CREATE INDEX IF NOT EXISTS idx_technology_momentum_concept ON technology_momentum(concept_name);
+CREATE INDEX IF NOT EXISTS idx_technology_momentum_year ON technology_momentum(year);
