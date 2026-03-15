@@ -68,30 +68,56 @@ CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity);
 CREATE INDEX IF NOT EXISTS idx_alerts_created ON alerts(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_raw_sources_processed ON raw_sources(processed);
 
+CREATE TABLE IF NOT EXISTS organizations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  country TEXT,
+  type TEXT, -- university, company, government
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS researchers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  organization_id INTEGER,
+  country TEXT,
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
+);
+
 CREATE TABLE IF NOT EXISTS technology_actors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  concept_name TEXT NOT NULL,       
-  organization TEXT,                
-  country TEXT,                     
-  paper_count INTEGER DEFAULT 0,
-  patent_count INTEGER DEFAULT 0,
-  citations INTEGER DEFAULT 0,
-  first_seen TEXT,                  
-  last_seen TEXT,                   
-  UNIQUE(concept_name, organization, country)
+  technology TEXT NOT NULL,
+  organization_id INTEGER,
+  country TEXT,
+  source_type TEXT, -- paper, patent, news
+  source_id TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
 CREATE TABLE IF NOT EXISTS technology_momentum (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  concept_name TEXT NOT NULL,
-  region TEXT NOT NULL,             
-  year INTEGER NOT NULL,
-  momentum_score REAL DEFAULT 0.0,
+  technology TEXT,
+  country TEXT,
+  year INTEGER,
   research_count INTEGER DEFAULT 0,
   patent_count INTEGER DEFAULT 0,
-  UNIQUE(concept_name, region, year)
+  citation_count INTEGER DEFAULT 0,
+  momentum_score REAL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_technology_actors_concept ON technology_actors(concept_name);
-CREATE INDEX IF NOT EXISTS idx_technology_momentum_concept ON technology_momentum(concept_name);
-CREATE INDEX IF NOT EXISTS idx_technology_momentum_year ON technology_momentum(year);
+CREATE TABLE IF NOT EXISTS organization_leaders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  technology TEXT,
+  organization_id INTEGER,
+  paper_count INTEGER,
+  patent_count INTEGER,
+  citation_count INTEGER,
+  momentum_score REAL,
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_actor_technology ON technology_actors(technology);
+CREATE INDEX IF NOT EXISTS idx_actor_country ON technology_actors(country);
+CREATE INDEX IF NOT EXISTS idx_momentum_technology ON technology_momentum(technology);

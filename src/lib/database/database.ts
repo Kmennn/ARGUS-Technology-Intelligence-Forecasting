@@ -201,93 +201,136 @@ export function seedFromStaticData(): { seeded: number } {
   return { seeded };
 }
 
-/* ─── Technology Actors ─── */
-export interface DbActor {
-  id: number;
-  concept_name: string;
-  organization: string | null;
-  country: string | null;
-  paper_count: number;
-  patent_count: number;
-  citations: number;
-  first_seen: string | null;
-  last_seen: string | null;
+/* ─── Phase-22: Normalized Actor & Momentum Schema ─── */
+
+export interface ExtractedActorsData {
+  authors: string[];
+  organizations: string[];
+  country: string;
+  technology: string;
+  sourceType: string;
+  sourceId: string;
 }
 
-export function upsertActor(actor: Pick<DbActor, "concept_name" | "organization" | "country" | "paper_count" | "patent_count" | "citations"> & { timestamp: string }): void {
+export function insertTechnologyActors(actors: ExtractedActorsData): void {
   const db = getDb();
-  
-  // Clean up nulls to empty strings for unique constraint matching if needed, though SQLite handles NULLs uniquely.
-  // We'll trust the caller to pass "Unknown" instead of null for primary keys.
-  const org = actor.organization || "Unknown";
-  const ctry = actor.country || "Unknown";
+
+  const insertOrg = db.prepare(`
+    INSERT INTO organizations (name, country, type)
+    VALUES (?, ?, ?)
+    RETURNING id
+  `);
+
+  const findOrg = db.prepare(`
+    SELECT id FROM organizations WHERE name = ?
+  `);
+
+  const insertResearcher = db.prepare(`
+    INSERT INTO researchers (name, organization_id, country)
+    VALUES (?, ?, ?)
+  `);
+
+  const insertTechActor = db.prepare(`
+    INSERT INTO technology_actors (technology, organization_id, country, source_type, source_id)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  const transaction = db.transaction(() => {
+    const orgIds: number[] = [];
+
+    // Process organizations
+    for (const orgName of actors.organizations) {
+      if (!orgName || orgName === "Unknown") continue;
+      
+      let orgRow = findOrg.get(orgName) as { id: number } | undefined;
+      if (!orgRow) {
+        // Infer type heuristically
+        let type = "company";
+        const upper = orgName.toUpperCase();
+        if (upper.includes("UNIV") || upper.includes("INSTITUTE") || upper.includes("COLLEGE") || upper.includes("MIT") || upper.includes("IIT")) type = "university";
+        else if (upper.includes("GOV") || upper.includes("MINISTRY") || upper.includes("AGENCY") || upper.includes("AUTHORITY") || upper.includes("NASA")) type = "government";
+        
+        // Infer country roughly inside India/Unknown for now unless passed explicitly
+        orgRow = insertOrg.get(orgName, actors.country, type) as { id: number };
+      }
+      orgIds.push(orgRow.id);
+
+      // Link actor
+      insertTechActor.run(actors.technology, orgRow.id, actors.country, actors.sourceType, actors.sourceId);
+    }
+
+    // Process researchers (authors)
+    for (const authorName of actors.authors) {
+      if (!authorName) continue;
+      const orgId = orgIds.length > 0 ? orgIds[0] : null; // Link to first org if possible
+      insertResearcher.run(authorName, orgId, actors.country);
+    }
+  });
+
+  transaction();
+}
+
+export function updateMomentumScoresCore(technology: string, country: string, isResearch: boolean, isPatent: boolean, citations: number): void {
+  const db = getDb();
+  const year = new Date().getFullYear();
 
   const existing = db.prepare(
-    "SELECT id, paper_count, patent_count, citations, first_seen FROM technology_actors WHERE concept_name = ? AND organization = ? AND country = ?"
-  ).get(actor.concept_name, org, ctry) as DbActor | undefined;
-
-  if (existing) {
-    db.prepare(`
-      UPDATE technology_actors 
-      SET paper_count = paper_count + ?, 
-          patent_count = patent_count + ?, 
-          citations = citations + ?, 
-          last_seen = ?
-      WHERE id = ?
-    `).run(actor.paper_count, actor.patent_count, actor.citations, actor.timestamp, existing.id);
-  } else {
-    db.prepare(`
-      INSERT INTO technology_actors (concept_name, organization, country, paper_count, patent_count, citations, first_seen, last_seen)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(actor.concept_name, org, ctry, actor.paper_count, actor.patent_count, actor.citations, actor.timestamp, actor.timestamp);
-  }
-}
-
-export function getActorsByConcept(conceptName: string): DbActor[] {
-  return getDb().prepare(
-    "SELECT * FROM technology_actors WHERE concept_name = ? ORDER BY (paper_count + patent_count) DESC LIMIT 50"
-  ).all(conceptName) as DbActor[];
-}
-
-/* ─── Technology Momentum ─── */
-export interface DbMomentum {
-  id: number;
-  concept_name: string;
-  region: string;
-  year: number;
-  momentum_score: number;
-  research_count: number;
-  patent_count: number;
-}
-
-export function upsertMomentum(momentum: Pick<DbMomentum, "concept_name" | "region" | "year" | "research_count" | "patent_count">): void {
-  const db = getDb();
-  
-  const existing = db.prepare(
-    "SELECT id, research_count, patent_count FROM technology_momentum WHERE concept_name = ? AND region = ? AND year = ?"
-  ).get(momentum.concept_name, momentum.region, momentum.year) as DbMomentum | undefined;
+    "SELECT id, research_count, patent_count, citation_count FROM technology_momentum WHERE technology = ? AND country = ? AND year = ?"
+  ).get(technology, country, year) as { id: number, research_count: number, patent_count: number, citation_count: number } | undefined;
 
   if (existing) {
     db.prepare(`
       UPDATE technology_momentum 
       SET research_count = research_count + ?, 
-          patent_count = patent_count + ?
+          patent_count = patent_count + ?,
+          citation_count = citation_count + ?
       WHERE id = ?
-    `).run(momentum.research_count, momentum.patent_count, existing.id);
+    `).run(isResearch ? 1 : 0, isPatent ? 1 : 0, citations, existing.id);
   } else {
     db.prepare(`
-      INSERT INTO technology_momentum (concept_name, region, year, research_count, patent_count, momentum_score)
-      VALUES (?, ?, ?, ?, ?, 0.0)
-    `).run(momentum.concept_name, momentum.region, momentum.year, momentum.research_count, momentum.patent_count);
+      INSERT INTO technology_momentum (technology, country, year, research_count, patent_count, citation_count, momentum_score)
+      VALUES (?, ?, ?, ?, ?, ?, 0.0)
+    `).run(technology, country, year, isResearch ? 1 : 0, isPatent ? 1 : 0, citations);
   }
 }
 
-export function updateMomentumScore(id: number, score: number): void {
-  getDb().prepare("UPDATE technology_momentum SET momentum_score = ? WHERE id = ?").run(score, id);
+export interface DbActorOutput {
+  name: string;
+  country: string;
+  output_count: number;
 }
 
-export function getMomentumByConcept(conceptName: string): DbMomentum[] {
-  return getDb().prepare(
-    "SELECT * FROM technology_momentum WHERE concept_name = ? ORDER BY year ASC, region ASC"
-  ).all(conceptName) as DbMomentum[];
+export interface DbMomentumAggregate {
+  country: string;
+  momentum: number;
 }
+
+export function getAllMomentumScores(): Array<{ id: number, technology: string, country: string, research_count: number, patent_count: number, citation_count: number, momentum_score: number }> {
+    return getDb().prepare("SELECT * FROM technology_momentum").all() as Array<{ id: number, technology: string, country: string, research_count: number, patent_count: number, citation_count: number, momentum_score: number }>;
+}
+
+export function setMomentumScore(id: number, score: number): void {
+    getDb().prepare("UPDATE technology_momentum SET momentum_score = ? WHERE id = ?").run(score, id);
+}
+
+export function getTopOrganizations(conceptName: string): DbActorOutput[] {
+  return getDb().prepare(`
+    SELECT o.name, o.country, COUNT(ta.id) as output_count
+    FROM organizations o
+    JOIN technology_actors ta ON o.id = ta.organization_id
+    WHERE ta.technology = ?
+    GROUP BY o.id
+    ORDER BY output_count DESC
+    LIMIT 5
+  `).all(conceptName) as DbActorOutput[];
+}
+
+export function getMomentumAggregated(conceptName: string): DbMomentumAggregate[] {
+  return getDb().prepare(`
+    SELECT country, MAX(momentum_score) as momentum
+    FROM technology_momentum
+    WHERE technology = ?
+    GROUP BY country
+  `).all(conceptName) as DbMomentumAggregate[];
+}
+

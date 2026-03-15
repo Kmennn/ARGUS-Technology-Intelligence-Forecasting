@@ -8,6 +8,7 @@
 import cron from "node-cron";
 import { runIngestionCycle } from "@/lib/ingestion/ingestionPipeline";
 import { seedFromStaticData } from "@/lib/database/database";
+import { updateMomentumScores } from "@/lib/analysis/momentumEngine";
 
 let scheduled = false;
 
@@ -60,10 +61,22 @@ export function startScheduler(): void {
     }
   });
 
+  // Momentum Updates: daily at 02:00
+  cron.schedule("0 2 * * *", async () => {
+    console.log("[ARGUS Scheduler] Running momentum scoring updates...");
+    try {
+      await updateMomentumScores();
+      console.log("[ARGUS Scheduler] Momentum scores updated.");
+    } catch (err) {
+      console.error("[ARGUS Scheduler] Momentum update failed:", err);
+    }
+  });
+
   console.log("[ARGUS Scheduler] Schedules active:");
   console.log("  News:     every hour at :15");
   console.log("  Research: every 6 hours at :00");
   console.log("  Patents:  daily at 03:00");
+  console.log("  Momentum: daily at 02:00");
 }
 
 /**

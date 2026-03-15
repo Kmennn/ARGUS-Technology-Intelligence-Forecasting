@@ -12,7 +12,8 @@ import {
 } from "@/lib/database/database";
 import { generateSignalId } from "@/lib/ingestion/signalEngine";
 import { extractSemanticSignals } from "@/lib/analysis/semanticSignalEngine";
-import { trackInnovationMomentum } from "@/lib/analysis/momentumEngine";
+import { extractActors } from "@/lib/analysis/actorExtraction";
+import { insertTechnologyActors, updateMomentumScoresCore } from "@/lib/database/database";
 import { validateRecord, isDuplicate } from "@/lib/validation/sourceTrust";
 import { fetchArxivPapers } from "@/lib/ingestion/arxivFetcher";
 import { fetchCrossRefPublications } from "@/lib/ingestion/crossrefFetcher";
@@ -126,7 +127,12 @@ async function processRawSources(fetcher?: string): Promise<{ created: number; u
 
         // [PHASE 22]: Track the actor and momentum for this technology
         const citations = raw.citations ? Number(raw.citations) : 0;
-        trackInnovationMomentum(sig.technology, source.fetcher, raw, citations, published);
+        const actors = extractActors(raw, sig.technology, sourceType, sourceUrl);
+        insertTechnologyActors(actors);
+        
+        const isResearch = (sourceType === "arxiv" || sourceType === "crossref" || sourceType === "news");
+        const isPatent = (sourceType === "patent");
+        updateMomentumScoresCore(sig.technology, actors.country, isResearch, isPatent, citations);
       }
 
       markSourceProcessed(source.id);
