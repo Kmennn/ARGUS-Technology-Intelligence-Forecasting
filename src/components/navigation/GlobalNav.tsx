@@ -12,12 +12,14 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/research", label: "Research" },
-  { href: "/analysis", label: "Analysis" },
-  { href: "/signals", label: "Signals" },
-  { href: "/capabilities", label: "Capabilities" },
-  { href: "/calibration", label: "Calibration", requiredRole: "Admin" },
+  { href: "/command", label: "Command" },
+  { href: "/intelligence", label: "Intelligence" },
+  { href: "/assessment", label: "Assessment" },
+  { href: "/capabilities", label: "Capability Impact" },
+  { href: "/simulation", label: "Simulation", requiredRole: "Allocator" },
+  { href: "/decisions", label: "Decisions", requiredRole: "Allocator" },
   { href: "/archive", label: "Archive" },
+  { href: "/calibration", label: "Calibration", requiredRole: "Admin" },
 ];
 
 export function GlobalNav() {

@@ -1,0 +1,76 @@
+{
+  "nodes": [
+    { "id": "semiconductors", "label": "Semiconductors", "cluster": "Semiconductors", "level": 0 },
+    { "id": "gan-diamond", "label": "GaN-on-Diamond", "cluster": "Semiconductors", "level": 0, "signalRef": "sig-006" },
+    { "id": "ai-chips", "label": "AI Chips", "cluster": "AI", "level": 1 },
+    { "id": "neuromorphic", "label": "Neuromorphic Chips", "cluster": "AI", "level": 1, "signalRef": "sig-004" },
+    { "id": "edge-ai", "label": "Edge AI", "cluster": "AI", "level": 2 },
+    { "id": "autonomy", "label": "Autonomous Systems", "cluster": "Autonomy", "level": 2 },
+    { "id": "lidar", "label": "Solid-State LiDAR", "cluster": "Autonomy", "level": 2, "signalRef": "sig-002" },
+    { "id": "swarm", "label": "Swarm Warfare", "cluster": "Autonomy", "level": 3 },
+    { "id": "ambc", "label": "AmBC Comms", "cluster": "Communications", "level": 1, "signalRef": "sig-001" },
+    { "id": "sigint-defeat", "label": "SIGINT Defeat", "cluster": "Communications", "level": 2 },
+    { "id": "covert-networks", "label": "Covert Mesh Networks", "cluster": "Communications", "level": 3 },
+    { "id": "qkd", "label": "Quantum KD", "cluster": "Quantum", "level": 1, "signalRef": "sig-005" },
+    { "id": "secure-c2", "label": "Quantum-Secure C2", "cluster": "Quantum", "level": 2 },
+    { "id": "sigint-obsolescence", "label": "SIGINT Obsolescence", "cluster": "Quantum", "level": 3 },
+    { "id": "plasma-comm", "label": "Plasma Sheath Comm", "cluster": "Hypersonics", "level": 1, "signalRef": "sig-003" },
+    { "id": "hgv-flex", "label": "HGV Tactical Flex", "cluster": "Hypersonics", "level": 2 },
+    { "id": "ew-systems", "label": "EW Systems", "cluster": "Semiconductors", "level": 2 },
+    { "id": "radar-next", "label": "Next-Gen AESA Radar", "cluster": "Semiconductors", "level": 2 },
+    { "id": "fusion", "label": "Compact Fusion", "cluster": "Energy", "level": 1, "signalRef": "sig-007" },
+    { "id": "naval-power", "label": "Naval Power Projection", "cluster": "Energy", "level": 3 },
+    { "id": "directed-energy", "label": "Directed Energy Weapons", "cluster": "Energy", "level": 2 }
+  ],
+  "edges": [
+    { "from": "semiconductors", "to": "ai-chips", "relation": "enables", "strength": 0.9 },
+    { "from": "semiconductors", "to": "gan-diamond", "relation": "produces", "strength": 0.85 },
+    { "from": "gan-diamond", "to": "ew-systems", "relation": "powers", "strength": 0.8 },
+    { "from": "gan-diamond", "to": "radar-next", "relation": "enables", "strength": 0.82 },
+    { "from": "ai-chips", "to": "neuromorphic", "relation": "evolves into", "strength": 0.88 },
+    { "from": "neuromorphic", "to": "edge-ai", "relation": "enables", "strength": 0.92 },
+    { "from": "edge-ai", "to": "autonomy", "relation": "powers", "strength": 0.9 },
+    { "from": "autonomy", "to": "swarm", "relation": "enables", "strength": 0.85 },
+    { "from": "lidar", "to": "autonomy", "relation": "enhances", "strength": 0.88 },
+    { "from": "lidar", "to": "swarm", "relation": "enables targeting", "strength": 0.7 },
+    { "from": "ambc", "to": "sigint-defeat", "relation": "creates", "strength": 0.82 },
+    { "from": "sigint-defeat", "to": "covert-networks", "relation": "enables", "strength": 0.75 },
+    { "from": "covert-networks", "to": "swarm", "relation": "supports", "strength": 0.65 },
+    { "from": "qkd", "to": "secure-c2", "relation": "enables", "strength": 0.78 },
+    { "from": "secure-c2", "to": "sigint-obsolescence", "relation": "causes", "strength": 0.72 },
+    { "from": "plasma-comm", "to": "hgv-flex", "relation": "enables", "strength": 0.55 },
+    { "from": "fusion", "to": "directed-energy", "relation": "enables", "strength": 0.4 },
+    { "from": "fusion", "to": "naval-power", "relation": "transforms", "strength": 0.35 },
+    { "from": "directed-energy", "to": "ew-systems", "relation": "converges", "strength": 0.5 }
+  ],
+  "chains": [
+    {
+      "id": "chain-1",
+      "name": "AI-Autonomy Pipeline",
+      "description": "Semiconductor advances drive AI chip evolution, enabling edge inference that powers autonomous systems and swarm warfare.",
+      "path": ["semiconductors", "ai-chips", "neuromorphic", "edge-ai", "autonomy", "swarm"],
+      "criticality": "CRITICAL"
+    },
+    {
+      "id": "chain-2",
+      "name": "Stealth Communication Chain",
+      "description": "Ambient backscatter defeats SIGINT, enabling covert mesh networks that support autonomous swarm coordination.",
+      "path": ["ambc", "sigint-defeat", "covert-networks", "swarm"],
+      "criticality": "HIGH"
+    },
+    {
+      "id": "chain-3",
+      "name": "Quantum Security Disruption",
+      "description": "Quantum key distribution enables quantum-secure command channels, rendering current SIGINT infrastructure obsolete.",
+      "path": ["qkd", "secure-c2", "sigint-obsolescence"],
+      "criticality": "MEDIUM"
+    },
+    {
+      "id": "chain-4",
+      "name": "Next-Gen Electronic Warfare",
+      "description": "GaN-on-Diamond substrates enable next-generation AESA radar and high-power EW systems.",
+      "path": ["gan-diamond", "radar-next", "ew-systems"],
+      "criticality": "MEDIUM"
+    }
+  ]
+}

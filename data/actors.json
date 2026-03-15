@@ -1,0 +1,266 @@
+{
+  "actors": [
+    {
+      "id": "actor-us",
+      "name": "United States",
+      "type": "country",
+      "flag": "🇺🇸",
+      "investmentLevel": "dominant",
+      "technologies": ["semiconductors", "neuromorphic", "lidar", "ai-chips", "qkd", "gan-diamond", "hypersonic-mats", "6g"]
+    },
+    {
+      "id": "actor-cn",
+      "name": "China",
+      "type": "country",
+      "flag": "🇨🇳",
+      "investmentLevel": "dominant",
+      "technologies": ["semiconductors", "qkd", "ambc", "ai-chips", "6g", "hypersonic-mats", "solid-state-bat"]
+    },
+    {
+      "id": "actor-jp",
+      "name": "Japan",
+      "type": "country",
+      "flag": "🇯🇵",
+      "investmentLevel": "significant",
+      "technologies": ["gan-diamond", "lidar", "semiconductors", "solid-state-bat"]
+    },
+    {
+      "id": "actor-in",
+      "name": "India",
+      "type": "country",
+      "flag": "🇮🇳",
+      "investmentLevel": "growing",
+      "technologies": ["semiconductors", "qkd", "ai-chips", "6g", "hypersonic-mats"]
+    },
+    {
+      "id": "actor-eu",
+      "name": "European Union",
+      "type": "country",
+      "flag": "🇪🇺",
+      "investmentLevel": "significant",
+      "technologies": ["qkd", "6g", "semiconductors", "solid-state-bat"]
+    },
+    {
+      "id": "actor-kr",
+      "name": "South Korea",
+      "type": "country",
+      "flag": "🇰🇷",
+      "investmentLevel": "significant",
+      "technologies": ["semiconductors", "solid-state-bat", "6g", "lidar"]
+    }
+  ],
+  "organizations": [
+    {
+      "id": "org-darpa",
+      "name": "DARPA",
+      "type": "program",
+      "country": "actor-us",
+      "sector": "defense",
+      "technologies": ["neuromorphic", "ambc", "gan-diamond", "hypersonic-mats", "qkd"],
+      "programs": ["Electronics Resurgence Initiative", "Microsystems Technology Office"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-drdo",
+      "name": "DRDO",
+      "type": "program",
+      "country": "actor-in",
+      "sector": "defense",
+      "technologies": ["hypersonic-mats", "qkd", "semiconductors"],
+      "programs": ["Advanced Systems Lab", "DRDL Hypersonics"],
+      "budgetTier": "medium"
+    },
+    {
+      "id": "org-intel",
+      "name": "Intel",
+      "type": "company",
+      "country": "actor-us",
+      "sector": "semiconductor",
+      "technologies": ["neuromorphic", "semiconductors", "ai-chips"],
+      "programs": ["Loihi 2", "Intel Foundry Services"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-tsmc",
+      "name": "TSMC",
+      "type": "company",
+      "country": "actor-kr",
+      "sector": "semiconductor",
+      "technologies": ["semiconductors", "ai-chips", "gan-diamond"],
+      "programs": ["N3 Process", "Advanced Packaging"],
+      "budgetTier": "very-high"
+    },
+    {
+      "id": "org-nvidia",
+      "name": "NVIDIA",
+      "type": "company",
+      "country": "actor-us",
+      "sector": "semiconductor",
+      "technologies": ["ai-chips", "neuromorphic", "semiconductors"],
+      "programs": ["Blackwell Architecture", "CUDA Platform"],
+      "budgetTier": "very-high"
+    },
+    {
+      "id": "org-huawei",
+      "name": "Huawei",
+      "type": "company",
+      "country": "actor-cn",
+      "sector": "telecommunications",
+      "technologies": ["6g", "ai-chips", "semiconductors"],
+      "programs": ["6G Research Institute", "Kirin Chips"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-ibm",
+      "name": "IBM",
+      "type": "company",
+      "country": "actor-us",
+      "sector": "computing",
+      "technologies": ["qkd", "neuromorphic", "ai-chips"],
+      "programs": ["IBM Quantum Network", "NorthPole"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-lockheed",
+      "name": "Lockheed Martin",
+      "type": "company",
+      "country": "actor-us",
+      "sector": "defense",
+      "technologies": ["hypersonic-mats", "lidar", "gan-diamond"],
+      "programs": ["Skunk Works", "Hypersonic Strike"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-cas",
+      "name": "Chinese Academy of Sciences",
+      "type": "program",
+      "country": "actor-cn",
+      "sector": "research",
+      "technologies": ["qkd", "neuromorphic", "ambc", "hypersonic-mats"],
+      "programs": ["Micius Satellite QKD", "Brain-Inspired Computing"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-samsung",
+      "name": "Samsung",
+      "type": "company",
+      "country": "actor-kr",
+      "sector": "semiconductor",
+      "technologies": ["semiconductors", "solid-state-bat", "6g"],
+      "programs": ["Samsung Advanced Foundry", "All-Solid-State Battery"],
+      "budgetTier": "very-high"
+    },
+    {
+      "id": "org-raytheon",
+      "name": "RTX (Raytheon)",
+      "type": "company",
+      "country": "actor-us",
+      "sector": "defense",
+      "technologies": ["gan-diamond", "hypersonic-mats", "6g"],
+      "programs": ["Advanced EW Systems", "Raytheon Missiles & Defense"],
+      "budgetTier": "high"
+    },
+    {
+      "id": "org-toshiba",
+      "name": "Toshiba",
+      "type": "company",
+      "country": "actor-jp",
+      "sector": "electronics",
+      "technologies": ["qkd", "solid-state-bat"],
+      "programs": ["QKD Commercial Network", "SCiB Battery"],
+      "budgetTier": "medium"
+    },
+    {
+      "id": "org-toyota",
+      "name": "Toyota",
+      "type": "company",
+      "country": "actor-jp",
+      "sector": "automotive",
+      "technologies": ["solid-state-bat", "lidar"],
+      "programs": ["Prime Planet Energy", "Woven Planet"],
+      "budgetTier": "very-high"
+    }
+  ],
+  "technologyActorMap": {
+    "semiconductors": {
+      "leaders": ["actor-us", "actor-cn", "actor-kr"],
+      "followers": ["actor-jp", "actor-eu", "actor-in"],
+      "dominantOrgs": ["org-tsmc", "org-intel", "org-nvidia", "org-samsung"],
+      "patentVelocity": 2400,
+      "fundingBillions": 152,
+      "competitiveIntensity": "extreme"
+    },
+    "neuromorphic": {
+      "leaders": ["actor-us"],
+      "followers": ["actor-cn", "actor-eu"],
+      "dominantOrgs": ["org-intel", "org-darpa", "org-ibm", "org-cas"],
+      "patentVelocity": 340,
+      "fundingBillions": 4.2,
+      "competitiveIntensity": "high"
+    },
+    "lidar": {
+      "leaders": ["actor-us", "actor-jp"],
+      "followers": ["actor-cn", "actor-kr"],
+      "dominantOrgs": ["org-lockheed", "org-toyota"],
+      "patentVelocity": 890,
+      "fundingBillions": 8.1,
+      "competitiveIntensity": "high"
+    },
+    "ai-chips": {
+      "leaders": ["actor-us", "actor-cn"],
+      "followers": ["actor-kr", "actor-eu"],
+      "dominantOrgs": ["org-nvidia", "org-intel", "org-huawei"],
+      "patentVelocity": 1800,
+      "fundingBillions": 42,
+      "competitiveIntensity": "extreme"
+    },
+    "qkd": {
+      "leaders": ["actor-cn", "actor-eu"],
+      "followers": ["actor-us", "actor-jp", "actor-in"],
+      "dominantOrgs": ["org-cas", "org-ibm", "org-toshiba"],
+      "patentVelocity": 290,
+      "fundingBillions": 3.8,
+      "competitiveIntensity": "high"
+    },
+    "ambc": {
+      "leaders": ["actor-cn"],
+      "followers": ["actor-us"],
+      "dominantOrgs": ["org-darpa", "org-cas"],
+      "patentVelocity": 85,
+      "fundingBillions": 0.6,
+      "competitiveIntensity": "medium"
+    },
+    "gan-diamond": {
+      "leaders": ["actor-us", "actor-jp"],
+      "followers": ["actor-eu"],
+      "dominantOrgs": ["org-darpa", "org-lockheed", "org-raytheon"],
+      "patentVelocity": 120,
+      "fundingBillions": 1.4,
+      "competitiveIntensity": "high"
+    },
+    "hypersonic-mats": {
+      "leaders": ["actor-us", "actor-cn"],
+      "followers": ["actor-in"],
+      "dominantOrgs": ["org-lockheed", "org-darpa", "org-drdo", "org-raytheon"],
+      "patentVelocity": 210,
+      "fundingBillions": 12.5,
+      "competitiveIntensity": "extreme"
+    },
+    "6g": {
+      "leaders": ["actor-cn", "actor-kr"],
+      "followers": ["actor-us", "actor-eu", "actor-in"],
+      "dominantOrgs": ["org-huawei", "org-samsung", "org-raytheon"],
+      "patentVelocity": 520,
+      "fundingBillions": 6.8,
+      "competitiveIntensity": "high"
+    },
+    "solid-state-bat": {
+      "leaders": ["actor-jp", "actor-kr"],
+      "followers": ["actor-cn", "actor-us"],
+      "dominantOrgs": ["org-toyota", "org-samsung", "org-toshiba"],
+      "patentVelocity": 680,
+      "fundingBillions": 9.2,
+      "competitiveIntensity": "high"
+    }
+  }
+}

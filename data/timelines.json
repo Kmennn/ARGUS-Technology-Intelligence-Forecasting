@@ -1,0 +1,135 @@
+[
+  {
+    "techId": "ambc",
+    "technology": "Ambient Backscatter Comm",
+    "cluster": "Communications",
+    "currentTRL": 4,
+    "milestones": [
+      { "year": 2024, "phase": "Laboratory Validation", "trl": 4, "status": "completed" },
+      { "year": 2025, "phase": "Prototype Development", "trl": 5, "status": "in-progress" },
+      { "year": 2027, "phase": "Field Demonstration", "trl": 6, "status": "projected" },
+      { "year": 2029, "phase": "Defense Integration", "trl": 7, "status": "projected" },
+      { "year": 2032, "phase": "Operational Deployment", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2029, "uncertainty": 3 },
+    "deploymentProbability": 0.62,
+    "adoptionSpeed": "slow",
+    "strategicWindow": "2027–2032",
+    "constraints": ["Energy harvesting efficiency", "Miniaturized antenna arrays", "Environmental RF variability"],
+    "accelerators": ["DARPA SBIR activity", "Multi-nation convergence", "Commercial IoT demand"]
+  },
+  {
+    "techId": "lidar",
+    "technology": "Solid-State LiDAR",
+    "cluster": "Autonomy",
+    "currentTRL": 6,
+    "milestones": [
+      { "year": 2023, "phase": "Component Validation", "trl": 5, "status": "completed" },
+      { "year": 2024, "phase": "System Integration", "trl": 6, "status": "completed" },
+      { "year": 2026, "phase": "Defense Prototype", "trl": 7, "status": "in-progress" },
+      { "year": 2027, "phase": "UAS Integration", "trl": 8, "status": "projected" },
+      { "year": 2028, "phase": "Full Deployment", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2027, "uncertainty": 1 },
+    "deploymentProbability": 0.91,
+    "adoptionSpeed": "fast",
+    "strategicWindow": "2026–2028",
+    "constraints": ["Thermal management at scale", "Counter-LiDAR countermeasures"],
+    "accelerators": ["Automotive cost collapse", "CMOS-compatible fabrication", "Active defense programs"]
+  },
+  {
+    "techId": "neuromorphic",
+    "technology": "Neuromorphic Edge Processors",
+    "cluster": "AI",
+    "currentTRL": 5,
+    "milestones": [
+      { "year": 2023, "phase": "Research Prototype", "trl": 4, "status": "completed" },
+      { "year": 2025, "phase": "System Validation", "trl": 5, "status": "completed" },
+      { "year": 2027, "phase": "Edge Deployment Trial", "trl": 6, "status": "projected" },
+      { "year": 2029, "phase": "Defense Integration", "trl": 7, "status": "projected" },
+      { "year": 2031, "phase": "Operational Scale", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2029, "uncertainty": 2 },
+    "deploymentProbability": 0.74,
+    "adoptionSpeed": "moderate",
+    "strategicWindow": "2027–2031",
+    "constraints": ["Software ecosystem maturity", "Power-accuracy trade-offs", "Manufacturing yield"],
+    "accelerators": ["Intel Loihi 2 ecosystem", "DARPA ERI program", "Edge AI demand surge"]
+  },
+  {
+    "techId": "qkd",
+    "technology": "Quantum Key Distribution",
+    "cluster": "Quantum",
+    "currentTRL": 5,
+    "milestones": [
+      { "year": 2023, "phase": "Lab Network Proof", "trl": 4, "status": "completed" },
+      { "year": 2025, "phase": "Metro-Scale Test", "trl": 5, "status": "completed" },
+      { "year": 2027, "phase": "National Network Pilot", "trl": 6, "status": "projected" },
+      { "year": 2030, "phase": "Defense Network Integration", "trl": 7, "status": "projected" },
+      { "year": 2033, "phase": "Operational QKD Infrastructure", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2030, "uncertainty": 3 },
+    "deploymentProbability": 0.58,
+    "adoptionSpeed": "slow",
+    "strategicWindow": "2028–2034",
+    "constraints": ["Fiber infrastructure requirements", "Satellite relay complexity", "Key rate limitations"],
+    "accelerators": ["China Micius satellite program", "EU quantum initiative", "Post-quantum crypto urgency"]
+  },
+  {
+    "techId": "gan-diamond",
+    "technology": "GaN-on-Diamond RF",
+    "cluster": "Semiconductors",
+    "currentTRL": 4,
+    "milestones": [
+      { "year": 2024, "phase": "Material Validation", "trl": 4, "status": "completed" },
+      { "year": 2026, "phase": "Prototype MMIC", "trl": 5, "status": "in-progress" },
+      { "year": 2028, "phase": "AESA Integration Test", "trl": 6, "status": "projected" },
+      { "year": 2030, "phase": "Defense Qualification", "trl": 7, "status": "projected" },
+      { "year": 2033, "phase": "Next-Gen Radar Systems", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2030, "uncertainty": 3 },
+    "deploymentProbability": 0.52,
+    "adoptionSpeed": "slow",
+    "strategicWindow": "2028–2033",
+    "constraints": ["Diamond substrate cost", "Thermal boundary resistance", "Wafer-scale manufacturing"],
+    "accelerators": ["DARPA DREaM program", "5G/6G base station demand", "EW system modernization"]
+  },
+  {
+    "techId": "hypersonic-mats",
+    "technology": "Hypersonic Thermal Materials",
+    "cluster": "Hypersonics",
+    "currentTRL": 5,
+    "milestones": [
+      { "year": 2023, "phase": "Wind Tunnel Validation", "trl": 4, "status": "completed" },
+      { "year": 2025, "phase": "Flight-Article Testing", "trl": 5, "status": "completed" },
+      { "year": 2027, "phase": "Flight Demonstration", "trl": 6, "status": "projected" },
+      { "year": 2029, "phase": "Weapons Integration", "trl": 7, "status": "projected" },
+      { "year": 2031, "phase": "Operational IOC", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2029, "uncertainty": 2 },
+    "deploymentProbability": 0.78,
+    "adoptionSpeed": "fast",
+    "strategicWindow": "2027–2031",
+    "constraints": ["UHTC oxidation resistance", "Joining technology", "Lifecycle Cost Reduction"],
+    "accelerators": ["Multiple national hypersonic programs", "CMC manufacturing maturity", "DRDO HSTDV success"]
+  },
+  {
+    "techId": "6g",
+    "technology": "6G Communications",
+    "cluster": "Communications",
+    "currentTRL": 3,
+    "milestones": [
+      { "year": 2024, "phase": "Standards Research", "trl": 2, "status": "completed" },
+      { "year": 2026, "phase": "Concept Validation", "trl": 3, "status": "in-progress" },
+      { "year": 2028, "phase": "System Prototype", "trl": 5, "status": "projected" },
+      { "year": 2031, "phase": "Pilot Network", "trl": 7, "status": "projected" },
+      { "year": 2034, "phase": "Commercial Rollout", "trl": 9, "status": "projected" }
+    ],
+    "operationalReadiness": { "year": 2032, "uncertainty": 3 },
+    "deploymentProbability": 0.45,
+    "adoptionSpeed": "slow",
+    "strategicWindow": "2030–2035",
+    "constraints": ["THz propagation physics", "Spectrum allocation", "Energy consumption"],
+    "accelerators": ["China 6G patent lead", "Samsung/Huawei R&D investment", "AI-native network demand"]
+  }
+]

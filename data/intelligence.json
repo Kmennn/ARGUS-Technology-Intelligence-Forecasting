@@ -1,0 +1,218 @@
+[
+  {
+    "id": "sig-001",
+    "signal": "Ambient Backscatter Comm (AmBC)",
+    "trl": 4,
+    "confidence": 0.82,
+    "volatility": "destabilizing",
+    "priority": "HIGH",
+    "priorityScore": 0.88,
+    "priorityDrivers": [
+      "DARPA SBIR activity indicates institutional interest",
+      "SIGINT defeat potential creates urgent defensive gap",
+      "Multi-lab convergence across 3 allied nations"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.31 },
+      { "year": "2023-Q3", "score": 0.45 },
+      { "year": "2024-Q1", "score": 0.52 },
+      { "year": "2024-Q3", "score": 0.68 },
+      { "year": "2025-Q1", "score": 0.74 },
+      { "year": "2025-Q3", "score": 0.81 },
+      { "year": "2026-Q1", "score": 0.88 }
+    ],
+    "impactDomains": ["C4ISR", "LPI/LPD Comms", "Distributed Sensors"],
+    "technologyCluster": "Communications",
+    "strategicNotes": "AmBC demonstrates sustained capability to operate at sub-noise floors using existing ambient RF. Immediate implication: traditional SIGINT will fail to detect these networks. This creates a persistent operational blind spot in highly contested EM environments.",
+    "evidenceBase": "24 related academic papers, 3 recent DARPA SBIRs, 1 patent filing by major defense contractor.",
+    "bottlenecks": "energy harvesting efficiency, miniaturized antenna design",
+    "lastUpdated": "2026-03-12",
+    "sourceCount": 28,
+    "trendDirection": "rising"
+  },
+  {
+    "id": "sig-002",
+    "signal": "Solid-State LiDAR Shrinkage",
+    "trl": 6,
+    "confidence": 0.91,
+    "volatility": "accelerating",
+    "priority": "CRITICAL",
+    "priorityScore": 0.95,
+    "priorityDrivers": [
+      "Imminent integration into micro-UAS platforms",
+      "Current countermeasures obsolete within 18 months",
+      "Commercial automotive scale driving rapid cost collapse",
+      "Active deployment in 3+ defense programs globally"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.42 },
+      { "year": "2023-Q3", "score": 0.55 },
+      { "year": "2024-Q1", "score": 0.65 },
+      { "year": "2024-Q3", "score": 0.78 },
+      { "year": "2025-Q1", "score": 0.86 },
+      { "year": "2025-Q3", "score": 0.91 },
+      { "year": "2026-Q1", "score": 0.95 }
+    ],
+    "impactDomains": ["Autonomous Vehicles", "Swarm Robotics", "Precision Targeting"],
+    "technologyCluster": "Autonomy",
+    "strategicNotes": "Rapid cost reduction and form-factor shrinkage in solid-state LiDAR units point towards imminent integration into attritable, micro-UAS platforms. Current optical-only countermeasures will be insufficient within 18 months.",
+    "evidenceBase": "Commercial supply chain analysis, widespread automotive adoption, miniaturized prototypes in defense expos.",
+    "bottlenecks": "thermal management, high-volume manufacturing yield",
+    "lastUpdated": "2026-03-14",
+    "sourceCount": 41,
+    "trendDirection": "rising"
+  },
+  {
+    "id": "sig-003",
+    "signal": "Hypersonic Glide Body Plasma Sheath Comm",
+    "trl": 3,
+    "confidence": 0.55,
+    "volatility": "stable",
+    "priority": "LOW",
+    "priorityScore": 0.38,
+    "priorityDrivers": [
+      "Still theoretical — no verified experimental results",
+      "Extremely small research community"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.35 },
+      { "year": "2023-Q3", "score": 0.36 },
+      { "year": "2024-Q1", "score": 0.37 },
+      { "year": "2024-Q3", "score": 0.37 },
+      { "year": "2025-Q1", "score": 0.38 },
+      { "year": "2025-Q3", "score": 0.38 },
+      { "year": "2026-Q1", "score": 0.38 }
+    ],
+    "impactDomains": ["Strategic Strike", "Telemetry"],
+    "technologyCluster": "Hypersonics",
+    "strategicNotes": "Theoretical breakthroughs in utilizing magnetic windows to communicate through the plasma sheath of hypersonic vehicles. If realized, solves the 'blackout' problem, significantly increasing the tactical flexibility of HGV platforms.",
+    "evidenceBase": "Extremely niche academic publications, unverified claims from rival state-sponsored labs.",
+    "bottlenecks": "superconducting magnet miniaturization, extreme thermal shielding",
+    "lastUpdated": "2026-02-28",
+    "sourceCount": 7,
+    "trendDirection": "flat"
+  },
+  {
+    "id": "sig-004",
+    "signal": "Neuromorphic Chip Architectures for Edge AI",
+    "trl": 5,
+    "confidence": 0.76,
+    "volatility": "accelerating",
+    "priority": "HIGH",
+    "priorityScore": 0.82,
+    "priorityDrivers": [
+      "100x power efficiency gain over von Neumann for inference",
+      "Active NATO integration trials underway",
+      "Critical enabler for disconnected edge operations"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.28 },
+      { "year": "2023-Q3", "score": 0.39 },
+      { "year": "2024-Q1", "score": 0.51 },
+      { "year": "2024-Q3", "score": 0.62 },
+      { "year": "2025-Q1", "score": 0.71 },
+      { "year": "2025-Q3", "score": 0.77 },
+      { "year": "2026-Q1", "score": 0.82 }
+    ],
+    "impactDomains": ["Edge Computing", "Autonomous Systems", "Electronic Warfare"],
+    "technologyCluster": "AI",
+    "strategicNotes": "Intel Loihi 3 and IBM NorthPole demonstrate 100x power efficiency gains over von Neumann architectures for inference workloads. Immediate defense implication: real-time threat classification on platforms without GPU infrastructure.",
+    "evidenceBase": "Published benchmarks, active NATO CIED integration trials, 12 defense contractor R&D allocations.",
+    "bottlenecks": "programming model immaturity, limited training ecosystem",
+    "lastUpdated": "2026-03-10",
+    "sourceCount": 19,
+    "trendDirection": "rising"
+  },
+  {
+    "id": "sig-005",
+    "signal": "Quantum Key Distribution over Free-Space Optical Links",
+    "trl": 4,
+    "confidence": 0.62,
+    "volatility": "stable",
+    "priority": "MEDIUM",
+    "priorityScore": 0.54,
+    "priorityDrivers": [
+      "Chinese Micius satellite demonstrated intercontinental QKD",
+      "Renders current SIGINT against strategic comms obsolete if operationalized",
+      "ESA replication program initiated"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.41 },
+      { "year": "2023-Q3", "score": 0.44 },
+      { "year": "2024-Q1", "score": 0.47 },
+      { "year": "2024-Q3", "score": 0.50 },
+      { "year": "2025-Q1", "score": 0.52 },
+      { "year": "2025-Q3", "score": 0.53 },
+      { "year": "2026-Q1", "score": 0.54 }
+    ],
+    "impactDomains": ["Secure Communications", "Space Systems", "Strategic C2"],
+    "technologyCluster": "Quantum",
+    "strategicNotes": "Chinese Micius satellite demonstrated inter-continental QKD. European Space Agency initiated independent replication. If operationalized, current SIGINT infrastructure against strategic communications becomes obsolete.",
+    "evidenceBase": "State-published experimental results (partially verified), ESA roadmap documents, 3 US DoD research grants.",
+    "bottlenecks": "atmospheric attenuation, key generation rate limitations, satellite constellation cost",
+    "lastUpdated": "2026-03-01",
+    "sourceCount": 14,
+    "trendDirection": "flat"
+  },
+  {
+    "id": "sig-006",
+    "signal": "GaN-on-Diamond Power Amplifiers",
+    "trl": 3,
+    "confidence": 0.68,
+    "volatility": "accelerating",
+    "priority": "MEDIUM",
+    "priorityScore": 0.61,
+    "priorityDrivers": [
+      "5x thermal dissipation improvement over GaN-on-SiC",
+      "Enables next-gen radar and EW systems",
+      "Multiple DARPA contracts awarded in last 6 months"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.18 },
+      { "year": "2023-Q3", "score": 0.25 },
+      { "year": "2024-Q1", "score": 0.33 },
+      { "year": "2024-Q3", "score": 0.42 },
+      { "year": "2025-Q1", "score": 0.50 },
+      { "year": "2025-Q3", "score": 0.56 },
+      { "year": "2026-Q1", "score": 0.61 }
+    ],
+    "impactDomains": ["Electronic Warfare", "Radar Systems", "Space Power"],
+    "technologyCluster": "Semiconductors",
+    "strategicNotes": "Diamond substrates achieve 5x thermal conductivity versus silicon carbide, enabling power densities previously impossible in compact form factors. Direct implication for next-generation AESA radar modules and high-power EW jammers.",
+    "evidenceBase": "DARPA THREADS program results, industry partner demonstrations, 8 peer-reviewed papers.",
+    "bottlenecks": "synthetic diamond wafer cost, epitaxial growth uniformity",
+    "lastUpdated": "2026-03-08",
+    "sourceCount": 12,
+    "trendDirection": "rising"
+  },
+  {
+    "id": "sig-007",
+    "signal": "Compact Fusion Energy — Tokamak Miniaturization",
+    "trl": 2,
+    "confidence": 0.42,
+    "volatility": "stable",
+    "priority": "LOW",
+    "priorityScore": 0.29,
+    "priorityDrivers": [
+      "Long-term strategic significance but near-term improbable",
+      "No credible path to militarized compact reactor before 2040"
+    ],
+    "scoreHistory": [
+      { "year": "2023-Q1", "score": 0.22 },
+      { "year": "2023-Q3", "score": 0.24 },
+      { "year": "2024-Q1", "score": 0.25 },
+      { "year": "2024-Q3", "score": 0.26 },
+      { "year": "2025-Q1", "score": 0.27 },
+      { "year": "2025-Q3", "score": 0.28 },
+      { "year": "2026-Q1", "score": 0.29 }
+    ],
+    "impactDomains": ["Naval Propulsion", "Forward Operating Bases", "Directed Energy"],
+    "technologyCluster": "Energy",
+    "strategicNotes": "Multiple startups claim tokamak miniaturization breakthroughs. While eventual fusion propulsion would transform naval power projection, no verifiable experimental results indicate near-term viability. Monitor as long-horizon signal.",
+    "evidenceBase": "Startup press releases, 2 peer-reviewed plasma physics papers, VC funding announcements.",
+    "bottlenecks": "plasma confinement stability, materials science for containment vessels",
+    "lastUpdated": "2026-02-15",
+    "sourceCount": 6,
+    "trendDirection": "flat"
+  }
+]

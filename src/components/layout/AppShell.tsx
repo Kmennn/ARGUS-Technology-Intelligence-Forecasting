@@ -5,6 +5,7 @@ import { ReviewRoomProvider } from "@/components/simulation/ReviewRoomContext";
 import { ReviewRoomBanner } from "@/components/simulation/ReviewRoomBanner";
 import { InstitutionalStateProvider } from "@/context/InstitutionalStateProvider";
 import { CommandRegion } from "@/components/spatial/CommandRegion";
+import { WorkflowIndicator } from "@/components/navigation/WorkflowIndicator";
 import { DecisionLedgerPanel } from "@/components/intelligence/command/DecisionLedgerPanel";
 import { ActivityFeedPanel } from "@/components/intelligence/command/ActivityFeedPanel";
 import { SystemNotificationStrip } from "@/components/intelligence/command/SystemNotificationStrip";
@@ -27,6 +28,9 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
 
         {/* SOVEREIGN: Command Surface — always rendered above all domain routes */}
         <CommandRegion />
+
+        {/* Workflow Progress Indicator — shows analyst where they are in the pipeline */}
+        <WorkflowIndicator />
 
         {/* Main Content — Domain routes render below Command */}
         <main className="flex-1 pb-16">
@@ -52,9 +56,9 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
           <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 font-mono text-[11px] uppercase tracking-widest leading-loose text-[var(--text-muted)]">
             {/* Column 1 */}
             <div className="flex flex-col gap-2">
-              <a href="/research" className="hover:text-[var(--text-primary)] transition-colors">Research</a>
-              <a href="/analysis" className="hover:text-[var(--text-primary)] transition-colors">Analysis</a>
-              <a href="/signals" className="hover:text-[var(--text-primary)] transition-colors">Signals</a>
+              <a href="/intelligence" className="hover:text-[var(--text-primary)] transition-colors">Intelligence</a>
+              <a href="/assessment" className="hover:text-[var(--text-primary)] transition-colors">Assessment</a>
+              <a href="/capabilities" className="hover:text-[var(--text-primary)] transition-colors">Capability Impact</a>
               <a href="/archive" className="hover:text-[var(--text-primary)] transition-colors">Archive</a>
             </div>
 

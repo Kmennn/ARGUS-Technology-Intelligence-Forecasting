@@ -2,9 +2,12 @@
 
 import { RegionLayout } from "./regions/RegionLayout";
 import { DomainRadar } from "@/components/intelligence/analytics/DomainRadar";
+import { StepContext, WorkflowContinue } from "@/components/navigation/WorkflowPipeline";
 
 export function CapabilitiesRegion() {
   return (
+    <>
+    <StepContext />
     <RegionLayout
       label="Capabilities"
       title="Constrained by reality."
@@ -140,6 +143,8 @@ export function CapabilitiesRegion() {
         </div>
       </div>
 
+      <WorkflowContinue />
     </RegionLayout>
+    </>
   );
 }
