@@ -1,15 +1,53 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+import { discoverDependencies, mergeWithStatic } from "@/lib/analysis/dependencyDiscovery";
+import { seedFromStaticData, getSignalCount } from "@/lib/database/database";
 
-export async function GET() {
+/**
+ * GET /api/dependencies
+ * Returns dependency graph — merges static structure with auto-discovered relationships.
+ * Query: ?mode=static (original only) | ?mode=discovered (discovered only) | default: merged
+ */
+export async function GET(request: Request) {
   try {
-    const dataPath = path.join(process.cwd(), 'data', 'dependencies.json');
-    const fileContents = fs.readFileSync(dataPath, 'utf8');
-    const dependencyData = JSON.parse(fileContents);
-    return NextResponse.json(dependencyData);
+    const { searchParams } = new URL(request.url);
+    const mode = searchParams.get("mode") || "merged";
+
+    // Load static dependency data
+    const dataPath = path.join(process.cwd(), "data", "dependencies.json");
+    const fileContents = fs.readFileSync(dataPath, "utf8");
+    const staticData = JSON.parse(fileContents);
+
+    if (mode === "static") {
+      return NextResponse.json(staticData);
+    }
+
+    // Ensure database is seeded for discovery
+    seedFromStaticData();
+
+    const dbCount = getSignalCount();
+
+    if (dbCount === 0 && mode !== "discovered") {
+      // No data in DB yet — return static only
+      return NextResponse.json(staticData);
+    }
+
+    // Run dependency discovery
+    const discovered = discoverDependencies(2, 0.3);
+
+    if (mode === "discovered") {
+      return NextResponse.json({
+        ...discovered,
+        note: "These relationships were automatically discovered from the research corpus.",
+      });
+    }
+
+    // Default: merge static + discovered
+    const merged = mergeWithStatic(staticData, discovered);
+    return NextResponse.json(merged);
   } catch (error) {
-    console.error('Failed to load dependency data:', error);
-    return NextResponse.json({ error: 'Failed to load dependency data' }, { status: 500 });
+    console.error("Failed to load dependency data:", error);
+    return NextResponse.json({ error: "Failed to load dependency data" }, { status: 500 });
   }
 }
