@@ -133,7 +133,7 @@ export default function LandingPage() {
               className="text-6xl md:text-[90px] font-normal leading-tight mb-8"
               style={{ fontFamily: "var(--font-serif)", color: "rgba(254, 249, 237, 0.95)" }}
             >
-              Intelligence,<br/>grounded in <i className="font-serif">research</i>.
+              Intelligence,<br/>grounded in<br/><i className="font-serif">research.</i>
             </h1>
 
             <p className="text-xl md:text-2xl max-w-[720px] mx-auto mb-16 leading-relaxed" style={{ color: "rgba(254, 249, 237, 0.8)" }}>
