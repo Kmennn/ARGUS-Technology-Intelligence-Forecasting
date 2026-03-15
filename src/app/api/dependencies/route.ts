@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { discoverDependencies, mergeWithStatic } from "@/lib/analysis/dependencyDiscovery";
+import { pruneGraph } from "@/lib/analysis/graphPruner";
 import { seedFromStaticData, getSignalCount } from "@/lib/database/database";
 
 /**
@@ -43,11 +44,27 @@ export async function GET(request: Request) {
       });
     }
 
-    // Default: merge static + discovered
+    // Default: merge static + discovered, then prune
     const merged = mergeWithStatic(staticData, discovered);
-    return NextResponse.json(merged);
+
+    // Phase-24: Apply graph pruning to prevent hairball
+    const pruned = pruneGraph(merged.nodes, merged.edges, {
+      minCoOccurrences: 5,
+      minStrength: 0.25,
+      maxEdgesPerNode: 10,
+      temporalDecayFactor: 0.95,
+    });
+
+    return NextResponse.json({
+      nodes: pruned.nodes,
+      edges: pruned.edges,
+      chains: merged.chains,
+      discoveryStats: merged.discoveryStats,
+      pruningStats: pruned.stats,
+    });
   } catch (error) {
     console.error("Failed to load dependency data:", error);
     return NextResponse.json({ error: "Failed to load dependency data" }, { status: 500 });
   }
 }
+

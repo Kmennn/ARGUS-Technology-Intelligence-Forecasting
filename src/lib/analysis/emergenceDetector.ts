@@ -173,8 +173,15 @@ function measureCrossDomainLinks(
  */
 export function runEmergenceDetection(): EmergenceResult[] {
   const trackedData = getAllTrackedTechnologies();
-  const allSignals = getAllSignals();
+  const allSignalsRaw = getAllSignals();
   const results: EmergenceResult[] = [];
+
+  // Time-window filter: only scan signals from the last 24 months
+  const cutoffDate = new Date();
+  cutoffDate.setMonth(cutoffDate.getMonth() - 24);
+  const allSignals = allSignalsRaw.filter(
+    (s) => new Date(s.created_at) >= cutoffDate
+  );
 
   // Build per-technology yearly counts
   const techYearMap = new Map<string, YearlyCount[]>();
