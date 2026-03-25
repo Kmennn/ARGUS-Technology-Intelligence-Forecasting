@@ -61,13 +61,7 @@ CREATE TABLE IF NOT EXISTS alerts (
   created_at   TEXT DEFAULT (datetime('now'))
 );
 
-CREATE INDEX IF NOT EXISTS idx_signals_cluster ON signals(cluster);
-CREATE INDEX IF NOT EXISTS idx_signals_priority ON signals(priority_score DESC);
-CREATE INDEX IF NOT EXISTS idx_signals_trl ON signals(trl);
-CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity);
-CREATE INDEX IF NOT EXISTS idx_alerts_created ON alerts(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_raw_sources_processed ON raw_sources(processed);
-
+-- Phase-22: Normalized Actor & Momentum Schema
 CREATE TABLE IF NOT EXISTS organizations (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
@@ -119,9 +113,52 @@ CREATE TABLE IF NOT EXISTS organization_leaders (
   FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
+-- ═══════════════════════════════════════════════════════════════
+-- Production Indexes (Phase-25)
+-- Optimized for high-frequency query patterns at 1M+ records
+-- ═══════════════════════════════════════════════════════════════
+
+-- Signals: core lookup patterns
+CREATE INDEX IF NOT EXISTS idx_signals_cluster ON signals(cluster);
+CREATE INDEX IF NOT EXISTS idx_signals_priority ON signals(priority_score DESC);
+CREATE INDEX IF NOT EXISTS idx_signals_trl ON signals(trl);
+CREATE INDEX IF NOT EXISTS idx_signals_technology ON signals(technology);
+CREATE INDEX IF NOT EXISTS idx_signals_created_at ON signals(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_signals_source_type ON signals(source_type);
+CREATE INDEX IF NOT EXISTS idx_signals_tech_cluster ON signals(technology, cluster);
+
+-- Alerts: severity + unacknowledged fast path
+CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity);
+CREATE INDEX IF NOT EXISTS idx_alerts_created ON alerts(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_alerts_unack ON alerts(acknowledged, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_alerts_technology ON alerts(technology);
+
+-- Raw Sources: ingestion pipeline fast paths
+CREATE INDEX IF NOT EXISTS idx_raw_sources_processed ON raw_sources(processed);
+CREATE INDEX IF NOT EXISTS idx_raw_sources_fetcher ON raw_sources(fetcher, processed);
+CREATE INDEX IF NOT EXISTS idx_raw_sources_created ON raw_sources(created_at DESC);
+
+-- Ingestion Log: analytics
+CREATE INDEX IF NOT EXISTS idx_ingestion_fetcher ON ingestion_log(fetcher);
+CREATE INDEX IF NOT EXISTS idx_ingestion_run_at ON ingestion_log(run_at DESC);
+
+-- Organizations: dedup lookups
+CREATE INDEX IF NOT EXISTS idx_organizations_name ON organizations(name);
+CREATE INDEX IF NOT EXISTS idx_organizations_country ON organizations(country);
+
+-- Technology Actors: actor queries
 CREATE INDEX IF NOT EXISTS idx_actor_technology ON technology_actors(technology);
 CREATE INDEX IF NOT EXISTS idx_actor_country ON technology_actors(country);
+CREATE INDEX IF NOT EXISTS idx_actor_org ON technology_actors(organization_id);
+CREATE INDEX IF NOT EXISTS idx_actor_tech_country ON technology_actors(technology, country);
+
+-- Momentum: composite for aggregation queries
 CREATE INDEX IF NOT EXISTS idx_momentum_technology ON technology_momentum(technology);
+CREATE INDEX IF NOT EXISTS idx_momentum_tech_year ON technology_momentum(technology, year);
+CREATE INDEX IF NOT EXISTS idx_momentum_country ON technology_momentum(country);
+
+-- Organization Leaders: ranking queries
+CREATE INDEX IF NOT EXISTS idx_leaders_technology ON organization_leaders(technology);
 
 -- Phase-23: Early Technology Emergence Detection
 CREATE TABLE IF NOT EXISTS emerging_signals (

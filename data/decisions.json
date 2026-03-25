@@ -95,6 +95,37 @@
       },
       "note": "Penalty mutation applied — review expired without action",
       "decisionId": "c4e63da9-805a-4121-af9a-523bca5ae0b5"
+    },
+    {
+      "cycleId": "Q1-2026-ESCALATION",
+      "actor": "current-user",
+      "role": "Admin",
+      "action": "INITIATE_REVIEW",
+      "stateBefore": {
+        "pressure": 0.73,
+        "horizonMonths": 6.2
+      },
+      "stateAfter": null,
+      "note": "Strategic review manually initiated by Allocator",
+      "decisionId": "6788d3f6-bb43-4fb9-b3b2-375e86f093c7",
+      "timestamp": "2026-03-16T04:48:24.582Z"
+    },
+    {
+      "cycleId": "Q1-2026-ESCALATION",
+      "actor": "current-user",
+      "role": "Admin",
+      "action": "GOVERNANCE_MUTATION_APPLIED",
+      "stateBefore": {
+        "pressure": 0.73,
+        "horizonMonths": 6.2
+      },
+      "stateAfter": {
+        "pressure": 0.61,
+        "horizonMonths": 7.5
+      },
+      "note": "Reward mutation applied for timely resolution",
+      "decisionId": "cbf7485c-6507-421d-b037-9f449306aaa5",
+      "timestamp": "2026-03-16T04:49:27.367Z"
     }
   ]
 }

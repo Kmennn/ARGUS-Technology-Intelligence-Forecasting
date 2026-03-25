@@ -22,7 +22,7 @@
       "userId": "SYSTEM_SEED",
       "role": "Admin",
       "timestamp": "2025-10-15T10:00:00Z",
-      "projectedWithoutIntervention": 9.0,
+      "projectedWithoutIntervention": 9,
       "actualRecoveryTime": 9.2,
       "governanceTrace": {
         "decisionSubmitted": false,
@@ -43,6 +43,21 @@
         "decisionSubmitted": true,
         "timeRemainingAtSubmissionMs": 840000,
         "mutationApplied": "Reward"
+      }
+    },
+    {
+      "eventId": "a314eaf7-af7d-4583-a0e4-05d48d7fe395",
+      "cycleId": "Q1-2026-ESCALATION",
+      "cycle": "Q1 2026 ESCALATION",
+      "userId": "AUTH_PENDING",
+      "role": "Admin",
+      "timestamp": "2026-03-16T04:48:24.585Z",
+      "projectedWithoutIntervention": 3.2,
+      "actualRecoveryTime": 2.4,
+      "governanceTrace": {
+        "decisionSubmitted": false,
+        "timeRemainingAtSubmissionMs": 0,
+        "mutationApplied": "Penalty"
       }
     }
   ]

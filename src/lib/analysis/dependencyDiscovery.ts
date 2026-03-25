@@ -123,8 +123,18 @@ export function discoverDependencies(minCoOccurrences = 2, minStrength = 0.3): D
     }
   }
 
-  // Build discovered nodes
+  // Build discovered nodes — filter out low-frequency technologies (Phase-25)
+  // Technologies must appear ≥3 times to participate in graph edges
+  const MIN_MENTION_THRESHOLD = 3;
+  const frequentTechs = new Set<string>();
+  for (const [tech, data] of techMentions) {
+    if (data.count >= MIN_MENTION_THRESHOLD) {
+      frequentTechs.add(tech);
+    }
+  }
+
   const nodes: DiscoveredNode[] = Array.from(techMentions.entries())
+    .filter(([tech]) => frequentTechs.has(tech))
     .map(([tech, data]) => ({
       id: techToId(tech),
       label: capitalizeWords(tech),
