@@ -156,7 +156,7 @@ export default function SignalsPage() {
                 <th className="px-4 py-3 text-left">Source</th>
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ divideColor: "var(--border)" }}>
+            <tbody className="divide-y border-[#c6aa76]/10">
               {filtered.map(s => (
                 <tr key={s.id} className="transition-colors hover:bg-[rgba(254,249,237,0.02)]" style={{ backgroundColor: "rgba(254,249,237,0.01)" }}>
                   <td className="px-4 py-3 font-medium" style={{ color: "var(--text-primary)" }}>{s.technology}</td>
