@@ -15,14 +15,14 @@ interface Signal {
   trendDirection?: string;
 }
 
-const CLUSTER_COLORS: Record<string, string> = {
-  AI: 'text-blue-400',
-  Autonomy: 'text-purple-400',
-  Quantum: 'text-cyan-400',
-  Semiconductors: 'text-yellow-400',
-  Communications: 'text-green-400',
-  Hypersonics: 'text-red-400',
-  Energy: 'text-orange-400',
+const CLUSTER_ACCENT: Record<string, string> = {
+  AI: '#6B8CAE',
+  Autonomy: '#8B6BAE',
+  Quantum: '#5A9AAE',
+  Semiconductors: '#C4A35A',
+  Communications: '#5A8A6A',
+  Hypersonics: '#C4684B',
+  Energy: '#B87D3A',
 };
 
 const TRL_LABEL: Record<number, string> = {
@@ -39,29 +39,25 @@ export default function SignalsPage() {
   const [clusterFilter, setClusterFilter] = useState('ALL');
 
   useEffect(() => {
-    // Calling the correct endpoint, which is /api/intelligence in the codebase
     fetch('/api/intelligence')
       .then(r => r.json())
       .then(data => {
         const list = Array.isArray(data) ? data : data.signals ?? [];
-        
-        // Map backend properties to the frontend interface
         const mappedList = list.map((item: any) => ({
           id: item.id,
           signal: item.signal || item.technology,
           technologyCluster: item.technologyCluster || item.cluster || 'Unknown',
           trl: item.trl || 1,
           confidence: item.confidence || 0,
-          volatility: typeof item.volatility === 'number' ? item.volatility : 
+          volatility: typeof item.volatility === 'number' ? item.volatility :
                       item.volatility === 'accelerating' ? 0.85 :
                       item.volatility === 'destabilizing' ? 0.95 :
                       item.volatility === 'stable' ? 0.35 : 0.5,
           priority: item.priority || 0,
           priorityScore: item.priorityScore ? Math.round(item.priorityScore * 100) : item.priority || 0,
           sourceType: item.sourceType || item.source_type || 'Unknown',
-          trendDirection: item.trendDirection
+          trendDirection: item.trendDirection,
         }));
-        
         setSignals(mappedList);
         setFiltered(mappedList);
         setLoading(false);
@@ -89,25 +85,30 @@ export default function SignalsPage() {
 
   const bar = (value: number, color: string) => (
     <div className="flex items-center gap-2">
-      <div className="w-16 bg-gray-700 rounded-full h-1.5" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
+      <div className="w-16 rounded-full h-1.5" style={{ background: 'var(--border)' }}>
         <div
-          className={`h-1.5 rounded-full ${color}`}
-          style={{ width: `${Math.min(100, (value ?? 0) * 100)}%` }}
+          className="h-1.5 rounded-full"
+          style={{ width: `${Math.min(100, (value ?? 0) * 100)}%`, background: color }}
         />
       </div>
-      <span className="text-xs" style={{ color: "var(--text-muted)" }}>{((value ?? 0) * 100).toFixed(0)}%</span>
+      <span className="text-xs" style={{ color: 'var(--ink-tertiary)' }}>{((value ?? 0) * 100).toFixed(0)}%</span>
     </div>
   );
 
   if (loading) return (
-    <div className="p-8 text-center" style={{ color: "var(--text-muted)" }}>Loading signals...</div>
+    <div className="p-8 text-center" style={{ color: 'var(--ink-tertiary)' }}>Loading signals...</div>
   );
 
   return (
     <div className="p-6 space-y-4 max-w-[1200px] mx-auto">
-      <div>
-        <h1 className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>Signal Browser</h1>
-        <p className="mt-1" style={{ color: "var(--text-muted)" }}>
+      <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
+        <h1
+          className="text-2xl font-bold"
+          style={{ color: 'var(--ink-primary)', fontFamily: 'var(--font-serif, Georgia, serif)' }}
+        >
+          Signal Browser
+        </h1>
+        <p className="mt-1 text-sm" style={{ color: 'var(--ink-secondary)' }}>
           {filtered.length} of {signals.length} signals
         </p>
       </div>
@@ -119,21 +120,23 @@ export default function SignalsPage() {
           placeholder="Search technology, cluster, source..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="border rounded px-3 py-2 text-sm w-72 focus:outline-none focus:border-blue-500"
-          style={{ backgroundColor: "rgba(254,249,237,0.02)", borderColor: "var(--border-strong)", color: "var(--text-primary)" }}
+          className="rounded px-3 py-2 text-sm w-72 focus:outline-none"
+          style={{
+            background: 'var(--background-muted)',
+            border: '1px solid var(--border)',
+            color: 'var(--ink-primary)',
+          }}
         />
         <div className="flex gap-2 flex-wrap">
           {clusters.map(c => (
             <button
               key={c}
               onClick={() => setClusterFilter(c)}
-              className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
-                clusterFilter === c
-                  ? 'bg-blue-600 text-white'
-                  : 'hover:bg-gray-700'
-              }`}
+              className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
               style={
-                clusterFilter !== c ? { backgroundColor: "rgba(254,249,237,0.05)", color: "var(--text-muted)" } : {}
+                clusterFilter === c
+                  ? { background: 'var(--accent)', color: '#fff' }
+                  : { background: 'var(--background-muted)', color: 'var(--ink-tertiary)', border: '1px solid var(--border)' }
               }
             >
               {c}
@@ -144,13 +147,16 @@ export default function SignalsPage() {
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16" style={{ color: "var(--text-muted)" }}>
-          No signals found. Run an ingestion cycle via <code className="opacity-70">/api/ingest</code> to populate data.
+        <div className="text-center py-16 text-sm" style={{ color: 'var(--ink-tertiary)' }}>
+          No signals found. Run an ingestion cycle via <code style={{ opacity: 0.7 }}>/api/ingest</code> to populate data.
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border" style={{ borderColor: "var(--border-strong)" }}>
+        <div className="overflow-x-auto rounded-lg" style={{ border: '1px solid var(--border)' }}>
           <table className="w-full text-sm">
-            <thead className="uppercase text-xs" style={{ backgroundColor: "rgba(254,249,237,0.05)", color: "var(--text-muted)" }}>
+            <thead
+              className="uppercase text-xs"
+              style={{ background: 'var(--background-muted)', color: 'var(--ink-tertiary)' }}
+            >
               <tr>
                 <th className="px-4 py-3 text-left">Technology</th>
                 <th className="px-4 py-3 text-left">Cluster</th>
@@ -161,29 +167,45 @@ export default function SignalsPage() {
                 <th className="px-4 py-3 text-left">Source</th>
               </tr>
             </thead>
-            <tbody className="divide-y border-[#c6aa76]/10">
+            <tbody>
               {filtered.map(s => (
-                <tr key={s.id} className="bg-gray-900 hover:bg-gray-800 transition-colors">
-                  <td className="px-4 py-3 text-white font-medium max-w-xs truncate">{s.signal}</td>
+                <tr
+                  key={s.id}
+                  className="transition-colors"
+                  style={{ borderBottom: '1px solid var(--border-soft)' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'var(--background-muted)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                >
+                  <td className="px-4 py-3 font-medium max-w-xs truncate" style={{ color: 'var(--ink-primary)' }}>
+                    {s.signal}
+                  </td>
                   <td className="px-4 py-3">
-                    <span className={`font-medium ${CLUSTER_COLORS[s.technologyCluster] ?? 'text-gray-400'}`}>
+                    <span
+                      className="font-medium text-sm"
+                      style={{ color: CLUSTER_ACCENT[s.technologyCluster] ?? 'var(--ink-secondary)' }}
+                    >
                       {s.technologyCluster}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-300">
+                  <td className="px-4 py-3" style={{ color: 'var(--ink-secondary)', fontFamily: 'var(--font-mono, monospace)', fontSize: '12px' }}>
                     {TRL_LABEL[s.trl] ?? `TRL ${s.trl}`}
                   </td>
-                  <td className="px-4 py-3">{bar(s.confidence, 'bg-green-500')}</td>
-                  <td className="px-4 py-3">{bar(s.volatility, 'bg-blue-500')}</td>
+                  <td className="px-4 py-3">{bar(s.confidence, '#5A8A6A')}</td>
+                  <td className="px-4 py-3">{bar(s.volatility, '#6B8CAE')}</td>
                   <td className="px-4 py-3">
-                    <span className={`font-bold ${
-                      s.priorityScore >= 80 ? 'text-red-400' :
-                      s.priorityScore >= 60 ? 'text-yellow-400' : 'text-gray-400'
-                    }`}>
+                    <span
+                      className="font-bold"
+                      style={{
+                        color: s.priorityScore >= 80 ? 'var(--accent-deep)' :
+                               s.priorityScore >= 60 ? '#C4A35A' : 'var(--ink-tertiary)',
+                      }}
+                    >
                       {s.priorityScore}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">{s.sourceType}</td>
+                  <td className="px-4 py-3 text-xs" style={{ color: 'var(--ink-muted)', fontFamily: 'var(--font-mono, monospace)' }}>
+                    {s.sourceType}
+                  </td>
                 </tr>
               ))}
             </tbody>
