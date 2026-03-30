@@ -1,6 +1,6 @@
 import React from "react";
 import { EscalationEvent } from "@/lib/horizonEngine";
-import { useReviewRoom } from "../../simulation/ReviewRoomContext";
+import { useReviewRoom } from "@/components/simulation/ReviewRoomContext";
 import { useGovernance } from "@/context/InstitutionalStateProvider";
 
 export function EscalationEffectivenessBlock() {
