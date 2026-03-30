@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react';
 
 interface Signal {
   id: number;
-  technology: string;
-  cluster: string;
+  signal: string;
+  technologyCluster: string;
   trl: number;
   confidence: number;
-  velocity: number;
+  volatility: number;
   priority: number;
-  source_type: string;
-  region?: string;
-  ingested_at?: string;
+  priorityScore: number;
+  sourceType: string;
+  trendDirection?: string;
 }
 
 const CLUSTER_COLORS: Record<string, string> = {
@@ -48,13 +48,18 @@ export default function SignalsPage() {
         // Map backend properties to the frontend interface
         const mappedList = list.map((item: any) => ({
           id: item.id,
-          technology: item.signal || item.technology,
-          cluster: item.technologyCluster || item.cluster || 'Unknown',
+          signal: item.signal || item.technology,
+          technologyCluster: item.technologyCluster || item.cluster || 'Unknown',
           trl: item.trl || 1,
           confidence: item.confidence || 0,
-          velocity: item.velocity || 0,
-          priority: item.priorityScore ? Math.round(item.priorityScore * 100) : item.priority || 0,
-          source_type: item.sourceType || item.source_type || 'Unknown'
+          volatility: typeof item.volatility === 'number' ? item.volatility : 
+                      item.volatility === 'accelerating' ? 0.85 :
+                      item.volatility === 'destabilizing' ? 0.95 :
+                      item.volatility === 'stable' ? 0.35 : 0.5,
+          priority: item.priority || 0,
+          priorityScore: item.priorityScore ? Math.round(item.priorityScore * 100) : item.priority || 0,
+          sourceType: item.sourceType || item.source_type || 'Unknown',
+          trendDirection: item.trendDirection
         }));
         
         setSignals(mappedList);
@@ -67,20 +72,20 @@ export default function SignalsPage() {
   useEffect(() => {
     let result = signals;
     if (clusterFilter !== 'ALL') {
-      result = result.filter(s => s.cluster === clusterFilter);
+      result = result.filter(s => s.technologyCluster === clusterFilter);
     }
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(s =>
-        s.technology?.toLowerCase().includes(q) ||
-        s.cluster?.toLowerCase().includes(q) ||
-        s.source_type?.toLowerCase().includes(q)
+        s.signal?.toLowerCase().includes(q) ||
+        s.technologyCluster?.toLowerCase().includes(q) ||
+        s.sourceType?.toLowerCase().includes(q)
       );
     }
     setFiltered(result);
   }, [search, clusterFilter, signals]);
 
-  const clusters = ['ALL', ...Array.from(new Set(signals.map(s => s.cluster).filter(Boolean)))];
+  const clusters = ['ALL', ...Array.from(new Set(signals.map(s => s.technologyCluster).filter(Boolean)))];
 
   const bar = (value: number, color: string) => (
     <div className="flex items-center gap-2">
@@ -158,27 +163,27 @@ export default function SignalsPage() {
             </thead>
             <tbody className="divide-y border-[#c6aa76]/10">
               {filtered.map(s => (
-                <tr key={s.id} className="transition-colors hover:bg-[rgba(254,249,237,0.02)]" style={{ backgroundColor: "rgba(254,249,237,0.01)" }}>
-                  <td className="px-4 py-3 font-medium" style={{ color: "var(--text-primary)" }}>{s.technology}</td>
+                <tr key={s.id} className="bg-gray-900 hover:bg-gray-800 transition-colors">
+                  <td className="px-4 py-3 text-white font-medium max-w-xs truncate">{s.signal}</td>
                   <td className="px-4 py-3">
-                    <span className={`font-medium ${CLUSTER_COLORS[s.cluster] ?? ''}`} style={!CLUSTER_COLORS[s.cluster] ? { color: "var(--text-muted)" } : {}}>
-                      {s.cluster}
+                    <span className={`font-medium ${CLUSTER_COLORS[s.technologyCluster] ?? 'text-gray-400'}`}>
+                      {s.technologyCluster}
                     </span>
                   </td>
-                  <td className="px-4 py-3" style={{ color: "var(--text-muted)" }}>
+                  <td className="px-4 py-3 text-gray-300">
                     {TRL_LABEL[s.trl] ?? `TRL ${s.trl}`}
                   </td>
-                  <td className="px-4 py-3">{bar(s.confidence, 'bg-emerald-500')}</td>
-                  <td className="px-4 py-3">{bar(s.velocity, 'bg-blue-500')}</td>
+                  <td className="px-4 py-3">{bar(s.confidence, 'bg-green-500')}</td>
+                  <td className="px-4 py-3">{bar(s.volatility, 'bg-blue-500')}</td>
                   <td className="px-4 py-3">
                     <span className={`font-bold ${
-                      s.priority >= 80 ? 'text-red-400' :
-                      s.priority >= 60 ? 'text-yellow-400' : ''
-                    }`} style={s.priority < 60 ? { color: "var(--text-muted)" } : {}}>
-                      {s.priority}
+                      s.priorityScore >= 80 ? 'text-red-400' :
+                      s.priorityScore >= 60 ? 'text-yellow-400' : 'text-gray-400'
+                    }`}>
+                      {s.priorityScore}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--text-muted)" }}>{s.source_type}</td>
+                  <td className="px-4 py-3 text-gray-500 text-xs">{s.sourceType}</td>
                 </tr>
               ))}
             </tbody>
