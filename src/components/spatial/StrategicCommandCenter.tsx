@@ -115,8 +115,8 @@ function Panel({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-[var(--border-soft)] bg-[rgba(255,255,255,0.015)] overflow-hidden ${className}`}>
-      <div className="px-4 py-2.5 border-b border-[var(--border-soft)] bg-[rgba(255,255,255,0.02)] flex items-center gap-2">
+    <div className={`rounded-xl border border-[var(--border-soft)] bg-[var(--background)] overflow-hidden ${className}`}>
+      <div className="px-4 py-2.5 border-b border-[var(--border-soft)] bg-[var(--background-muted)] flex items-center gap-2">
         {accentColor && <div className="w-2 h-2 rounded-full" style={{ backgroundColor: accentColor }} />}
         <span className="font-mono text-[8px] uppercase tracking-widest text-[var(--ink-muted)]">{label}</span>
         <span className="font-mono text-[11px] font-bold text-[var(--text-primary)]">{title}</span>
@@ -167,7 +167,7 @@ function MiniShockSimulator({ deps }: { deps: DepData | null }) {
         <select
           value={originId || ""}
           onChange={(e) => { setOriginId(e.target.value); setCascade([]); }}
-          className="bg-[rgba(255,255,255,0.04)] border border-[var(--border-soft)] text-[var(--text-primary)] text-[10px] font-mono rounded-lg px-2 py-1.5 outline-none"
+          className="bg-[var(--background-muted)] border border-[var(--border-soft)] text-[var(--text-primary)] text-[10px] font-mono rounded-lg px-2 py-1.5 outline-none"
         >
           <option value="">Select shock origin...</option>
           {deps.nodes.map((n) => (
@@ -185,9 +185,9 @@ function MiniShockSimulator({ deps }: { deps: DepData | null }) {
       {cascade.length > 0 && (
         <div className="space-y-1 max-h-[200px] overflow-y-auto">
           {cascade.map((c) => (
-            <div key={c.id} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[rgba(255,255,255,0.03)]">
+            <div key={c.id} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[rgba(0,0,0,0.03)]">
               <span className="font-mono text-[8px] text-[var(--ink-muted)] w-4 shrink-0">L{c.order}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-[rgba(255,255,255,0.05)] overflow-hidden">
+              <div className="flex-1 h-1.5 rounded-full bg-[var(--border-soft)] overflow-hidden">
                 <div
                   className="h-full rounded-full bg-red-500 transition-all"
                   style={{ width: `${Math.min(c.impact, 100)}%` }}
@@ -273,11 +273,11 @@ export function StrategicCommandCenter() {
     <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)]">
 
       {/* ══════════ TELEMETRY BAR ══════════ */}
-      <div className="sticky top-0 z-50 bg-[rgba(28,25,23,0.95)] backdrop-blur-xl border-b border-[var(--border-soft)]">
+      <div className="sticky top-0 z-50 bg-[var(--background)]/95 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-[1600px] mx-auto px-4 py-2 flex items-center justify-between gap-3 flex-wrap">
           {/* Left — System Identity */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="font-serif text-lg tracking-[0.06em] text-amber-500 font-bold hover:opacity-80 transition-opacity">
+            <Link href="/" className="font-serif text-lg tracking-[0.06em] text-[var(--accent-deep)] font-bold hover:opacity-80 transition-opacity">
               ARGUS
             </Link>
             <span className="font-mono text-[8px] uppercase tracking-widest text-[var(--ink-muted)] border-l border-[var(--border-soft)] pl-3">
@@ -287,7 +287,7 @@ export function StrategicCommandCenter() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="font-mono text-[9px] text-emerald-500">ONLINE</span>
+            <span className="font-mono text-[9px] text-[var(--accent-deep)]">ONLINE</span>
           </div>
 
           {/* Center — Stats */}
@@ -296,7 +296,7 @@ export function StrategicCommandCenter() {
               { label: "Signals", value: signals.length, color: "text-[var(--text-primary)]" },
               { label: "Alerts", value: alerts.length, color: criticalCount > 0 ? "text-red-500" : "text-amber-500" },
               { label: "Critical", value: criticalCount, color: criticalCount > 0 ? "text-red-500 animate-pulse" : "text-[var(--ink-muted)]" },
-              { label: "Clusters", value: clusterStats.length, color: "text-sky-400" },
+              { label: "Clusters", value: clusterStats.length, color: "text-[var(--accent-deep)]" },
               { label: "Horizons", value: timelines.length, color: "text-[var(--text-primary)]" },
             ].map((s) => (
               <div key={s.label} className="text-center">
@@ -348,18 +348,18 @@ export function StrategicCommandCenter() {
                   <span className="font-mono text-[10px] text-emerald-500">No active alerts — all clear</span>
                 )}
                 {alerts.slice(0, 8).map((a, i) => (
-                  <div key={i} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.03)] transition-colors">
+                  <div key={i} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(0,0,0,0.03)] transition-colors">
                     <span className={`w-2 h-2 rounded-full mt-1 shrink-0 ${
                       a.severity === "CRITICAL" ? "bg-red-500 animate-pulse" :
                       a.severity === "WARNING" ? "bg-amber-500" :
-                      "bg-sky-400"
+                      "bg-[var(--accent-soft)]"
                     }`} />
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className={`font-mono text-[8px] font-bold uppercase ${
                           a.severity === "CRITICAL" ? "text-red-500" :
                           a.severity === "WARNING" ? "text-amber-500" :
-                          "text-sky-400"
+                          "text-[var(--accent-soft)]"
                         }`}>{a.severity}</span>
                         <span className="font-mono text-[8px] text-[var(--ink-muted)]">{a.type}</span>
                       </div>
@@ -375,7 +375,7 @@ export function StrategicCommandCenter() {
             <Panel title="Priority Signals" label="Intelligence" accentColor="#F59E0B">
               <div className="space-y-1 max-h-[200px] overflow-y-auto">
                 {highPrioritySignals.slice(0, 6).map((sig) => (
-                  <div key={sig.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.03)] transition-colors">
+                  <div key={sig.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(0,0,0,0.03)] transition-colors">
                     <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: CLUSTER_COLORS[sig.technologyCluster || ""] || "#6B7280" }} />
                     <span className="font-mono text-[10px] text-[var(--text-primary)] flex-1 truncate">{sig.signal}</span>
                     <span className={`font-mono text-[10px] font-bold tabular-nums shrink-0 ${
@@ -415,10 +415,10 @@ export function StrategicCommandCenter() {
                     const yearsAway = ready - 2026;
                     const barWidth = Math.max(10, Math.min(100, (1 - yearsAway / 10) * 100));
                     return (
-                      <div key={tech.techId} className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.03)] transition-colors">
+                      <div key={tech.techId} className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-[rgba(0,0,0,0.03)] transition-colors">
                         <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
                         <span className="font-mono text-[10px] text-[var(--text-primary)] w-[140px] truncate shrink-0">{tech.technology}</span>
-                        <div className="flex-1 h-2 rounded-full bg-[rgba(255,255,255,0.05)] overflow-hidden relative">
+                        <div className="flex-1 h-2 rounded-full bg-[var(--border-soft)] overflow-hidden relative">
                           <div
                             className="h-full rounded-full opacity-60 transition-all"
                             style={{ width: `${barWidth}%`, backgroundColor: color }}
@@ -449,7 +449,7 @@ export function StrategicCommandCenter() {
             {/* Dependency Network Summary */}
             <Panel title="Dependency Network" label="Technology Graph" accentColor="#EC4899">
               <div className="grid grid-cols-3 gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[var(--border-soft)] text-center">
+                <div className="p-2 rounded-lg bg-[var(--background-muted)] border border-[var(--border-soft)] text-center">
                   <span className="block font-mono text-sm font-bold tabular-nums text-[var(--text-primary)]">{deps?.nodes.length || 0}</span>
                   <span className="block font-mono text-[7px] uppercase tracking-widest text-[var(--ink-muted)]">Nodes</span>
                 </div>
@@ -474,7 +474,7 @@ export function StrategicCommandCenter() {
                     const src = deps.nodes.find((n) => n.id === edge.source);
                     const tgt = deps.nodes.find((n) => n.id === edge.target);
                     return (
-                      <div key={i} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[rgba(255,255,255,0.03)]">
+                      <div key={i} className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[rgba(0,0,0,0.03)]">
                         <span className="font-mono text-[9px] text-[var(--text-primary)] truncate flex-1">
                           {src?.label || edge.source}
                         </span>
@@ -517,11 +517,11 @@ export function StrategicCommandCenter() {
                 { action: "Quantum comm risk evaluation", status: "REVIEW", date: "05 Mar 2026", priority: "HIGH" },
                 { action: "6G standards monitoring mandate", status: "ACTIVE", date: "01 Mar 2026", priority: "MEDIUM" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.03)] transition-colors">
+                <div key={i} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(0,0,0,0.03)] transition-colors">
                   <span className={`w-2 h-2 rounded-full shrink-0 ${
                     item.status === "APPROVED" ? "bg-emerald-500" :
                     item.status === "IN PROGRESS" ? "bg-amber-500 animate-pulse" :
-                    item.status === "REVIEW" ? "bg-sky-400" :
+                    item.status === "REVIEW" ? "bg-[var(--accent-soft)]" :
                     "bg-[var(--ink-muted)]"
                   }`} />
                   <span className="font-mono text-[10px] text-[var(--text-primary)] flex-1 truncate">{item.action}</span>
@@ -534,7 +534,7 @@ export function StrategicCommandCenter() {
                 </div>
               ))}
               <div className="pt-2 text-center">
-                <Link href="/decisions" className="font-mono text-[9px] uppercase tracking-widest text-amber-500 hover:text-amber-400 transition-colors">
+                <Link href="/decisions" className="font-mono text-[9px] uppercase tracking-widest text-[var(--accent-deep)] hover:text-[var(--accent-soft)] transition-colors">
                   Open Full Ledger →
                 </Link>
               </div>
@@ -554,7 +554,7 @@ export function StrategicCommandCenter() {
             <Link
               key={nav.label}
               href={nav.href}
-              className="p-3 rounded-xl border border-[var(--border-soft)] bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] hover:border-amber-500/20 transition-all text-center group"
+              className="p-3 rounded-xl border border-[var(--border-soft)] bg-[var(--background)] hover:bg-[var(--background-muted)] hover:border-[var(--accent-soft)]/20 transition-all text-center group"
             >
               <div className="w-2 h-2 rounded-full mx-auto mb-2 transition-transform group-hover:scale-125" style={{ backgroundColor: nav.color }} />
               <span className="block font-mono text-[10px] font-bold text-[var(--text-primary)]">{nav.label}</span>
