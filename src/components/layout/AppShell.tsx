@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarNav } from "@/components/navigation/SidebarNav";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
 import { ReviewRoomProvider } from "@/components/simulation/ReviewRoomContext";
 import { ReviewRoomBanner } from "@/components/simulation/ReviewRoomBanner";
@@ -14,14 +15,19 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
   return (
     <ReviewRoomProvider>
     <InstitutionalStateProvider>
-      <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
-        {/* Global Notifications */}
-        <SystemNotificationStrip />
+      <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)]">
+        {/* Persistent Side Navigation - Desktop only */}
+        <SidebarNav />
 
-        {/* Header — Editorial Navigation */}
-        <header className="sticky top-0 z-50 px-[5vw] py-4 bg-[var(--background)]">
-          <GlobalNav />
-        </header>
+        {/* Workspace Area - Offset for Sidebar on desktop */}
+        <div className="lg:pl-[280px] flex flex-col min-h-screen">
+          {/* Global Notifications */}
+          <SystemNotificationStrip />
+
+          {/* Top Utility Bar — Identity & Search */}
+          <header className="sticky top-0 z-50 px-[5vw] py-4 bg-[var(--background)] border-b border-[var(--border-soft)]">
+            <GlobalNav />
+          </header>
 
         {/* PHASE 7: Persistent Tension Banner */}
         <ReviewRoomBanner />
@@ -84,6 +90,7 @@ export function AppShell({ children }: { children?: React.ReactNode }) {
           </div>
         </footer>
       </div>
+    </div>
     </InstitutionalStateProvider>
     </ReviewRoomProvider>
   );
