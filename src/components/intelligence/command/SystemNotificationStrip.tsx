@@ -42,7 +42,7 @@ export function SystemNotificationStrip() {
 
   return (
     <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
-      <div className="bg-[#1a1c1a] border border-[#ff4500] text-[#ff4500] px-6 py-2 shadow-2xl flex items-center gap-3 font-mono text-[11px] uppercase tracking-widest">
+      <div className="bg-[var(--background)] border border-red-500 text-red-600 px-6 py-2 shadow-2xl flex items-center gap-3 font-mono text-[11px] uppercase tracking-widest">
         <span className="animate-pulse">⚠</span>
         {activeNotification.message}
       </div>
