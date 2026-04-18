@@ -31,7 +31,7 @@ interface SignalData {
 const PRIORITY_STYLES: Record<string, string> = {
   CRITICAL: "bg-red-600 text-white border-red-700",
   HIGH: "bg-amber-500/90 text-white border-amber-600",
-  MEDIUM: "bg-sky-500/80 text-white border-sky-600",
+  MEDIUM: "bg-[#6B8CAE] text-white border-[#5A7A9A]",
   LOW: "bg-[var(--ink-muted)]/20 text-[var(--ink-secondary)] border-[var(--border-soft)]",
 };
 
