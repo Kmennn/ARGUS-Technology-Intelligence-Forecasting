@@ -52,7 +52,7 @@ export function CommandRegion() {
 
         {/* Right: Telemetry */}
         <div className="flex items-center gap-5 text-[9px] font-mono uppercase tracking-[0.08em] text-[var(--ink-muted)]">
-          <span className="hidden sm:inline px-2.5 py-1 rounded border border-[var(--border-soft)] bg-[rgba(255,255,255,0.02)]">
+          <span className="hidden sm:inline px-2.5 py-1 rounded border border-[var(--border-soft)] bg-[var(--background-muted)]">
             {role}
           </span>
           <span className="hidden md:inline">
