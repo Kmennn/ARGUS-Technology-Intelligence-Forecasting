@@ -70,22 +70,22 @@ export function ActivityFeedPanel() {
         </div>
       </div>
 
-      <div className="bg-[#1a1c1a] border border-[#2a2d2a] h-48 overflow-y-auto p-4 font-mono text-[10px] space-y-2 text-[#a0a6a0]">
+      <div className="bg-[var(--background-muted)] border border-[var(--border-soft)] h-48 overflow-y-auto p-4 font-mono text-[10px] space-y-2 text-[var(--ink-secondary)]">
         {feed.length === 0 ? (
-          <div className="text-[#6b726b] italic flex items-center justify-center h-full">Awaiting system events...</div>
+          <div className="text-[var(--ink-muted)] italic flex items-center justify-center h-full">Awaiting system events...</div>
         ) : (
           feed.map(item => (
-            <div key={item.id} className="flex items-start gap-4 border-b border-[#2a2d2a] pb-2 last:border-0 last:pb-0">
-              <span className="text-[#6b726b] shrink-0 mt-0.5">{formatTime(item.timestamp)}</span>
+            <div key={item.id} className="flex items-start gap-4 border-b border-[var(--border-soft)] pb-2 last:border-0 last:pb-0">
+              <span className="text-[var(--ink-tertiary)] shrink-0 mt-0.5">{formatTime(item.timestamp)}</span>
               <div className="flex flex-col">
-                <span className={`${EVENT_STYLES[item.event] || "text-[#a0a6a0]"} font-bold tracking-wider`}>
+                <span className={`${EVENT_STYLES[item.event] || "text-[var(--ink-secondary)]"} font-bold tracking-wider`}>
                   {item.event}
                 </span>
                 {item.payload?.message && (
-                  <span className="text-[#c1c6c1] mt-0.5">{item.payload.message}</span>
+                  <span className="text-[var(--ink-secondary)] mt-0.5">{item.payload.message}</span>
                 )}
                 {item.payload?.cycleId && (
-                  <span className="text-[#6b726b] mt-0.5 text-[9px] uppercase">Cycle: {item.payload.cycleId}</span>
+                  <span className="text-[var(--ink-tertiary)] mt-0.5 text-[9px] uppercase">Cycle: {item.payload.cycleId}</span>
                 )}
               </div>
             </div>
