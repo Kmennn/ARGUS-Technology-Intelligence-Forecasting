@@ -47,6 +47,50 @@ const TECH_KEYWORDS: Record<string, { cluster: string; aliases: string[] }> = {
   "perovskite solar":      { cluster: "Energy", aliases: ["perovskite photovoltaic", "tandem solar cell", "perovskite cell"] },
   "small modular reactor": { cluster: "Energy", aliases: ["smr", "micro reactor", "advanced reactor", "molten salt reactor"] },
   "hydrogen fuel cell":    { cluster: "Energy", aliases: ["green hydrogen", "proton exchange membrane", "pem fuel cell"] },
+
+  // --- News-prose variants: how journalists phrase defense/strategic tech ---
+  // These use verbiage common in Defense News, Breaking Defense, TechCrunch
+  // rather than academic abstracts.
+
+  // AI cluster - news phrasing
+  "ai chip":               { cluster: "AI", aliases: ["ai accelerator", "inference chip", "ai processor", "nvidia h100", "tpu", "ai hardware"] },
+  "foundation model":      { cluster: "AI", aliases: ["frontier model", "frontier ai", "agi", "general intelligence"] },
+  "artificial intelligence": { cluster: "AI", aliases: ["machine learning", "ml model", "ai system", "ai capability"] },
+
+  // Autonomy cluster - news phrasing
+  "autonomous systems":    { cluster: "Autonomy", aliases: ["unmanned systems", "autonomous platform", "autonomous weapons", "loitering munition"] },
+  "drone":                 { cluster: "Autonomy", aliases: ["uav", "unmanned aerial", "quadcopter", "combat drone", "reconnaissance drone"] },
+  "military robotics":     { cluster: "Autonomy", aliases: ["robotic combat vehicle", "ground robot", "unmanned ground"] },
+
+  // Semiconductors - news phrasing
+  "chip manufacturing":    { cluster: "Semiconductors", aliases: ["chip fab", "semiconductor fab", "foundry", "tsmc", "intel foundry", "samsung foundry"] },
+  "export controls":       { cluster: "Semiconductors", aliases: ["chip export", "semiconductor restriction", "chips act"] },
+
+  // Communications - news phrasing
+  "satellite constellation": { cluster: "Communications", aliases: ["mega constellation", "broadband satellite", "leo satellite"] },
+  "electronic warfare":    { cluster: "Communications", aliases: ["ew system", "jamming", "electromagnetic spectrum", "signal jammer"] },
+  "5g network":            { cluster: "Communications", aliases: ["5g rollout", "5g infrastructure", "open ran", "private 5g"] },
+
+  // Quantum - news phrasing
+  "quantum technology":    { cluster: "Quantum", aliases: ["quantum capability", "quantum readiness", "quantum threat"] },
+  "quantum clock":         { cluster: "Quantum", aliases: ["atomic clock", "optical clock", "quantum timing", "pnt"] },
+
+  // Hypersonics - news phrasing
+  "hypersonic weapon":     { cluster: "Hypersonics", aliases: ["hypersonic missile", "hypersonic glide vehicle", "hgv", "boost-glide"] },
+  "hypersonic test":       { cluster: "Hypersonics", aliases: ["hypersonic flight test", "hypersonic prototype", "mach 5", "hawc"] },
+
+  // Energy - news phrasing
+  "critical minerals":     { cluster: "Energy", aliases: ["rare earth", "lithium supply", "cobalt supply", "mineral dependency"] },
+  "nuclear microreactor":  { cluster: "Energy", aliases: ["portable nuclear", "mobile reactor", "dod microreactor", "pele reactor"] },
+
+  // Directed energy (defense context → Energy cluster)
+  "directed energy":       { cluster: "Energy", aliases: ["laser weapon", "high-power laser", "directed energy weapon", "dew", "hpm", "microwave weapon"] },
+
+  // Defense contracts & programs (multi-cluster catch-all → AI)
+  "defense contract":      { cluster: "AI", aliases: ["pentagon contract", "dod contract", "darpa program", "afrl program", "defense award"] },
+
+  // Space-tech news phrasing (→ Communications for satcom/orbital infra)
+  "space force":           { cluster: "Communications", aliases: ["space command", "space domain", "orbital warfare", "counterspace"] },
 };
 
 /* ─── TRL Language Signals ─── */

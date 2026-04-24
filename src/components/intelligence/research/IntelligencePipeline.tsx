@@ -31,40 +31,95 @@ export function IntelligencePipeline() {
             <div className="space-y-4">
               {/* Patents */}
               <div className="grid grid-cols-[180px_150px_1fr] gap-4 font-mono text-[11px] items-baseline border-b border-[var(--border-subtle)] pb-3">
-                <span className="text-[var(--ink-primary)]">Patents (Lens/EPO/WIPO)</span>
-                <span className="text-[var(--ink-muted)]">24,510 INGESTED</span>
+                <span className="text-[var(--ink-primary)]">Patents (Lens / USPTO ODP)</span>
+                <span
+                  className="text-[10px] tracking-widest font-medium px-1.5 py-0.5 rounded"
+                  style={{
+                    color: 'var(--accent)',
+                    background: 'var(--background-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  PENDING INTEGRATION
+                </span>
                 <span className="text-[var(--ink-muted)] flex justify-between w-full max-w-[280px]">
-                  <span>UPDATED: 2H AGO</span>
+                  <span>&mdash;</span>
                   <span>TIER 1</span>
                 </span>
               </div>
               
               {/* Scientific Literature */}
               <div className="grid grid-cols-[180px_150px_1fr] gap-4 font-mono text-[11px] items-baseline border-b border-[var(--border-subtle)] pb-3">
-                <span className="text-[var(--ink-primary)]">Literature (arXiv/Crossref)</span>
-                <span className="text-[var(--ink-muted)]">8,902 INGESTED</span>
+                <span className="text-[var(--ink-primary)]">Literature (arXiv / CrossRef)</span>
+                <span
+                  className="text-[10px] tracking-widest font-medium px-1.5 py-0.5 rounded"
+                  style={{
+                    color: '#5A8A6A',
+                    background: 'var(--background-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  LIVE
+                </span>
                 <span className="text-[var(--ink-muted)] flex justify-between w-full max-w-[280px]">
-                  <span>UPDATED: 12M AGO</span>
+                  <span>&mdash;</span>
                   <span>TIER 1</span>
+                </span>
+              </div>
+
+              {/* News / RSS */}
+              <div className="grid grid-cols-[180px_150px_1fr] gap-4 font-mono text-[11px] items-baseline border-b border-[var(--border-subtle)] pb-3">
+                <span className="text-[var(--ink-primary)]">News (Defense / IEEE / Tech)</span>
+                <span
+                  className="text-[10px] tracking-widest font-medium px-1.5 py-0.5 rounded"
+                  style={{
+                    color: '#5A8A6A',
+                    background: 'var(--background-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  LIVE
+                </span>
+                <span className="text-[var(--ink-muted)] flex justify-between w-full max-w-[280px]">
+                  <span>&mdash;</span>
+                  <span>TIER 2</span>
                 </span>
               </div>
 
               {/* Procurement Signals */}
               <div className="grid grid-cols-[180px_150px_1fr] gap-4 font-mono text-[11px] items-baseline border-b border-[var(--border-subtle)] pb-3">
-                <span className="text-[var(--ink-primary)]">Procurement Signals</span>
-                <span className="text-[var(--ink-muted)]">143 CONTRACTS</span>
+                <span className="text-[var(--ink-primary)]">Procurement (SAM.gov / FPDS)</span>
+                <span
+                  className="text-[10px] tracking-widest font-medium px-1.5 py-0.5 rounded"
+                  style={{
+                    color: 'var(--accent)',
+                    background: 'var(--background-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  PENDING INTEGRATION
+                </span>
                 <span className="text-[var(--ink-muted)] flex justify-between w-full max-w-[280px]">
-                  <span>UPDATED: 1D AGO</span>
+                  <span>&mdash;</span>
                   <span>TIER 2</span>
                 </span>
               </div>
 
               {/* VC & Capital Flows */}
               <div className="grid grid-cols-[180px_150px_1fr] gap-4 font-mono text-[11px] items-baseline pb-1">
-                <span className="text-[var(--ink-primary)]">VC & Capital Flows</span>
-                <span className="text-[var(--ink-muted)]">$1.4B TRACKED</span>
+                <span className="text-[var(--ink-primary)]">VC Flows (Crunchbase / PitchBook)</span>
+                <span
+                  className="text-[10px] tracking-widest font-medium px-1.5 py-0.5 rounded"
+                  style={{
+                    color: 'var(--accent)',
+                    background: 'var(--background-muted)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  PENDING INTEGRATION
+                </span>
                 <span className="text-[var(--ink-muted)] flex justify-between w-full max-w-[280px]">
-                  <span>UPDATED: 4H AGO</span>
+                  <span>&mdash;</span>
                   <span>TIER 3</span>
                 </span>
               </div>

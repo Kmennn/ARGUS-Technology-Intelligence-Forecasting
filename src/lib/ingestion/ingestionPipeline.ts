@@ -185,14 +185,19 @@ export async function runIngestionCycle(fetcherName: string): Promise<IngestionR
 
   const durationMs = Date.now() - startTime;
 
-  // Log ingestion
+  const notesFromFetcher = (fetchResult as { notes?: string }).notes;
+  const combinedError = [
+    notesFromFetcher,
+    errors.length > 0 ? errors.join("; ") : undefined,
+  ].filter(Boolean).join(" | ") || undefined;
+
   logIngestion(
     fetcherName,
     fetchResult.fetched,
     processResult.created,
     processResult.updated,
     durationMs,
-    errors.length > 0 ? errors.join("; ") : undefined
+    combinedError
   );
 
   return {

@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { detectTechnologies, estimateTRL } from "@/lib/ingestion/signalEngine";
 
 export interface SemanticSignal {
   technology: string;
@@ -76,56 +77,21 @@ Text:
 }
 
 /**
- * Intelligent Mock Extractor
- * If no OpenAI key is available, uses heuristic keyword grouping to simulate semantic extraction.
+ * Intelligent Keyword-Based Extractor
+ * Uses the full TECH_KEYWORDS dictionary (49 entries) from signalEngine.ts
+ * for comprehensive technology detection without requiring an LLM API key.
  */
 function simulateSemanticExtraction(text: string): SemanticSignal[] {
-  const lowerText = text.toLowerCase();
-  const signals: SemanticSignal[] = [];
+  const detections = detectTechnologies(text);
+  const trl = estimateTRL(text);
 
-  if (lowerText.includes("spik") || lowerText.includes("neuromorphic")) {
-    signals.push({
-      technology: "Event-Driven Spiking Architectures",
-      cluster: "AI",
-      trl: 4,
-      confidence: 0.88,
-      novelty_score: 0.85,
-      related_domains: ["Edge Inference", "Autonomous Robotics"],
-    });
-  }
-
-  if (lowerText.includes("swarm") || lowerText.includes("multi-agent")) {
-    signals.push({
-      technology: "Decentralized Swarm Coordination",
-      cluster: "Autonomy",
-      trl: 5,
-      confidence: 0.82,
-      novelty_score: 0.75,
-      related_domains: ["Tactical Operations", "UAV Networks"],
-    });
-  }
-
-  if (lowerText.includes("ambient") || lowerText.includes("backscatter") || lowerText.includes("zero-power")) {
-    signals.push({
-      technology: "Ambient Backscatter Communications",
-      cluster: "Communications",
-      trl: 3,
-      confidence: 0.76,
-      novelty_score: 0.90,
-      related_domains: ["Covert Networks", "IoT Swarms"],
-    });
-  }
-
-  if (lowerText.includes("qkd") || lowerText.includes("quantum key")) {
-    signals.push({
-      technology: "Quantum Key Distribution",
-      cluster: "Quantum",
-      trl: 6,
-      confidence: 0.92,
-      novelty_score: 0.70,
-      related_domains: ["Secure C2", "SIGINT Defeat"],
-    });
-  }
-
-  return signals;
+  return detections.map(det => ({
+    technology: det.technology,
+    cluster: det.cluster,
+    trl: trl,
+    confidence: 0.70,
+    novelty_score: 0.65,
+    related_domains: [det.cluster, "Defense"],
+  }));
 }
+
