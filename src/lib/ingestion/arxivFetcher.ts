@@ -14,6 +14,14 @@ const CATEGORY_QUERIES = [
   { category: "quant-ph", keywords: "quantum computing OR quantum key distribution OR quantum sensing" },
   { category: "cs.CR", keywords: "post-quantum cryptography OR cybersecurity" },
   { category: "eess.SP", keywords: "6G OR terahertz OR backscatter communication" },
+  { category: "cs.AI",        keywords: "large language model OR foundation model OR reinforcement learning" },
+  { category: "cs.CV",        keywords: "computer vision OR object detection OR surveillance" },
+  { category: "cs.CR",        keywords: "zero-day OR cyber defense OR adversarial attack" },
+  { category: "physics.space-ph", keywords: "satellite OR space weather OR orbital debris" },
+  { category: "physics.flu-dyn",  keywords: "hypersonic OR scramjet OR shockwave" },
+  { category: "eess.SY",      keywords: "autonomous control OR drone swarm OR uav" },
+  { category: "physics.app-ph",   keywords: "directed energy OR high-power laser OR microwave weapon" },
+  { category: "cond-mat.mes-hall", keywords: "gallium nitride OR silicon carbide OR semiconductor" },
 ];
 
 interface ArxivEntry {

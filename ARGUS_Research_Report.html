@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARGUS — Comprehensive Technical Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════ */
+/*  ARGUS RESEARCH REPORT — PRINT-READY STYLESHEET                */
+/* ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8F6F1;
+  --color-bg-code: #F4F1EB;
+  --color-ink: #1A1A1A;
+  --color-ink-secondary: #3D3D3D;
+  --color-ink-tertiary: #6B6B6B;
+  --color-ink-muted: #999999;
+  --color-accent: #B8432F;
+  --color-accent-dark: #8C2E1E;
+  --color-accent-light: #E8C4BC;
+  --color-blue: #2C5F8A;
+  --color-blue-light: #D4E4F1;
+  --color-teal: #1A7A6D;
+  --color-teal-light: #D0EDEA;
+  --color-gold: #B8891A;
+  --color-gold-light: #F5EDDA;
+  --color-purple: #6B4C9A;
+  --color-purple-light: #E8E0F3;
+  --color-border: #D9D3C7;
+  --color-border-light: #E8E3DA;
+  --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+@page {
+  size: A4;
+  margin: 2.5cm 2cm 2.5cm 2cm;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 11pt;
+  line-height: 1.72;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ─── COVER PAGE ─── */
+.cover-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 3rem;
+  page-break-after: always;
+  background: linear-gradient(172deg, #FDFBF7 0%, #F5F0E8 40%, #EDE6D9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-dark) 50%, var(--color-blue) 100%);
+}
+
+.cover-page::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-accent-dark) 50%, var(--color-accent) 100%);
+}
+
+.cover-ornament {
+  width: 80px;
+  height: 2px;
+  background: var(--color-accent);
+  margin: 0 auto 2.5rem;
+}
+
+.cover-system-label {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.cover-title {
+  font-family: var(--font-serif);
+  font-size: 32pt;
+  font-weight: 900;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+}
+
+.cover-subtitle {
+  font-family: var(--font-serif);
+  font-size: 13pt;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-ink-secondary);
+  line-height: 1.5;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+}
+
+.cover-divider {
+  width: 120px;
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 auto 2rem;
+}
+
+.cover-meta {
+  font-family: var(--font-sans);
+  font-size: 10.5pt;
+  color: var(--color-ink-tertiary);
+  line-height: 2;
+}
+
+.cover-meta strong {
+  color: var(--color-ink-secondary);
+  font-weight: 600;
+}
+
+.cover-url {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  color: var(--color-blue);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+/* ─── ABSTRACT BOX ─── */
+.abstract-page {
+  page-break-after: always;
+  padding: 3rem 0;
+}
+
+.abstract-box {
+  background: var(--color-bg-alt);
+  border-left: 4px solid var(--color-accent);
+  padding: 2rem 2.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.abstract-box p {
+  font-size: 10.5pt;
+  line-height: 1.8;
+  color: var(--color-ink-secondary);
+  text-align: justify;
+  hyphens: auto;
+}
+
+.keywords {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.keywords strong {
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-tertiary);
+}
+
+.keywords span {
+  font-size: 9.5pt;
+  color: var(--color-ink-secondary);
+  font-style: italic;
+}
+
+/* ─── TABLE OF CONTENTS ─── */
+.toc {
+  page-break-after: always;
+  padding: 2rem 0;
+}
+
+.toc h2 {
+  font-family: var(--font-serif);
+  font-size: 18pt;
+  color: var(--color-ink);
+  margin-bottom: 2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.toc-section {
+  margin-bottom: 1.5rem;
+}
+
+.toc-section-title {
+  font-weight: 700;
+  font-size: 11pt;
+  color: var(--color-ink);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.toc-section-title .toc-num {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 10pt;
+  font-weight: 600;
+  min-width: 1.8rem;
+}
+
+.toc-sub {
+  list-style: none;
+  padding-left: 2.4rem;
+}
+
+.toc-sub li {
+  font-size: 10pt;
+  color: var(--color-ink-tertiary);
+  line-height: 2;
+  position: relative;
+}
+
+.toc-sub li::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+/* ─── HEADINGS ─── */
+h1 {
+  font-family: var(--font-serif);
+  font-size: 22pt;
+  font-weight: 900;
+  color: var(--color-ink);
+  margin: 3rem 0 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--color-accent);
+  page-break-after: avoid;
+  line-height: 1.25;
+}
+
+h1 .chapter-num {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.3rem;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: 15pt;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin: 2.2rem 0 1rem;
+  page-break-after: avoid;
+  line-height: 1.35;
+}
+
+h2::before {
+  display: inline-block;
+  width: 28px;
+  height: 3px;
+  background: var(--color-accent);
+  margin-right: 10px;
+  vertical-align: middle;
+  content: '';
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--color-ink-secondary);
+  margin: 1.6rem 0 0.8rem;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--color-ink-tertiary);
+  margin: 1.2rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── BODY TEXT ─── */
+p {
+  margin-bottom: 0.9rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* ─── TABLES ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0 1.8rem;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+thead {
+  background: var(--color-ink);
+  color: #FFFFFF;
+}
+
+thead th {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 8.5pt;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--color-bg-alt);
+}
+
+tbody td {
+  padding: 0.6rem 0.9rem;
+  vertical-align: top;
+}
+
+.table-caption {
+  font-size: 9pt;
+  font-style: italic;
+  color: var(--color-ink-tertiary);
+  text-align: center;
+  margin-top: -0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── CODE BLOCKS ─── */
+code {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  background: var(--color-bg-code);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  color: var(--color-accent-dark);
+}
+
+pre {
+  background: #2B2B2B;
+  color: #D4D4D4;
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  line-height: 1.65;
+  padding: 1.2rem 1.5rem;
+  border-radius: 6px;
+  margin: 1rem 0 1.5rem;
+  overflow-x: auto;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  border-radius: 0;
+}
+
+.code-comment { color: #6A9955; }
+.code-keyword { color: #569CD6; }
+.code-string { color: #CE9178; }
+.code-number { color: #B5CEA8; }
+.code-type { color: #4EC9B0; }
+
+/* ─── FORMULA BLOCKS ─── */
+.formula {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-left: 4px solid var(--color-blue);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0 1.5rem;
+  border-radius: 0 6px 6px 0;
+  font-family: var(--font-mono);
+  font-size: 10pt;
+  line-height: 1.8;
+  color: var(--color-ink-secondary);
+  page-break-inside: avoid;
+}
+
+.formula .label {
+  font-family: var(--font-sans);
+  font-size: 8.5pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-blue);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+/* ─── DIAGRAM CONTAINERS ─── */
+.diagram {
+  margin: 1.5rem 0 2rem;
+  page-break-inside: avoid;
+}
+
+.diagram-title {
+  font-family: var(--font-sans);
+  font-size: 9pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-tertiary);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.diagram-caption {
+  font-size: 9pt;
+  font-style: italic;
+  color: var(--color-ink-muted);
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+/* ─── ARCHITECTURE DIAGRAM ─── */
+.arch-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.arch-tier {
+  border: 2px solid;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.arch-tier:first-child { border-radius: 8px 8px 0 0; }
+.arch-tier:last-child { border-radius: 0 0 8px 8px; }
+
+.arch-tier.presentation {
+  background: #EBF1F8;
+  border-color: var(--color-blue);
+}
+.arch-tier.application {
+  background: #FDF0ED;
+  border-color: var(--color-accent);
+}
+.arch-tier.data {
+  background: #E8F5E9;
+  border-color: var(--color-teal);
+}
+
+.arch-tier-label {
+  font-family: var(--font-sans);
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.arch-tier.presentation .arch-tier-label { color: var(--color-blue); }
+.arch-tier.application .arch-tier-label { color: var(--color-accent); }
+.arch-tier.data .arch-tier-label { color: var(--color-teal); }
+
+.arch-tier-content {
+  font-size: 9pt;
+  color: var(--color-ink-secondary);
+  line-height: 1.6;
+}
+
+.arch-arrow {
+  text-align: center;
+  font-size: 16pt;
+  color: var(--color-ink-muted);
+  line-height: 1;
+  padding: 2px 0;
+}
+
+/* ─── PIPELINE DIAGRAM ─── */
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 0 auto;
+  max-width: 520px;
+}
+
+.pipeline-node {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 9.5pt;
+  font-weight: 600;
+  position: relative;
+}
+
+.pipeline-node.source { background: var(--color-blue-light); color: var(--color-blue); border: 1.5px solid var(--color-blue); }
+.pipeline-node.process { background: var(--color-gold-light); color: #7A5C0F; border: 1.5px solid var(--color-gold); }
+.pipeline-node.store { background: var(--color-teal-light); color: var(--color-teal); border: 1.5px solid var(--color-teal); }
+.pipeline-node.analyze { background: var(--color-purple-light); color: var(--color-purple); border: 1.5px solid var(--color-purple); }
+.pipeline-node.alert { background: #FDEDED; color: var(--color-accent-dark); border: 1.5px solid var(--color-accent); }
+
+.pipeline-node small {
+  display: block;
+  font-weight: 400;
+  font-size: 8pt;
+  margin-top: 0.2rem;
+  opacity: 0.8;
+}
+
+.pipeline-arrow {
+  font-size: 14pt;
+  color: var(--color-ink-muted);
+  line-height: 1;
+  padding: 2px 0;
+}
+
+.pipeline-branch {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.pipeline-branch .pipeline-node {
+  flex: 1;
+  font-size: 8.5pt;
+  padding: 0.6rem 0.5rem;
+}
+
+/* ─── CALLOUT BOXES ─── */
+.callout {
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin: 1.2rem 0;
+  page-break-inside: avoid;
+  font-size: 10pt;
+}
+
+.callout.note {
+  background: var(--color-blue-light);
+  border-left: 4px solid var(--color-blue);
+}
+
+.callout.important {
+  background: var(--color-gold-light);
+  border-left: 4px solid var(--color-gold);
+}
+
+.callout.technical {
+  background: var(--color-bg-alt);
+  border-left: 4px solid var(--color-ink-muted);
+}
+
+.callout-title {
+  font-weight: 700;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.callout.note .callout-title { color: var(--color-blue); }
+.callout.important .callout-title { color: var(--color-gold); }
+.callout.technical .callout-title { color: var(--color-ink-tertiary); }
+
+/* ─── NUMBERED LISTS ─── */
+ol {
+  counter-reset: list-counter;
+  list-style: none;
+  padding-left: 0;
+  margin: 0.8rem 0;
+}
+
+ol > li {
+  counter-increment: list-counter;
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+ol > li::before {
+  content: counter(list-counter) ".";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 9pt;
+  color: var(--color-accent);
+}
+
+ul {
+  padding-left: 1.5rem;
+  margin: 0.6rem 0;
+}
+
+ul li {
+  margin-bottom: 0.35rem;
+  position: relative;
+  list-style-type: none;
+  padding-left: 0.8rem;
+}
+
+ul li::before {
+  content: '—';
+  position: absolute;
+  left: -1rem;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* ─── METRIC CARDS ─── */
+.metric-row {
+  display: flex;
+  gap: 1rem;
+  margin: 1.2rem 0;
+  flex-wrap: wrap;
+}
+
+.metric-card {
+  flex: 1;
+  min-width: 100px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 22pt;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1.1;
+}
+
+.metric-label {
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-tertiary);
+  margin-top: 0.4rem;
+}
+
+/* ─── SECTION BREAKS ─── */
+.section-break {
+  page-break-before: always;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: 2rem 0;
+}
+
+.ornamental-break {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 12pt;
+  color: var(--color-border);
+  letter-spacing: 0.5em;
+}
+
+/* ─── REFERENCES ─── */
+.reference-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: ref-counter;
+}
+
+.reference-list li {
+  counter-increment: ref-counter;
+  padding-left: 2.5rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+  font-size: 9.5pt;
+  line-height: 1.6;
+  color: var(--color-ink-secondary);
+}
+
+.reference-list li::before {
+  content: "[" counter(ref-counter) "]";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 8.5pt;
+  color: var(--color-accent);
+}
+
+/* ─── FOOTER ─── */
+.report-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--color-accent);
+  text-align: center;
+  font-size: 9pt;
+  color: var(--color-ink-muted);
+  page-break-before: avoid;
+}
+
+.report-footer .footer-line {
+  margin-bottom: 0.2rem;
+}
+
+/* ─── ENGINE COMPARISON ─── */
+.engine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.engine-card {
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  page-break-inside: avoid;
+  background: var(--color-bg);
+}
+
+.engine-card-title {
+  font-weight: 700;
+  font-size: 10pt;
+  color: var(--color-ink);
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.engine-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.engine-badge.core { background: var(--color-accent-light); color: var(--color-accent-dark); }
+.engine-badge.analysis { background: var(--color-blue-light); color: var(--color-blue); }
+.engine-badge.forecast { background: var(--color-purple-light); color: var(--color-purple); }
+.engine-badge.graph { background: var(--color-teal-light); color: var(--color-teal); }
+
+.engine-card p {
+  font-size: 8.5pt;
+  color: var(--color-ink-tertiary);
+  margin: 0;
+  text-align: left;
+  line-height: 1.55;
+}
+
+/* ─── STATUS INDICATORS ─── */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.status-dot.active { background: var(--color-teal); }
+.status-dot.planned { background: var(--color-gold); }
+.status-dot.research { background: var(--color-purple); }
+
+/* ─── PRINT OVERRIDES ─── */
+@media print {
+  body { max-width: none; padding: 0; }
+  .cover-page { min-height: auto; height: 100vh; }
+  pre { overflow: hidden; white-space: pre-wrap; word-wrap: break-word; }
+  .no-print { display: none; }
+}
+
+/* ─── DOWNLOAD BUTTON (SCREEN ONLY) ─── */
+.download-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-ink);
+  padding: 0.8rem 2rem;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+}
+
+.download-bar button {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 0.7rem 2.5rem;
+  font-family: var(--font-sans);
+  font-size: 10.5pt;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.download-bar button:hover {
+  background: var(--color-accent-dark);
+}
+
+@media print {
+  .download-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  DOWNLOAD BAR                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="download-bar no-print">
+  <button onclick="window.print()">Save as PDF (Ctrl + P)</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  COVER PAGE                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="cover-page">
+  <div class="cover-ornament"></div>
+  <div class="cover-system-label">Technical Research Report</div>
+  <div class="cover-title">ARGUS</div>
+  <div class="cover-subtitle">
+    An AI-Driven Technology Intelligence and<br>
+    Strategic Forecasting Platform
+  </div>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <strong>Author:</strong> Virendra Mahajan<br>
+    <strong>Department:</strong> Computer Science &amp; Engineering<br>
+    <strong>Date:</strong> April 2026<br>
+    <strong>Version:</strong> 1.2<br>
+  </div>
+  <a class="cover-url" href="https://argus-platform.onrender.com" target="_blank">
+    argus-platform.onrender.com
+  </a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  ABSTRACT                                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="abstract-page">
+  <h1><span class="chapter-num">Abstract</span></h1>
+  <div class="abstract-box">
+    <p>
+      ARGUS (Autonomous Research &amp; Governance Utility System) is a full-stack technology intelligence and strategic forecasting platform designed to autonomously ingest, analyze, and visualize emerging technology signals across defense-relevant domains. The system integrates real-time data feeds from arXiv, CrossRef, PatentsView, and RSS news sources into a unified SQLite intelligence database. Ingested data undergoes multi-stage processing through a pipeline comprising keyword-based signal extraction, optional LLM-augmented semantic analysis (via OpenAI GPT-4o-mini), automated Technology Readiness Level (TRL) estimation, source trust scoring, and fuzzy deduplication.
+    </p>
+    <p>
+      The platform implements seven distinct analytical engines: a Breakout Detection Engine that identifies velocity spikes and cluster surges; an Emergence Detector combining publication acceleration, vocabulary novelty, and cross-domain convergence; a Momentum Engine computing weighted innovation scores; a Dependency Discovery Engine constructing co-occurrence graphs; a Graph Pruning Engine with temporal decay; a deterministic Horizon Engine computing non-linear temporal compression; and a Monte Carlo Scenario Engine with seeded PRNG for reproducible probabilistic forecasting.
+    </p>
+    <p>
+      The frontend presents 16 specialized dashboard views organized into a four-section Intelligence Cycle information architecture, rendered through a warm-cream editorial design system. The system implements a governance accountability framework with a Decision Ledger, cryptographic export signing (SHA-256), and role-based access control.
+    </p>
+    <div class="keywords">
+      <strong>Keywords: </strong>
+      <span>Technology Intelligence, Horizon Scanning, Emerging Technology Detection, TRL Estimation, Knowledge Graphs, Monte Carlo Simulation, Strategic Forecasting, Defense Technology, NLP Signal Extraction</span>
+    </div>
+  </div>
+
+  <!-- METRICS SUMMARY -->
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">7</div>
+      <div class="metric-label">Analytical Engines</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">4</div>
+      <div class="metric-label">Data Fetchers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">16</div>
+      <div class="metric-label">Dashboard Views</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">26</div>
+      <div class="metric-label">Technologies Tracked</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">15K+</div>
+      <div class="metric-label">Lines of Code</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  TABLE OF CONTENTS                                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">01</span> Introduction</div>
+    <ul class="toc-sub"><li>Problem Statement</li><li>Motivation</li><li>Objectives</li><li>Scope of the Project</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">02</span> Literature Review</div>
+    <ul class="toc-sub"><li>Technology Intelligence Systems</li><li>Horizon Scanning Methodologies</li><li>Technology Readiness Levels</li><li>Knowledge Graphs in Forecasting</li><li>Monte Carlo Methods</li><li>Research Gap</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">03</span> System Architecture</div>
+    <ul class="toc-sub"><li>High-Level Architecture</li><li>Technology Stack</li><li>Directory Structure</li><li>Data Flow Architecture</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">04</span> Database Design</div>
+    <ul class="toc-sub"><li>Schema Philosophy</li><li>Core Tables</li><li>Analytical Tables</li><li>Index Strategy (28 Indexes)</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">05</span> Data Ingestion Pipeline</div>
+    <ul class="toc-sub"><li>Pipeline Architecture</li><li>arXiv Fetcher</li><li>CrossRef Fetcher</li><li>PatentsView Fetcher</li><li>RSS/News Fetcher</li><li>Source Trust &amp; Validation</li><li>Deduplication Engine</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">06</span> Analytical Engines</div>
+    <ul class="toc-sub"><li>Signal Extraction Engine</li><li>Semantic Signal Engine (LLM)</li><li>Breakout Detection</li><li>Emergence Detector</li><li>Momentum Engine</li><li>Dependency Discovery</li><li>Graph Pruning</li><li>Horizon Engine</li><li>Scenario &amp; Monte Carlo</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">07</span> Governance &amp; Accountability</div>
+    <ul class="toc-sub"><li>Decision Ledger</li><li>Institutional State Provider</li><li>Event Bus Architecture</li><li>Cryptographic Export Engine</li><li>Intelligence Brief Generator</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">08</span> Frontend Architecture</div>
+    <ul class="toc-sub"><li>Design Philosophy</li><li>Design System &amp; CSS Tokens</li><li>Navigation Architecture</li><li>16 Dashboard Routes</li><li>Spatial Components</li><li>Role-Based Access Control</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">09</span> Deployment Infrastructure</div>
+    <ul class="toc-sub"><li>Docker Containerization</li><li>Render Cloud Hosting</li><li>Database Persistence</li><li>CI/CD Pipeline</li></ul>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">10</span> Results &amp; Discussion</div>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">11</span> Current Limitations</div>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">12</span> Future Scope</div>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">13</span> Conclusion</div>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">14</span> References</div>
+  </div>
+  <div class="toc-section">
+    <div class="toc-section-title"><span class="toc-num">15</span> Appendices</div>
+    <ul class="toc-sub"><li>A — Technology Keyword Dictionary</li><li>B — API Route Reference</li><li>C — Horizon Engine Mathematical Proofs</li></ul>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 1: INTRODUCTION                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 1</span>Introduction</h1>
+
+<h2>1.1 Problem Statement</h2>
+<p>
+  Governments, defense agencies, and strategic research institutions face an accelerating challenge: the velocity of emerging technology development now outpaces institutional capacity to detect, assess, and respond to critical signals. A single academic paper on arXiv can describe a breakthrough in quantum key distribution that, within 18 months, reshapes the strategic posture of national cybersecurity infrastructure. Patent filings from semiconductor foundries signal shifts in supply chain dependencies affecting defense procurement timelines months before they become visible in policy forums.
+</p>
+<p>
+  The core problem is <strong>information overload combined with analytical latency.</strong> Existing approaches rely on manual scanning by domain experts who cannot monitor the full breadth of academic publications, patent databases, news feeds, and industry reports across all relevant technology clusters simultaneously. By the time a traditional horizon scanning exercise produces a report, the signal landscape has already shifted.
+</p>
+
+<h2>1.2 Motivation</h2>
+<ol>
+  <li><strong>Fragmented Data Sources:</strong> Technology intelligence data is dispersed across arXiv (preprints), CrossRef (journals), USPTO (patents), and defense/technology news outlets. No single platform unifies these into a coherent signal stream.</li>
+  <li><strong>Absence of Automated TRL Estimation:</strong> While the Technology Readiness Level framework is universally adopted in defense procurement, TRL assignment remains a subjective, expert-driven process.</li>
+  <li><strong>Static Forecasting Models:</strong> Traditional horizon scanning produces point-in-time reports. Strategic decision-makers need continuous, dynamic models that update as new signals arrive.</li>
+  <li><strong>Governance Accountability Deficit:</strong> When strategic technology decisions are made (or not made), there is rarely a cryptographically verifiable audit trail linking the decision to evidence state.</li>
+</ol>
+
+<h2>1.3 Objectives</h2>
+<ol>
+  <li><strong>Autonomous Data Ingestion:</strong> Build a multi-source ingestion pipeline fetching research papers, patents, and news articles from external APIs with zero manual intervention.</li>
+  <li><strong>Intelligent Signal Extraction:</strong> Develop a hybrid extraction pipeline combining keyword-based detection with optional LLM-augmented semantic analysis.</li>
+  <li><strong>Multi-Algorithm Analysis:</strong> Implement seven analytical engines for breakout detection, emergence detection, momentum scoring, dependency graph construction, and probabilistic horizon forecasting.</li>
+  <li><strong>Institutional Governance:</strong> Create a decision accountability framework with cryptographic integrity.</li>
+  <li><strong>Editorial-Grade Visualization:</strong> Design a 16-view dashboard communicating institutional intelligence with clarity and authority.</li>
+</ol>
+
+<h2>1.4 Scope</h2>
+<table>
+  <thead><tr><th>Dimension</th><th>Coverage</th></tr></thead>
+  <tbody>
+    <tr><td>Technology Clusters</td><td>AI, Autonomy, Semiconductors, Communications, Quantum, Hypersonics, Energy</td></tr>
+    <tr><td>Data Sources</td><td>arXiv, CrossRef, PatentsView (USPTO), RSS feeds (Defense News, Breaking Defense, IEEE Spectrum, TechCrunch)</td></tr>
+    <tr><td>Temporal Range</td><td>Rolling 24-month analysis window; 2-year patent lookback</td></tr>
+    <tr><td>User Roles</td><td>Analyst, Allocator, Admin (three-tier RBAC)</td></tr>
+    <tr><td>Deployment</td><td>Docker container on Render with persistent disk storage</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 2: LITERATURE REVIEW                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 2</span>Literature Review</h1>
+
+<h2>2.1 Technology Intelligence Systems</h2>
+<p>
+  Technology intelligence (TI) has evolved from manual expert-driven scanning processes to semi-automated systems. Kerr et al. (2006) define TI as "the capture and delivery of technological information as part of the process whereby an organization develops awareness of technological threats and opportunities." Early systems such as the NATO Technology Watch relied on manual report compilation. More recent approaches, including DARPA's Foresight programs, employ NLP and machine learning to accelerate signal detection.
+</p>
+
+<h2>2.2 Horizon Scanning Methodologies</h2>
+<p>
+  Horizon scanning is a systematic examination of potential threats, opportunities, and likely future developments (Government Office for Science, UK, 2017). Traditional methods include Delphi panels, STEEP analysis, and scenario planning workshops. The ARGUS Horizon Engine departs from these qualitative approaches by implementing a purely deterministic, mathematically auditable model with non-linear impact amplification.
+</p>
+
+<h2>2.3 Technology Readiness Levels (TRL)</h2>
+<p>
+  The TRL framework, developed by NASA (Mankins, 1995), provides a standardized scale from TRL&nbsp;1 (basic principles observed) to TRL&nbsp;9 (actual system proven in operational environment). The European Commission adopted TRL as part of Horizon&nbsp;2020. ARGUS implements automated TRL estimation via regex-based language signal detection mapping nine distinct patterns to TRL levels.
+</p>
+
+<h2>2.4 Knowledge Graphs in Technology Forecasting</h2>
+<p>
+  Knowledge graphs have been increasingly adopted for technology forecasting. Chen et al. (2019) demonstrated that co-occurrence networks from patent data can predict technology convergence patterns 3–5 years ahead. ARGUS implements an automated Dependency Discovery Engine constructing co-occurrence graphs with Jaccard-like similarity metrics.
+</p>
+
+<h2>2.5 Monte Carlo Methods in Strategic Simulation</h2>
+<p>
+  Monte Carlo simulation has been applied to strategic planning in defense contexts since the 1940s (Metropolis &amp; Ulam, 1949). ARGUS implements a 200-run Monte Carlo simulation using a seeded Mulberry32 PRNG ensuring audit reproducibility.
+</p>
+
+<h2>2.6 Research Gap</h2>
+<div class="callout important">
+  <div class="callout-title">Research Gap Identified</div>
+  <p>No existing system integrates multi-source autonomous ingestion, LLM-augmented semantic analysis with heuristic fallback, seven analytical engines on a shared database, a governance accountability framework with cryptographic signing, and an editorial-grade frontend for defense audiences — into a single, unified platform. ARGUS fills this gap.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 3: SYSTEM ARCHITECTURE                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 3</span>System Architecture</h1>
+
+<h2>3.1 High-Level Architecture</h2>
+<p>ARGUS employs a three-tier architecture separating presentation, application logic, and data storage:</p>
+
+<div class="diagram">
+  <div class="diagram-title">Figure 3.1 — Three-Tier System Architecture</div>
+  <div class="arch-diagram">
+    <div class="arch-tier presentation">
+      <div class="arch-tier-label">Presentation Tier</div>
+      <div class="arch-tier-content">
+        Next.js App Router &middot; React 19 &middot; D3.js &middot; Recharts<br>
+        16 Dashboard Views &middot; Editorial Design System &middot; SidebarNav
+      </div>
+    </div>
+    <div class="arch-arrow">&#9660;</div>
+    <div class="arch-tier application">
+      <div class="arch-tier-label">Application Tier</div>
+      <div class="arch-tier-content">
+        7 Analytical Engines &middot; 4 Data Fetchers &middot; Ingestion Pipeline<br>
+        Governance Framework &middot; 12 REST API Routes &middot; Event Bus
+      </div>
+    </div>
+    <div class="arch-arrow">&#9660;</div>
+    <div class="arch-tier data">
+      <div class="arch-tier-label">Data Tier</div>
+      <div class="arch-tier-content">
+        SQLite (better-sqlite3) &middot; WAL Mode &middot; 10 Tables &middot; 28 Production Indexes
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>3.2 Technology Stack</h2>
+<table>
+  <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Justification</th></tr></thead>
+  <tbody>
+    <tr><td>Framework</td><td>Next.js</td><td>16.1.6</td><td>SSR, API routes, file-based routing</td></tr>
+    <tr><td>UI Library</td><td>React</td><td>19.2.4</td><td>Component-based, hooks system</td></tr>
+    <tr><td>Language</td><td>TypeScript</td><td>5.3+</td><td>Type safety, compile-time errors</td></tr>
+    <tr><td>Database</td><td>SQLite (better-sqlite3)</td><td>12.8.0</td><td>Embedded, zero-config, WAL mode</td></tr>
+    <tr><td>Visualization</td><td>D3.js</td><td>7.9.0</td><td>Force-directed graphs, SVG</td></tr>
+    <tr><td>Charts</td><td>Recharts</td><td>3.7.0</td><td>Declarative chart components</td></tr>
+    <tr><td>AI/NLP</td><td>OpenAI (GPT-4o-mini)</td><td>6.29.0</td><td>Semantic signal extraction</td></tr>
+    <tr><td>Styling</td><td>Tailwind CSS</td><td>3.4.1</td><td>Utility-first with custom tokens</td></tr>
+    <tr><td>Testing</td><td>Vitest</td><td>4.0.18</td><td>Fast, Vite-native unit testing</td></tr>
+    <tr><td>Container</td><td>Docker (node:20-alpine)</td><td>—</td><td>Reproducible production builds</td></tr>
+    <tr><td>Hosting</td><td>Render</td><td>—</td><td>Docker deploy + persistent disk</td></tr>
+  </tbody>
+</table>
+
+<h2>3.3 Data Flow Architecture</h2>
+
+<div class="diagram">
+  <div class="diagram-title">Figure 3.2 — End-to-End Data Flow Pipeline</div>
+  <div class="pipeline">
+    <div class="pipeline-node source">External APIs<small>arXiv &middot; CrossRef &middot; PatentsView &middot; RSS Feeds</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node process">4 Source-Specific Fetchers<small>Rate-limited, XML/JSON parsing, error handling</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node store">raw_sources Table (Staging)<small>Immutable append-only ingestion log</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node process">Validation &amp; Deduplication Layer<small>Source trust scoring &middot; Jaccard title similarity</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node analyze">Signal Extraction Engine<small>Keyword matching OR LLM semantic analysis + TRL estimation</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node store">signals Table (Primary Intelligence)<small>Structured technology signals with confidence scores</small></div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-branch">
+      <div class="pipeline-node alert">Breakout Detection<small>alerts table</small></div>
+      <div class="pipeline-node analyze">Emergence Detection<small>emerging_signals</small></div>
+      <div class="pipeline-node analyze">Momentum Scoring<small>technology_momentum</small></div>
+    </div>
+  </div>
+  <div class="diagram-caption">Figure 3.2: Data flows from external APIs through fetching, validation, extraction, and multi-engine analysis.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 4: DATABASE DESIGN                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 4</span>Database Design</h1>
+
+<h2>4.1 Schema Design Philosophy</h2>
+<ol>
+  <li><strong>Append-Only Staging:</strong> Raw source data is never modified after insertion. The <code>raw_sources</code> table serves as an immutable audit log.</li>
+  <li><strong>Upsert Semantics:</strong> The <code>signals</code> table uses <code>INSERT OR IGNORE</code> for initial seeding and explicit <code>UPDATE</code> for enrichment.</li>
+  <li><strong>Denormalized for Speed:</strong> Fields like <code>score_history</code>, <code>priority_drivers</code>, and <code>impact_domains</code> are stored as JSON strings, trading storage for read performance.</li>
+</ol>
+
+<h2>4.2 Core Tables</h2>
+
+<h3>signals — The Primary Intelligence Table</h3>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>TEXT PK</td><td>Deterministic hash of technology + source URL</td></tr>
+    <tr><td><code>technology</code></td><td>TEXT</td><td>Specific technology name</td></tr>
+    <tr><td><code>cluster</code></td><td>TEXT</td><td>Technology cluster (AI, Quantum, etc.)</td></tr>
+    <tr><td><code>title</code></td><td>TEXT</td><td>Source document title</td></tr>
+    <tr><td><code>summary</code></td><td>TEXT</td><td>Extracted summary or strategic notes</td></tr>
+    <tr><td><code>priority_score</code></td><td>REAL</td><td>Composite priority (0–100)</td></tr>
+    <tr><td><code>trl</code></td><td>INTEGER</td><td>Technology Readiness Level (1–9)</td></tr>
+    <tr><td><code>confidence</code></td><td>REAL</td><td>Source confidence score (0.0–1.0)</td></tr>
+    <tr><td><code>velocity</code></td><td>REAL</td><td>Score change rate per quarter</td></tr>
+    <tr><td><code>score_history</code></td><td>TEXT (JSON)</td><td>Historical score array</td></tr>
+    <tr><td><code>source_type</code></td><td>TEXT</td><td>Origin (arxiv, crossref, patent, news, static)</td></tr>
+    <tr><td><code>source_url</code></td><td>TEXT</td><td>URL to original document</td></tr>
+    <tr><td><code>trend_direction</code></td><td>TEXT</td><td>rising, stable, declining</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT</td><td>ISO timestamp</td></tr>
+  </tbody>
+</table>
+
+<h3>raw_sources — Immutable Ingestion Staging</h3>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>INTEGER PK</td><td>Auto-increment</td></tr>
+    <tr><td><code>fetcher</code></td><td>TEXT</td><td>Source API (arxiv, crossref, patent, news)</td></tr>
+    <tr><td><code>source_url</code></td><td>TEXT</td><td>Original document URL</td></tr>
+    <tr><td><code>title</code></td><td>TEXT</td><td>Document title</td></tr>
+    <tr><td><code>raw_data</code></td><td>TEXT</td><td>Complete JSON blob</td></tr>
+    <tr><td><code>processed</code></td><td>INTEGER</td><td>0 = unprocessed, 1 = processed</td></tr>
+  </tbody>
+</table>
+
+<h3>alerts — Breakout Detection Output</h3>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>alert_type</code></td><td>TEXT</td><td>velocity_spike, breakout, cluster_surge, momentum_accel</td></tr>
+    <tr><td><code>severity</code></td><td>TEXT</td><td>CRITICAL, WARNING, WATCH</td></tr>
+    <tr><td><code>confidence</code></td><td>REAL</td><td>Alert confidence (0.0–1.0)</td></tr>
+    <tr><td><code>data</code></td><td>TEXT (JSON)</td><td>Full alert context</td></tr>
+  </tbody>
+</table>
+
+<h2>4.3 Index Strategy</h2>
+<p>The schema includes <strong>28 production indexes</strong> optimized for high-frequency query patterns:</p>
+<ul>
+  <li><strong>Signals:</strong> Composite index on <code>(technology, cluster)</code>; descending on <code>priority_score</code>; index on <code>created_at DESC</code></li>
+  <li><strong>Alerts:</strong> Composite on <code>(acknowledged, created_at DESC)</code> for "unacknowledged, newest first" queries</li>
+  <li><strong>Raw Sources:</strong> Composite on <code>(fetcher, processed)</code> for pipeline staging queries</li>
+  <li><strong>Momentum:</strong> Composite on <code>(technology, year)</code> for time-series aggregation</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 5: INGESTION PIPELINE                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 5</span>Data Ingestion Pipeline</h1>
+
+<h2>5.1 Pipeline Architecture</h2>
+<p>The ingestion pipeline is orchestrated by <code>ingestionPipeline.ts</code>, executing a four-step cycle: <strong>Fetch → Process → Detect Breakouts → Detect Emergence.</strong></p>
+
+<h2>5.2 arXiv Fetcher</h2>
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>API Endpoint</td><td><code>https://export.arxiv.org/api/query</code></td></tr>
+    <tr><td>Categories</td><td>cs.AI, cs.RO, physics.optics, quant-ph, cs.CR, eess.SP</td></tr>
+    <tr><td>Rate Limiting</td><td>3-second delay between queries (arXiv minimum)</td></tr>
+    <tr><td>Batch Size</td><td>15 papers/category/cycle (90 total)</td></tr>
+    <tr><td>Sort Order</td><td>submittedDate descending</td></tr>
+    <tr><td>Parser</td><td>Regex-based Atom XML extraction</td></tr>
+  </tbody>
+</table>
+
+<h2>5.3 CrossRef Fetcher</h2>
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>API Endpoint</td><td><code>https://api.crossref.org/works</code></td></tr>
+    <tr><td>Queries</td><td>Neuromorphic processor, QKD, Solid-state lidar, 6G, Hypersonic propulsion, GaN amplifier, Autonomous swarm, Ambient backscatter, Post-quantum cryptography, Perovskite solar</td></tr>
+    <tr><td>Rate Limiting</td><td>1-second delay between queries</td></tr>
+    <tr><td>Batch Size</td><td>5 papers/query (50 total)</td></tr>
+    <tr><td>Filter</td><td>type: journal-article only</td></tr>
+    <tr><td>User-Agent</td><td><code>ARGUS/1.0</code> (CrossRef polite pool)</td></tr>
+  </tbody>
+</table>
+
+<h2>5.4 PatentsView Fetcher</h2>
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>API Endpoint</td><td><code>https://api.patentsview.org/patents/query</code></td></tr>
+    <tr><td>Method</td><td>POST with JSON body</td></tr>
+    <tr><td>Date Filter</td><td>Patents filed within last 2 years</td></tr>
+    <tr><td>Fields</td><td>patent_number, title, abstract, date, assignees, CPC codes</td></tr>
+    <tr><td>Rate Limiting</td><td>1.5-second delay between queries</td></tr>
+  </tbody>
+</table>
+
+<h2>5.5 RSS/News Fetcher</h2>
+<table>
+  <thead><tr><th>Feed</th><th>Source Type</th></tr></thead>
+  <tbody>
+    <tr><td>Defense News</td><td>defense-news</td></tr>
+    <tr><td>Breaking Defense</td><td>defense-news</td></tr>
+    <tr><td>IEEE Spectrum</td><td>ieee</td></tr>
+    <tr><td>TechCrunch AI</td><td>tech-news</td></tr>
+    <tr><td>arXiv CS.AI RSS</td><td>arxiv</td></tr>
+    <tr><td>arXiv quant-ph RSS</td><td>arxiv</td></tr>
+  </tbody>
+</table>
+<p>Dual parser supporting RSS&nbsp;2.0 (<code>&lt;item&gt;</code>) and Atom (<code>&lt;entry&gt;</code>) formats with CDATA handling.</p>
+
+<h2>5.6 Source Trust &amp; Validation</h2>
+
+<div class="formula">
+  <span class="label">Trust Score Equation</span>
+  TrustScore = BaseCredibility &times; RecencyMultiplier + CitationBoost<br>
+  <br>
+  RecencyMultiplier = max(0.5, 1 &minus; daysSincePublished / 360)<br>
+  CitationBoost = min(0.1, citationCount / 200)
+</div>
+
+<table>
+  <thead><tr><th>Source Type</th><th>Base Credibility</th></tr></thead>
+  <tbody>
+    <tr><td>Peer-reviewed</td><td>0.95</td></tr>
+    <tr><td>CrossRef</td><td>0.90</td></tr>
+    <tr><td>IEEE</td><td>0.88</td></tr>
+    <tr><td>arXiv</td><td>0.85</td></tr>
+    <tr><td>Patent</td><td>0.85</td></tr>
+    <tr><td>Defense News</td><td>0.80</td></tr>
+    <tr><td>Tech News</td><td>0.70</td></tr>
+    <tr><td>Press Release</td><td>0.55</td></tr>
+    <tr><td>Blog</td><td>0.40</td></tr>
+    <tr><td>Unknown</td><td>0.50</td></tr>
+  </tbody>
+</table>
+
+<h2>5.7 Deduplication Engine</h2>
+<div class="formula">
+  <span class="label">Jaccard Word-Set Similarity</span>
+  Similarity(A, B) = |WordSet(A) &cap; WordSet(B)| / |WordSet(A) &cup; WordSet(B)|<br>
+  <br>
+  Duplicate threshold = 0.75 (configurable)<br>
+  Normalization: lowercase &rarr; remove non-alphanumeric &rarr; collapse whitespace
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 6: ANALYTICAL ENGINES                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 6</span>Analytical Engines</h1>
+
+<p>ARGUS implements seven distinct analytical engines, each operating on the shared SQLite database:</p>
+
+<div class="engine-grid">
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge core">Core</span> Signal Extraction</div>
+    <p>26-keyword dictionary across 7 clusters with alias matching and TRL estimation.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge core">Core</span> Semantic Signal (LLM)</div>
+    <p>GPT-4o-mini semantic analysis with heuristic fallback for API-free operation.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge analysis">Analysis</span> Breakout Detection</div>
+    <p>Four algorithms: velocity spikes, breakout candidates, momentum acceleration, cluster surges.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge analysis">Analysis</span> Emergence Detector</div>
+    <p>Three-factor composite: publication acceleration (40%), vocabulary novelty (30%), convergence (30%).</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge analysis">Analysis</span> Momentum Engine</div>
+    <p>Weighted scoring: research (35%), patents (25%), citations (20%), funding (10%), startups (10%).</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge graph">Graph</span> Dependency Discovery</div>
+    <p>Builds co-occurrence graphs from corpus with Jaccard-like edge weighting.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge graph">Graph</span> Graph Pruning</div>
+    <p>Four-rule cleanup: threshold, temporal decay, minimum strength, per-node edge limits.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge forecast">Forecast</span> Horizon Engine</div>
+    <p>Deterministic temporal compression with non-linear impact and cascade amplification.</p>
+  </div>
+  <div class="engine-card">
+    <div class="engine-card-title"><span class="engine-badge forecast">Forecast</span> Monte Carlo Scenario</div>
+    <p>200-run simulation with Mulberry32 seeded PRNG for reproducible probabilistic forecasting.</p>
+  </div>
+</div>
+
+<h2>6.1 Signal Extraction Engine</h2>
+
+<h3>Technology Detection</h3>
+<p>A curated dictionary of <strong>26 technologies</strong> across 7 clusters, each with 3–4 aliases, is matched against input text using case-insensitive substring matching. Duplicate cluster hits from the same document are suppressed using a seen-set:</p>
+
+<table>
+  <thead><tr><th>Cluster</th><th>Technologies Tracked</th></tr></thead>
+  <tbody>
+    <tr><td>AI</td><td>Neural Network, LLM, Reinforcement Learning, Computer Vision, Generative AI, Edge AI</td></tr>
+    <tr><td>Autonomy</td><td>Autonomous Vehicle, Swarm Robotics, Solid-State Lidar, Robotic Autonomy</td></tr>
+    <tr><td>Semiconductors</td><td>Neuromorphic Processor, GaN-on-Diamond, Chiplet, 3nm/EUV</td></tr>
+    <tr><td>Communications</td><td>6G, Ambient Backscatter, Optical Wireless, Satellite Communication</td></tr>
+    <tr><td>Quantum</td><td>Quantum Computing, QKD, Quantum Sensing, Post-Quantum Cryptography</td></tr>
+    <tr><td>Hypersonics</td><td>Hypersonic Vehicle, Thermal Protection, Aerodynamic Heating</td></tr>
+    <tr><td>Energy</td><td>Solid-State Battery, Perovskite Solar, SMR, Hydrogen Fuel Cell</td></tr>
+  </tbody>
+</table>
+
+<h3>Automated TRL Estimation</h3>
+<table>
+  <thead><tr><th>TRL</th><th>Language Pattern</th><th>Example Terms</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Conceptual</td><td>concept, theoretical, proposed</td></tr>
+    <tr><td>2</td><td>Formulation</td><td>research, feasibility study</td></tr>
+    <tr><td>3</td><td>Proof-of-Concept</td><td>proof-of-concept, lab-validated</td></tr>
+    <tr><td>4</td><td>Prototype</td><td>prototype, breadboard, bench-test</td></tr>
+    <tr><td>5</td><td>Simulated Environment</td><td>pilot, relevant environment</td></tr>
+    <tr><td>6</td><td>Demonstrated</td><td>field-test, operational environment</td></tr>
+    <tr><td>7</td><td>System Prototype</td><td>pre-production, integration test</td></tr>
+    <tr><td>8</td><td>Qualified</td><td>flight-ready, mission-qualified</td></tr>
+    <tr><td>9</td><td>Operational</td><td>deployed, production, fielded</td></tr>
+  </tbody>
+</table>
+
+<h2>6.2 Breakout Detection Engine</h2>
+
+<h3>Algorithm 1: Velocity Spike Detection</h3>
+<p>Computes ratio of recent velocity to historical average. Severity thresholds:</p>
+<table>
+  <thead><tr><th>Ratio</th><th>Severity</th></tr></thead>
+  <tbody>
+    <tr><td>> 1.8</td><td>CRITICAL</td></tr>
+    <tr><td>> 1.5</td><td>WARNING</td></tr>
+    <tr><td>> 1.3</td><td>WATCH</td></tr>
+  </tbody>
+</table>
+
+<h3>Algorithm 2: Breakout Candidate Identification</h3>
+<p>Identifies signals exhibiting: recent velocity > 0.05, TRL ≥ 5, priority ≥ 80. Score = recentVelocity × 100 × TRL. Always classified as CRITICAL.</p>
+
+<h3>Algorithm 3: Momentum Acceleration</h3>
+<p>Compares first-half vs. second-half average velocity. Triggers at ratio > 1.5 with minimum 5 data points.</p>
+
+<h3>Algorithm 4: Cluster Surge Detection</h3>
+<p>Aggregates per-cluster velocities. Triggers when surgeRatio > 0.5 AND avgVelocity > 0.04.</p>
+
+<h2>6.3 Emergence Detector</h2>
+<div class="formula">
+  <span class="label">Emergence Composite Score</span>
+  early_signal_score = publication_acceleration &times; 0.4 + vocabulary_novelty &times; 0.3 + cross_domain_links &times; 0.3
+</div>
+
+<h3>Factor 1: Publication Acceleration (40%)</h3>
+<div class="formula">
+  <span class="label">Weighted Year-over-Year Growth</span>
+  weightedAvgGrowth = &Sigma;(growthRate[i] &times; (i+1)) / &Sigma;(i+1)<br>
+  Normalized to [0, 1] where >100% growth &rarr; 1.0
+</div>
+
+<h3>Factor 2: Vocabulary Novelty (30%)</h3>
+<div class="formula">
+  <span class="label">TF-IDF Inspired Novelty</span>
+  novelty = (TF &times; IDF &times; 10) &times; (0.4 + 0.6 &times; recencyRatio)<br>
+  TF = technology_mentions / total_signals<br>
+  IDF = log(totalTechCount / matchingSignals)<br>
+  recencyRatio = signals_last_6_months / total_signals
+</div>
+
+<h3>Factor 3: Cross-Domain Convergence (30%)</h3>
+<p>Technologies spanning 5+ distinct domains receive maximum convergence score (1.0).</p>
+
+<h3>Status Transitions</h3>
+<table>
+  <thead><tr><th>Score</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>&ge; 0.7</td><td>Confirmed</td></tr>
+    <tr><td>0.3 &ndash; 0.7</td><td>Emerging</td></tr>
+    <tr><td>&lt; 0.3</td><td>Faded</td></tr>
+  </tbody>
+</table>
+
+<h2>6.4 Deterministic Horizon Engine</h2>
+
+<div class="callout technical">
+  <div class="callout-title">Design Constraint</div>
+  <p>All outputs are deterministic — no stochastic or heuristic elements are permitted in the core engine. Factor weights are governance-locked and require institutional review to alter.</p>
+</div>
+
+<table>
+  <thead><tr><th>Factor</th><th>Weight</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>Variance Magnitude</td><td>0.35</td><td>|Observed &minus; Projected| / Tolerance Band</td></tr>
+    <tr><td>Velocity Delta</td><td>0.30</td><td>Signal Velocity &Delta; normalized (0–1)</td></tr>
+    <tr><td>Dependency Exposure</td><td>0.20</td><td>Cross-domain exposure % (0–1)</td></tr>
+    <tr><td>Confidence Decay</td><td>0.15</td><td>Confidence drop since issuance (0–1)</td></tr>
+  </tbody>
+</table>
+<p class="table-caption">Weight validation: 0.35 + 0.30 + 0.20 + 0.15 = 1.00</p>
+
+<div class="formula">
+  <span class="label">Non-Linear Impact Function</span>
+  impact(weight, factor) = weight &times; factor &times; (1 + factor&sup2;)<br>
+  <br>
+  factor = 0.1 &rarr; multiplier &asymp; 1.01 (nearly linear)<br>
+  factor = 0.5 &rarr; multiplier = 1.25 (mild amplification)<br>
+  factor = 0.9 &rarr; multiplier = 1.81 (strong amplification)
+</div>
+
+<div class="formula">
+  <span class="label">Horizon Computation</span>
+  &Delta;H = min(1.0, shiftFactor) &times; BaseHorizon<br>
+  NewHorizon = max(0, 12 &minus; &Delta;H)<br>
+  <br>
+  Cascade Amplification: if variance > 0.6 AND dependency > 0.6 &rarr; shiftFactor &times;= 1.25
+</div>
+
+<h3>Escalation Triggers</h3>
+<ol>
+  <li><strong>Horizon Compression:</strong> Horizon &le; 6 months</li>
+  <li><strong>Sustained Pressure:</strong> Allocation Pressure &ge; 0.78 for 2 consecutive cycles</li>
+</ol>
+
+<h2>6.5 Monte Carlo Scenario Engine</h2>
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>PRNG Algorithm</td><td>Mulberry32 (seeded, deterministic)</td></tr>
+    <tr><td>Noise Model</td><td>&plusmn;10% Gaussian-like (intensity: 0.2)</td></tr>
+    <tr><td>Default Runs</td><td>200</td></tr>
+    <tr><td>Statistical Output</td><td>Mean, Median, Min, Max, P10, P90, StdDev, Collapse Risk</td></tr>
+    <tr><td>Collapse Threshold</td><td>P(horizon &le; 6 months)</td></tr>
+    <tr><td>Reproducibility</td><td>Same seed always produces identical results</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 7: GOVERNANCE                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 7</span>Governance &amp; Accountability Framework</h1>
+
+<h2>7.1 Decision Ledger</h2>
+<p>Every governance action generates a <code>DecisionEvent</code> linking <strong>WHO → WHEN → WHAT → OUTCOME:</strong></p>
+
+<table>
+  <thead><tr><th>Field</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>decisionId</code></td><td>Server-generated unique ID</td></tr>
+    <tr><td><code>cycleId</code></td><td>Governance cycle reference</td></tr>
+    <tr><td><code>actor</code></td><td>User identifier</td></tr>
+    <tr><td><code>role</code></td><td>Analyst | Allocator | Admin</td></tr>
+    <tr><td><code>action</code></td><td>INITIATE_REVIEW | SUBMIT_DECISION | REVIEW_EXPIRED | GOVERNANCE_MUTATION_APPLIED</td></tr>
+    <tr><td><code>stateBefore</code></td><td>System state before decision (pressure, horizon)</td></tr>
+    <tr><td><code>stateAfter</code></td><td>System state after decision (or null if pending)</td></tr>
+  </tbody>
+</table>
+
+<h2>7.2 Institutional State Provider</h2>
+<p>A React context provider managing two isolated state slices:</p>
+<ol>
+  <li><strong>Engine Slice:</strong> Purely derived from base factors + governance mutation booleans. Memoized. Recomputes at most twice per review session.</li>
+  <li><strong>Governance Slice:</strong> Owns institutional memory. Hydrates from <code>/api/governance</code> on mount with static fallback. Auto-posts governance events when review sessions end.</li>
+</ol>
+
+<h2>7.3 Event Bus Architecture</h2>
+<table>
+  <thead><tr><th>Event</th><th>Trigger</th></tr></thead>
+  <tbody>
+    <tr><td>REVIEW_INITIATED</td><td>Governance review begins</td></tr>
+    <tr><td>REVIEW_SUBMITTED</td><td>Decision submitted within window</td></tr>
+    <tr><td>REVIEW_EXPIRED</td><td>Window closed without action</td></tr>
+    <tr><td>ARTIFACT_EXPORTED</td><td>Institutional record exported</td></tr>
+    <tr><td>GOVERNANCE_MUTATION</td><td>Engine mutation applied</td></tr>
+    <tr><td>SCENARIO_MONTE_CARLO_FINISHED</td><td>Monte Carlo batch completes</td></tr>
+  </tbody>
+</table>
+
+<h2>7.4 Cryptographic Export Engine</h2>
+<ol>
+  <li><strong>Freeze:</strong> All mutable state frozen via <code>structuredClone()</code></li>
+  <li><strong>Sign:</strong> Payload POSTed to <code>/api/export</code> for SHA-256 digest computation</li>
+  <li><strong>Package:</strong> Metadata + Payload + Signature bundled as downloadable JSON artifact</li>
+  <li><strong>Download:</strong> Browser triggers file save with timestamped filename</li>
+</ol>
+
+<h2>7.5 Intelligence Brief Generator</h2>
+<p>Automated strategic reports containing: summary metrics, top-5 breakout signals, per-cluster activity status (Hot/Active/Monitoring), ingestion statistics, and auto-generated recommendations. Exportable as formatted Markdown.</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 8: FRONTEND ARCHITECTURE                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 8</span>Frontend Architecture</h1>
+
+<h2>8.1 Design Philosophy</h2>
+<p>
+  The ARGUS frontend adopts an <strong>editorial, institutional aesthetic</strong> inspired by premier think-tank publications (<em>Foreign Affairs</em>, <em>The Economist</em>, Brookings Institution Reports). The philosophy explicitly rejects common SaaS patterns in favor of typographic hierarchy, serif/sans-serif pairings, warm muted palettes, and high information density.
+</p>
+
+<h2>8.2 Design System — CSS Token Architecture</h2>
+<table>
+  <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>--background</code></td><td style="background:#FEF9ED;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#FEF9ED — Warm cream base</td></tr>
+    <tr><td><code>--accent</code></td><td style="background:#C4684B;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#C4684B — Warm terracotta</td></tr>
+    <tr><td><code>--accent-deep</code></td><td style="background:#A0462A;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#A0462A — Strong data highlight</td></tr>
+    <tr><td><code>--ink-primary</code></td><td style="background:#2E2A26;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#2E2A26 — Main headings</td></tr>
+    <tr><td><code>--ink-secondary</code></td><td style="background:#4A433E;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#4A433E — Body text</td></tr>
+    <tr><td><code>--ink-tertiary</code></td><td style="background:#6B625C;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#6B625C — Labels, metadata</td></tr>
+    <tr><td><code>--border-soft</code></td><td style="background:#E6DED6;width:20px;height:20px;display:inline-block;border:1px solid #ddd;vertical-align:middle;border-radius:3px;"></td><td>#E6DED6 — Section separators</td></tr>
+  </tbody>
+</table>
+
+<h2>8.3 Navigation Architecture</h2>
+<table>
+  <thead><tr><th>Section</th><th>Routes</th><th>Mental Model</th></tr></thead>
+  <tbody>
+    <tr><td><strong>COMMAND</strong></td><td>Overview, Command, Decisions, Calibration</td><td>Oversight &amp; Governance</td></tr>
+    <tr><td><strong>FORECASTING &amp; SIGNALS</strong></td><td>Intelligence, Signals, Emergence, Trajectories</td><td>Intelligence Collection</td></tr>
+    <tr><td><strong>CAPABILITY &amp; IMPACT</strong></td><td>Simulation, Assessment, Capabilities, TRL</td><td>Validation &amp; Assessment</td></tr>
+    <tr><td><strong>INSTITUTIONAL CORPUS</strong></td><td>Research, Analysis, Corpus, Archive</td><td>Reference &amp; Memory</td></tr>
+  </tbody>
+</table>
+<p><strong>Desktop:</strong> Persistent 280px sidebar, fixed left. <strong>Mobile:</strong> Drawer overlay with backdrop blur. <strong>Active state:</strong> font-weight 600, no background fills.</p>
+
+<h2>8.4 Role-Based Access Control</h2>
+<table>
+  <thead><tr><th>Role</th><th>Access Level</th><th>Gated Routes</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Analyst</strong></td><td>Read-only intelligence views</td><td>—</td></tr>
+    <tr><td><strong>Allocator</strong></td><td>Resource allocation decisions</td><td>Decisions, Simulation</td></tr>
+    <tr><td><strong>Admin</strong></td><td>Full system access</td><td>Calibration + all above</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 9: DEPLOYMENT                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 9</span>Deployment Infrastructure</h1>
+
+<h2>9.1 Docker Containerization</h2>
+<pre><code><span class="code-keyword">FROM</span> node:20-alpine
+<span class="code-keyword">RUN</span> apk add --no-cache python3 make g++  <span class="code-comment"># Required for better-sqlite3 native bindings</span>
+<span class="code-keyword">WORKDIR</span> /app
+<span class="code-keyword">COPY</span> package*.json ./
+<span class="code-keyword">RUN</span> npm ci
+<span class="code-keyword">COPY</span> . .
+<span class="code-keyword">RUN</span> npm run build
+<span class="code-keyword">RUN</span> mkdir -p /app/data
+<span class="code-keyword">EXPOSE</span> <span class="code-number">3005</span>
+<span class="code-keyword">CMD</span> [<span class="code-string">"npm"</span>, <span class="code-string">"start"</span>]</code></pre>
+
+<h2>9.2 CI/CD Pipeline</h2>
+<div class="diagram">
+  <div class="diagram-title">Figure 9.1 — Continuous Deployment Flow</div>
+  <div class="pipeline">
+    <div class="pipeline-node source">Git Push to <code>main</code> Branch</div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node process">GitHub Webhook Triggers Render Auto-Deploy</div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node process">Docker Build: npm ci &rarr; npm run build &rarr; mkdir /app/data</div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node store">Persistent Disk Mounts at /app/data (1 GB)</div>
+    <div class="pipeline-arrow">&#9660;</div>
+    <div class="pipeline-node analyze">Application Live at argus-platform.onrender.com</div>
+  </div>
+</div>
+
+<h2>9.3 Database Persistence</h2>
+<div class="callout note">
+  <div class="callout-title">Persistence Architecture</div>
+  <p>Render's default model rebuilds containers from scratch on each deploy. Without a persistent disk, SQLite data is lost. A Render Disk mounted at <code>/app/data</code> (1 GB) ensures the database survives redeployments. An external cron service POSTs to <code>/api/ingest</code> every 6 hours to maintain continuous data ingestion.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 10: RESULTS                                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 10</span>Results &amp; Discussion</h1>
+
+<h2>10.1 Ingestion Performance</h2>
+<table>
+  <thead><tr><th>Fetcher</th><th>Records Fetched</th><th>Signals Created</th><th>Duration (ms)</th><th>Error Rate</th></tr></thead>
+  <tbody>
+    <tr><td>arXiv</td><td>90</td><td>5</td><td>21,901</td><td>0%</td></tr>
+    <tr><td>CrossRef</td><td>50</td><td>12</td><td>13,789</td><td>0%</td></tr>
+    <tr><td>PatentsView</td><td>0</td><td>0</td><td>1,037</td><td>0%</td></tr>
+    <tr><td>News (RSS)</td><td>40</td><td>0</td><td>4,057</td><td>0%</td></tr>
+    <tr style="font-weight:700;background:var(--color-bg-alt)"><td>Total</td><td>180</td><td>17</td><td>40,784</td><td>0%</td></tr>
+  </tbody>
+</table>
+
+<h3>Key Observations</h3>
+<ol>
+  <li><strong>CrossRef highest conversion rate (24%):</strong> Journal articles contain more specific technology signals than preprints.</li>
+  <li><strong>arXiv largest volume but lower conversion (5.6%):</strong> Many papers are tangential to monitored clusters.</li>
+  <li><strong>PatentsView zero results:</strong> API availability issues during test cycle.</li>
+  <li><strong>News sources zero signals:</strong> Keyword dictionary optimized for academic abstracts, not news headlines.</li>
+</ol>
+
+<h2>10.2 Signal Quality</h2>
+<ul>
+  <li><strong>Average confidence:</strong> 0.76–0.92 depending on source type</li>
+  <li><strong>TRL distribution:</strong> Majority at TRL 2–4, consistent with academic source bias</li>
+  <li><strong>Cluster coverage:</strong> AI and Quantum dominate initial ingestion</li>
+</ul>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 11: LIMITATIONS                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 11</span>Current Limitations</h1>
+
+<ol>
+  <li><strong>Single-Node SQLite:</strong> Does not scale horizontally. PostgreSQL migration required for >1M signals.</li>
+  <li><strong>PatentsView API Instability:</strong> Intermittent availability results in zero patent data during some cycles.</li>
+  <li><strong>LLM Dependency:</strong> Without an OpenAI API key, falls back to keyword-only extraction with reduced specificity.</li>
+  <li><strong>No Real Authentication:</strong> RBAC uses client-side role switching. Production requires OAuth2 integration.</li>
+  <li><strong>Ephemeral Database:</strong> Without Render persistent disk, data is lost on redeployment.</li>
+  <li><strong>Limited Momentum Data:</strong> Funding and startup indicators are hardcoded to zero, awaiting Crunchbase/PitchBook integration.</li>
+  <li><strong>News Signal Conversion:</strong> Dictionary optimized for academic abstracts; news uses different terminology.</li>
+  <li><strong>English Only:</strong> Research in Chinese, German, or Japanese (significant in semiconductor/quantum) is not captured.</li>
+  <li><strong>Static Base Factors:</strong> Horizon Engine factors are hardcoded rather than derived from live system state.</li>
+  <li><strong>Mock Verification:</strong> Client-side export verification returns mock <code>true</code>, pending server-side endpoint.</li>
+</ol>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 12: FUTURE SCOPE                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 12</span>Future Scope</h1>
+
+<h2>12.1 Short-Term (3–6 Months)</h2>
+<ol>
+  <li><span class="status-dot active"></span><strong>PostgreSQL Migration</strong> — Horizontal scalability, full-text search via <code>tsvector</code></li>
+  <li><span class="status-dot active"></span><strong>Authentication Integration</strong> — Firebase Auth or Clerk with OAuth2</li>
+  <li><span class="status-dot active"></span><strong>Multi-LLM Support</strong> — Gemini Pro and Claude alongside OpenAI</li>
+  <li><span class="status-dot active"></span><strong>WebSocket Updates</strong> — Push new signals to clients in real-time</li>
+  <li><span class="status-dot active"></span><strong>News NLP Enhancement</strong> — Lightweight NER model for defense/tech news</li>
+</ol>
+
+<h2>12.2 Medium-Term (6–12 Months)</h2>
+<ol>
+  <li><span class="status-dot planned"></span><strong>GraphRAG Integration</strong> — Natural language queries over the knowledge graph with evidence-cited responses</li>
+  <li><span class="status-dot planned"></span><strong>Temporal Knowledge Graph</strong> — Time dimensions on graph edges for relationship evolution</li>
+  <li><span class="status-dot planned"></span><strong>Investment Data</strong> — Crunchbase/PitchBook APIs for funding and venture data</li>
+  <li><span class="status-dot planned"></span><strong>Collaborative Annotation</strong> — Analyst-in-the-loop feedback mechanism</li>
+  <li><span class="status-dot planned"></span><strong>Multi-Language Ingestion</strong> — Chinese, German, Japanese source support</li>
+</ol>
+
+<h2>12.3 Long-Term (12–24 Months)</h2>
+<ol>
+  <li><span class="status-dot research"></span><strong>Predictive TRL Model</strong> — ML model predicting TRL advancement probabilities</li>
+  <li><span class="status-dot research"></span><strong>Automated Policy Briefs</strong> — LLM-generated weekly briefs for stakeholder audiences</li>
+  <li><span class="status-dot research"></span><strong>Digital Twin Integration</strong> — Supply chain impact modeling</li>
+  <li><span class="status-dot research"></span><strong>Multi-Tenant SaaS</strong> — Isolated databases per organization</li>
+  <li><span class="status-dot research"></span><strong>Formal Verification</strong> — Mathematical proofs for Horizon Engine bounds</li>
+</ol>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 13: CONCLUSION                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 13</span>Conclusion</h1>
+
+<p>
+  ARGUS demonstrates that a comprehensive, autonomous technology intelligence platform can be architected and deployed as a full-stack web application using modern open-source technologies. The system successfully:
+</p>
+
+<ol>
+  <li><strong>Ingests real data</strong> from four heterogeneous external sources, processing 180+ records per cycle with zero errors.</li>
+  <li><strong>Extracts structured signals</strong> through a hybrid pipeline combining keyword-dictionary matching with optional LLM semantic analysis, achieving a 9.4% signal extraction rate.</li>
+  <li><strong>Detects emergent technologies</strong> using a novel three-factor composite model designed to identify signals 2–3 years before mainstream breakout.</li>
+  <li><strong>Enables probabilistic forecasting</strong> through a Monte Carlo simulation engine with deterministic reproducibility.</li>
+  <li><strong>Provides institutional accountability</strong> through a governance framework with cryptographic signing and an auditable decision ledger.</li>
+  <li><strong>Presents intelligence</strong> through 16 specialized dashboard views organized in a four-section Intelligence Cycle information architecture.</li>
+</ol>
+
+<p>
+  The platform's limitations — primarily around data source breadth, authentication maturity, and database scalability — represent engineering constraints addressable through incremental improvement rather than architectural redesign. The core analytical engines are architecturally sound and mathematically rigorous. ARGUS represents a viable foundation for a next-generation technology intelligence platform bridging the gap between academic signal detection methodologies and the operational needs of strategic decision-makers.
+</p>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 14: REFERENCES                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Chapter 14</span>References</h1>
+
+<ol class="reference-list">
+  <li>Mankins, J. C. (1995). "Technology Readiness Levels: A White Paper." NASA Office of Space Access and Technology.</li>
+  <li>Kerr, C. I. V., Mortara, L., Phaal, R., &amp; Probert, D. R. (2006). "A Conceptual Model for Technology Intelligence." <em>International Journal of Technology Intelligence and Planning</em>, 2(1), 73–93.</li>
+  <li>Government Office for Science, UK. (2017). "Futures Toolkit: Tools for Futures Thinking and Foresight Across UK Government."</li>
+  <li>Metropolis, N., &amp; Ulam, S. (1949). "The Monte Carlo Method." <em>Journal of the American Statistical Association</em>, 44(247), 335–341.</li>
+  <li>Chen, H., Zhang, G., Zhu, D., &amp; Lu, J. (2019). "Topic-Based Technological Forecasting Based on Patent Data." <em>Technological Forecasting and Social Change</em>, 119, 39–52.</li>
+  <li>NASA. (1974). "Technology Readiness Assessment Guide." NASA SP-3000.</li>
+  <li>DARPA. (2023). "Forward-Looking Research Methodologies for Emerging Technology Detection."</li>
+  <li>European Commission. (2014). "Horizon 2020 Work Programme — General Annexes: G. Technology Readiness Levels."</li>
+  <li>OpenAI. (2024). "GPT-4o-mini Technical Overview." OpenAI Technical Documentation.</li>
+  <li>Cornell University. (2024). "arXiv API User's Manual." arXiv.org.</li>
+  <li>CrossRef. (2025). "CrossRef REST API Documentation." crossref.org/documentation.</li>
+  <li>USPTO. (2025). "PatentsView API v3 Documentation." patentsview.org.</li>
+</ol>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 15: APPENDICES                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section-break"></div>
+<h1><span class="chapter-num">Appendix A</span>Technology Keyword Dictionary</h1>
+
+<table>
+  <thead><tr><th>#</th><th>Technology</th><th>Cluster</th><th>Aliases</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Neural Network</td><td>AI</td><td>deep learning, neural net, deep neural</td></tr>
+    <tr><td>2</td><td>Large Language Model</td><td>AI</td><td>llm, language model, gpt, transformer model</td></tr>
+    <tr><td>3</td><td>Reinforcement Learning</td><td>AI</td><td>rl, reward learning, policy gradient</td></tr>
+    <tr><td>4</td><td>Computer Vision</td><td>AI</td><td>object detection, image recognition, visual perception</td></tr>
+    <tr><td>5</td><td>Generative AI</td><td>AI</td><td>generative model, diffusion model, gen ai</td></tr>
+    <tr><td>6</td><td>Edge AI</td><td>AI</td><td>on-device ai, edge intelligence, tinyml</td></tr>
+    <tr><td>7</td><td>Autonomous Vehicle</td><td>Autonomy</td><td>self-driving, autonomous driving, driverless</td></tr>
+    <tr><td>8</td><td>Swarm Robotics</td><td>Autonomy</td><td>drone swarm, multi-robot, swarm intelligence</td></tr>
+    <tr><td>9</td><td>Solid-State Lidar</td><td>Autonomy</td><td>lidar, laser ranging, 3d scanning</td></tr>
+    <tr><td>10</td><td>Robotic Autonomy</td><td>Autonomy</td><td>autonomous robot, unmanned system, uas, uav</td></tr>
+    <tr><td>11</td><td>Neuromorphic Processor</td><td>Semiconductors</td><td>neuromorphic chip, spiking neural, brain-inspired chip</td></tr>
+    <tr><td>12</td><td>GaN-on-Diamond</td><td>Semiconductors</td><td>gallium nitride, gan rf, gan power, wide bandgap</td></tr>
+    <tr><td>13</td><td>Chiplet</td><td>Semiconductors</td><td>chiplet architecture, heterogeneous integration, advanced packaging</td></tr>
+    <tr><td>14</td><td>3nm</td><td>Semiconductors</td><td>2nm, sub-5nm, extreme ultraviolet, euv lithography</td></tr>
+    <tr><td>15</td><td>6G</td><td>Communications</td><td>sixth generation, 6g network, terahertz communication</td></tr>
+    <tr><td>16</td><td>Ambient Backscatter</td><td>Communications</td><td>backscatter communication, passive communication, rf harvesting</td></tr>
+    <tr><td>17</td><td>Optical Wireless</td><td>Communications</td><td>free-space optical, li-fi, visible light communication</td></tr>
+    <tr><td>18</td><td>Satellite Communication</td><td>Communications</td><td>satcom, leo constellation, starlink, non-terrestrial</td></tr>
+    <tr><td>19</td><td>Quantum Computing</td><td>Quantum</td><td>qubit, quantum processor, quantum supremacy</td></tr>
+    <tr><td>20</td><td>Quantum Key Distribution</td><td>Quantum</td><td>qkd, quantum encryption, quantum cryptography</td></tr>
+    <tr><td>21</td><td>Quantum Sensing</td><td>Quantum</td><td>quantum sensor, quantum magnetometer, quantum radar</td></tr>
+    <tr><td>22</td><td>Post-Quantum</td><td>Quantum</td><td>post-quantum cryptography, lattice-based, pqc</td></tr>
+    <tr><td>23</td><td>Hypersonic</td><td>Hypersonics</td><td>hypersonic vehicle, scramjet, mach 5+</td></tr>
+    <tr><td>24</td><td>Solid-State Battery</td><td>Energy</td><td>solid electrolyte, all-solid-state, lithium metal</td></tr>
+    <tr><td>25</td><td>Perovskite Solar</td><td>Energy</td><td>perovskite photovoltaic, tandem solar cell</td></tr>
+    <tr><td>26</td><td>Small Modular Reactor</td><td>Energy</td><td>smr, micro reactor, molten salt reactor</td></tr>
+  </tbody>
+</table>
+
+<div class="section-break"></div>
+<h1><span class="chapter-num">Appendix B</span>API Route Reference</h1>
+
+<table>
+  <thead><tr><th>Method</th><th>Route</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>POST</td><td><code>/api/ingest</code></td><td>Trigger manual ingestion cycle</td></tr>
+    <tr><td>GET</td><td><code>/api/signals</code></td><td>Fetch all signals ordered by priority</td></tr>
+    <tr><td>GET</td><td><code>/api/emergence</code></td><td>Fetch emerging signals</td></tr>
+    <tr><td>GET</td><td><code>/api/momentum</code></td><td>Fetch momentum aggregates</td></tr>
+    <tr><td>GET</td><td><code>/api/actors</code></td><td>Fetch technology actors</td></tr>
+    <tr><td>GET</td><td><code>/api/dependencies</code></td><td>Fetch dependency graph</td></tr>
+    <tr><td>GET</td><td><code>/api/intelligence</code></td><td>Fetch intelligence feed</td></tr>
+    <tr><td>GET</td><td><code>/api/reports</code></td><td>Generate strategic brief</td></tr>
+    <tr><td>GET/POST</td><td><code>/api/governance</code></td><td>Read/write governance events</td></tr>
+    <tr><td>POST</td><td><code>/api/export</code></td><td>Sign and export institutional record</td></tr>
+    <tr><td>GET/POST</td><td><code>/api/decisions</code></td><td>Read/write decision ledger</td></tr>
+    <tr><td>GET</td><td><code>/api/timelines</code></td><td>Fetch technology timelines</td></tr>
+  </tbody>
+</table>
+
+<div class="section-break"></div>
+<h1><span class="chapter-num">Appendix C</span>Horizon Engine — Mathematical Proofs</h1>
+
+<div class="formula">
+  <span class="label">Proof 1 — Weight Sum</span>
+  W<sub>variance</sub> + W<sub>velocity</sub> + W<sub>dependency</sub> + W<sub>confidenceDecay</sub><br>
+  = 0.35 + 0.30 + 0.20 + 0.15<br>
+  = <strong>1.00 &#10003;</strong>
+</div>
+
+<div class="formula">
+  <span class="label">Proof 2 — Bounded Shift Factor</span>
+  &forall; factors &isin; [0,1]&sup4;:<br>
+  &emsp;shiftFactor = &Sigma; nonlinearImpact(w<sub>i</sub>, f<sub>i</sub>) &le; &Sigma; w<sub>i</sub> &times; 1 &times; (1 + 1&sup2;) = 2.00<br>
+  &emsp;After cascade amplification (&times;1.25): &le; 2.50<br>
+  &emsp;After bounding: min(1.00, shiftFactor) &le; <strong>1.00 &#10003;</strong><br>
+  <br>
+  &there4; &Delta;H &isin; [0, 12] months<br>
+  &there4; NewHorizon &isin; [0, 12] months
+</div>
+
+<div class="formula">
+  <span class="label">Proof 3 — Governance Mutation Bounds</span>
+  Penalty: confidenceDrop &isin; [0, 1] (clamped) &#10003;<br>
+  &emsp;&emsp;&emsp;&emsp;&ensp;varianceMagnitude &isin; [0, 1] (clamped) &#10003;<br>
+  Reward: confidenceDrop &isin; [0, 1] (clamped) &#10003;<br>
+  &emsp;&emsp;&emsp;&emsp;&ensp;varianceMagnitude &isin; [0, 1] (clamped) &#10003;<br>
+  <br>
+  &there4; <strong>No unbounded accumulation possible across cycles &#10003;</strong>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  FOOTER                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="ornamental-break">&bull; &bull; &bull;</div>
+
+<div class="metric-row" style="margin-top:2rem">
+  <div class="metric-card"><div class="metric-value">45+</div><div class="metric-label">Source Files</div></div>
+  <div class="metric-card"><div class="metric-value">15K+</div><div class="metric-label">Lines of Code</div></div>
+  <div class="metric-card"><div class="metric-value">10</div><div class="metric-label">Database Tables</div></div>
+  <div class="metric-card"><div class="metric-value">28</div><div class="metric-label">Production Indexes</div></div>
+  <div class="metric-card"><div class="metric-value">12</div><div class="metric-label">API Routes</div></div>
+</div>
+
+<div class="report-footer">
+  <div class="footer-line"><strong>&copy; 2026 Virendra Mahajan</strong></div>
+  <div class="footer-line">All rights reserved.</div>
+  <div class="footer-line" style="margin-top:0.5rem;font-family:var(--font-mono);letter-spacing:0.1em;">ARGUS v1.2 — Strategic Technology Intelligence Platform</div>
+</div>
+
+<div style="height:80px"></div><!-- spacer for download bar -->
+
+</body>
+</html>

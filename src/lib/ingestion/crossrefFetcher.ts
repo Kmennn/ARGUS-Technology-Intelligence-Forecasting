@@ -18,6 +18,16 @@ const TECH_QUERIES = [
   "ambient backscatter",
   "post-quantum cryptography",
   "perovskite solar cell",
+  "directed energy weapon",
+  "scramjet propulsion",
+  "unmanned aerial vehicle",
+  "synthetic biology defense",
+  "critical minerals supply chain",
+  "satellite constellation",
+  "electronic warfare",
+  "artificial general intelligence",
+  "chip fabrication",
+  "rare earth processing",
 ];
 
 interface CrossRefItem {
