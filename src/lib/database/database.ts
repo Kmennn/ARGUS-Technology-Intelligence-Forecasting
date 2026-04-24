@@ -387,3 +387,42 @@ export function getAllTrackedTechnologies(): Array<{ technology: string; year: n
   `).all() as Array<{ technology: string; year: number; research_count: number; patent_count: number }>;
 }
 
+export interface DbUser {
+  id: number;
+  email: string;
+  password_hash: string;
+  role: 'admin' | 'allocator' | 'analyst';
+  display_name: string | null;
+}
+
+export function getUserByEmail(email: string): DbUser | null {
+  const row = getDb()
+    .prepare("SELECT id, email, password_hash, role, display_name FROM users WHERE email = ?")
+    .get(email.toLowerCase()) as DbUser | undefined;
+  return row ?? null;
+}
+
+export function upsertUser(
+  email: string,
+  passwordHash: string,
+  role: 'admin' | 'allocator' | 'analyst',
+  displayName: string
+): void {
+  getDb()
+    .prepare(`
+      INSERT INTO users (email, password_hash, role, display_name)
+      VALUES (?, ?, ?, ?)
+      ON CONFLICT(email) DO UPDATE SET
+        password_hash = excluded.password_hash,
+        role = excluded.role,
+        display_name = excluded.display_name
+    `)
+    .run(email.toLowerCase(), passwordHash, role, displayName);
+}
+
+export function updateLastLogin(userId: number): void {
+  getDb()
+    .prepare("UPDATE users SET last_login = datetime('now') WHERE id = ?")
+    .run(userId);
+}
+

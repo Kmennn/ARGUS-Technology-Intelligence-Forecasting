@@ -29,6 +29,8 @@ export const metadata: Metadata = {
     "Comprehensive technology intelligence, TRL assessment, and strategic forecasting for defense and research organizations.",
 };
 
+import { Providers } from './providers';
+
 export default function RootLayout({
   children,
 }: {
@@ -37,7 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${libreBaskerville.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <Providers>
+          <AuthProvider>{children}</AuthProvider>
+        </Providers>
       </body>
     </html>
   );

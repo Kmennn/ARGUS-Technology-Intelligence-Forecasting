@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "@/context/AuthProvider";
+import { useSession, signOut } from 'next-auth/react';
 
 export function GlobalNav() {
-  const { role } = useAuth();
+  const { data: session } = useSession();
+  const role = (session?.user as { role?: string } | undefined)?.role;
 
   return (
     <nav className="w-full">
@@ -80,12 +81,27 @@ export function GlobalNav() {
         </div>
 
         <div className="flex min-w-0 items-center justify-end gap-3 overflow-hidden whitespace-nowrap pl-4 xl:gap-5">
-           <div className="flex items-center gap-2">
-             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-             <span className="text-[10px] uppercase tracking-widest text-[var(--ink-tertiary)] font-mono">
-               System Live // {role || "(unassigned)"}
-             </span>
-           </div>
+           {role && (
+             <div className="flex items-center gap-3">
+               <span
+                 className="text-[10px] tracking-widest font-medium px-2 py-1 rounded uppercase"
+                 style={{
+                   color: role === 'admin' ? 'var(--accent)' : 'var(--ink-tertiary)',
+                   background: 'var(--background-muted)',
+                   border: '1px solid var(--border)',
+                 }}
+               >
+                 {role}
+               </span>
+               <button
+                 onClick={() => signOut({ callbackUrl: '/login' })}
+                 className="text-[11px] uppercase tracking-widest hover:text-[var(--ink-primary)] transition-colors"
+                 style={{ color: 'var(--ink-tertiary)' }}
+               >
+                 Sign out
+               </button>
+             </div>
+           )}
         </div>
       </div>
     </nav>

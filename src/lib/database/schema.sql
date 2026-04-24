@@ -177,3 +177,16 @@ CREATE TABLE IF NOT EXISTS emerging_signals (
 
 CREATE INDEX IF NOT EXISTS idx_emerging_score ON emerging_signals(early_signal_score DESC);
 CREATE INDEX IF NOT EXISTS idx_emerging_status ON emerging_signals(status);
+
+-- Users table for authentication
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL CHECK(role IN ('admin', 'allocator', 'analyst')),
+  display_name TEXT,
+  created_at TEXT DEFAULT (datetime('now')),
+  last_login TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
