@@ -1,43 +1,21 @@
+/**
+ * Auth Config — Edge-Safe Base
+ *
+ * This file contains ONLY the session/callback/pages config.
+ * NO database imports, NO bcrypt, NO Node.js APIs.
+ * Safe for import by middleware.ts (Edge Runtime).
+ *
+ * The CredentialsProvider with DB lookups lives in auth.ts,
+ * which is only used by the Node.js API route handler.
+ */
 import type { NextAuthConfig } from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import bcrypt from 'bcrypt';
-import { getUserByEmail, updateLastLogin } from '../database/database';
 
 export const authConfig: NextAuthConfig = {
   session: { strategy: 'jwt' },
   pages: {
     signIn: '/login',
   },
-  providers: [
-    Credentials({
-      name: 'credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
-      },
-      async authorize(credentials) {
-        const email = String(credentials?.email ?? '').toLowerCase().trim();
-        const password = String(credentials?.password ?? '');
-
-        if (!email || !password) return null;
-
-        const user = getUserByEmail(email);
-        if (!user) return null;
-
-        const ok = await bcrypt.compare(password, user.password_hash);
-        if (!ok) return null;
-
-        updateLastLogin(user.id);
-
-        return {
-          id: String(user.id),
-          email: user.email,
-          name: user.display_name ?? user.email,
-          role: user.role,
-        };
-      },
-    }),
-  ],
+  providers: [], // Populated in auth.ts — kept empty here for Edge safety
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -50,6 +28,18 @@ export const authConfig: NextAuthConfig = {
         (session.user as { role?: string }).role = token.role as string | undefined;
       }
       return session;
+    },
+    authorized({ auth, request }) {
+      // This callback is used by middleware (Edge Runtime).
+      // Return true/false to allow/deny. Returning false redirects to signIn page.
+      const { pathname } = request.nextUrl;
+      const isLoggedIn = !!auth;
+
+      const publicRoutes = ['/', '/login'];
+      const isPublic = publicRoutes.includes(pathname);
+
+      if (isPublic) return true;
+      return isLoggedIn;
     },
   },
 };
