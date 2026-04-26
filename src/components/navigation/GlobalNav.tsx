@@ -94,7 +94,7 @@ export function GlobalNav() {
                  {role}
                </span>
                <button
-                 onClick={() => signOut({ callbackUrl: '/login' })}
+                 onClick={() => signOut({ callbackUrl: `${window.location.origin}/login` })}
                  className="text-[11px] uppercase tracking-widest hover:text-[var(--ink-primary)] transition-colors"
                  style={{ color: 'var(--ink-tertiary)' }}
                >
