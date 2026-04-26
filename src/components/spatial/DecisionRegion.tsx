@@ -9,8 +9,8 @@ import { DecisionTraceLedger } from "@/components/intelligence/command/DecisionT
 import { generateInstitutionalRecord, verifyExportRecord, ExportArtifact } from "@/lib/exportEngine";
 import { useReviewRoom } from "@/components/simulation/ReviewRoomContext";
 import { useEngine, useGovernance } from "@/context/InstitutionalStateProvider";
-import { useAuth } from "@/context/AuthProvider";
-import { hasPermission } from "@/lib/auth";
+import { useSession } from "next-auth/react";
+import { hasPermission, Role } from "@/lib/auth";
 import { ENGINE_VERSION } from "@/lib/horizonEngine";
 import { StepContext, WorkflowContinue } from "@/components/navigation/WorkflowPipeline";
 
@@ -18,7 +18,8 @@ export function DecisionRegion() {
   const { baseFactors, appliedFactors, horizonShift, newHorizon, escalationResult } = useEngine();
   const { session, timeRemainingMs, isSessionActive, isExpired, isResolvedTimely, initiateReview } = useReviewRoom();
   const { escalationHistory } = useGovernance();
-  const { role } = useAuth();
+  const { data: sessionData } = useSession();
+  const role = ((sessionData?.user as { role?: Role })?.role) || "Analyst";
   
   const canAccessDecision = hasPermission(role, "Allocator");
   const canExport = hasPermission(role, "Admin");

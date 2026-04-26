@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/context/AuthProvider";
+import { useSession } from "next-auth/react";
 import { hasPermission, Role } from "@/lib/auth";
 
 interface PipelineStep {
@@ -22,7 +22,8 @@ const PIPELINE: PipelineStep[] = [
 
 function usePipelinePosition() {
   const pathname = usePathname();
-  const { role } = useAuth();
+  const { data: session } = useSession();
+  const role = (session?.user as { role?: Role } | undefined)?.role || "Analyst";
 
   const visibleSteps = PIPELINE.filter(
     (step) => !step.requiredRole || hasPermission(role, step.requiredRole)

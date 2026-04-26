@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
-import { useAuth } from "@/context/AuthProvider";
+import { useSession } from "next-auth/react";
+import { Role } from "@/lib/auth";
 import { ENGINE_VERSION } from "@/lib/horizonEngine";
 import { useReviewRoom } from "@/components/simulation/ReviewRoomContext";
 
 export function CommandRegion() {
-  const { role } = useAuth();
+  const { data: sessionData } = useSession();
+  const role = (sessionData?.user as { role?: Role } | undefined)?.role;
   const { session, isSessionActive } = useReviewRoom();
   const [currentTime, setCurrentTime] = React.useState("");
 

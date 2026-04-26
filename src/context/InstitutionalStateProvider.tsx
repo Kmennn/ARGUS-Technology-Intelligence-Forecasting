@@ -12,7 +12,8 @@ import {
   EscalationEvent,
 } from "@/lib/horizonEngine";
 import { useReviewRoom } from "@/components/simulation/ReviewRoomContext";
-import { useAuth } from "@/context/AuthProvider";
+import { useSession } from "next-auth/react";
+import { Role } from "@/lib/auth";
 
 // ─── Engine Slice ─────────────────────────────────────────────────────────────
 // Purely derived. Memoized. No side effects.
@@ -59,7 +60,8 @@ export function InstitutionalStateProvider({ children }: { children: React.React
   // Simulation slice is already its own isolated provider (ReviewRoomContext).
   // We only consume the TWO boolean signals that affect the engine.
   const { isExpired, isResolvedTimely, session } = useReviewRoom();
-  const { role } = useAuth();
+  const { data: sessionData } = useSession();
+  const role = ((sessionData?.user as { role?: Role })?.role) || "Analyst";
 
   const [escalationHistory, setEscalationHistory] = React.useState<EscalationEvent[]>(ESCALATION_HISTORY);
 

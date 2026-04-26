@@ -4,22 +4,23 @@ import { PredictionOutcomeLedger } from "@/components/intelligence/calibration/P
 import { EscalationEffectivenessBlock } from "@/components/intelligence/calibration/EscalationEffectivenessBlock";
 import { CouplingAccuracyAudit } from "@/components/intelligence/calibration/CouplingAccuracyAudit";
 import { WeightDriftMonitor } from "@/components/intelligence/calibration/WeightDriftMonitor";
-import { useAuth } from "@/context/AuthProvider";
-import { hasPermission } from "@/lib/auth";
+import { useSession } from "next-auth/react";
+import { Role, hasPermission } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function CalibrationPage() {
-  const { role } = useAuth();
+  const { data: session } = useSession();
+  const role = (session?.user as { role?: Role } | undefined)?.role;
   const router = useRouter();
 
   useEffect(() => {
-    if (!hasPermission(role, "Admin")) {
+    if (session && (!role || !hasPermission(role, "Admin"))) {
       router.replace("/research");
     }
-  }, [role, router]);
+  }, [role, router, session]);
 
-  if (!hasPermission(role, "Admin")) {
+  if (!session || !role || !hasPermission(role, "Admin")) {
     return (
       <div className="max-w-[760px] mx-auto w-full px-6 md:px-0 py-10">
         <div className="text-[11px] font-mono uppercase tracking-widest text-[var(--ink-tertiary)]">

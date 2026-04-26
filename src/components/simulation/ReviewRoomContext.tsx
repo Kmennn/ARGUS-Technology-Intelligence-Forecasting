@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { DecisionAction } from "@/lib/decisionLedger";
-import { useAuth } from "@/context/AuthProvider";
+import { useSession } from "next-auth/react";
+import { Role } from "@/lib/auth";
 import { argusEvents } from "@/lib/eventBus";
 
 export interface ReviewSession {
@@ -30,7 +31,8 @@ const STORAGE_KEY = "ARGUS_REVIEW_SESSION";
 export function ReviewRoomProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<ReviewSession | null>(null);
   const [timeRemainingMs, setTimeRemainingMs] = useState<number>(0);
-  const { role } = useAuth();
+  const { data: sessionData } = useSession();
+  const role = ((sessionData?.user as { role?: Role })?.role) || "Analyst";
   
   // Helper to log decisions to the server
   const logDecision = useCallback(async (
